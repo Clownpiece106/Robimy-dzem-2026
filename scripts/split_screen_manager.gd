@@ -17,6 +17,10 @@ func configure(game_session: GameSession) -> void:
 	_apply_layout()
 	get_viewport().size_changed.connect(_apply_layout)
 
+func set_layout(next_layout: Layout) -> void:
+	layout = next_layout
+	_apply_layout()
+
 func _create_viewports() -> void:
 	player_one_container = _create_container("Player1ViewportContainer")
 	player_two_container = _create_container("Player2ViewportContainer")

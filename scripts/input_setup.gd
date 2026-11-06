@@ -17,5 +17,5 @@ static func _bind(action_name: String, keycode: Key) -> void:
 	else:
 		InputMap.action_erase_events(action_name)
 	var key_event := InputEventKey.new()
-	key_event.keycode = keycode
+	key_event.physical_keycode = keycode
 	InputMap.action_add_event(action_name, key_event)

@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 	if activated or session == null:
 		return
 	var player_state := session.get_player_state(GameSession.PLAYER_1)
-	if player_state.position.x >= position.x - 36.0 and player_state.plane == CoopPlayer.Plane.FOREGROUND:
+	if absf(player_state.position.x - position.x) <= 36.0 and player_state.plane == CoopPlayer.Plane.FOREGROUND:
 		activated = true
 		session.emit_cross_map_event("lever_a_opened", {"source_player": GameSession.PLAYER_1})
 		queue_redraw()
