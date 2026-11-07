@@ -42,3 +42,153 @@ room_b = NodePath("../GrandRoom(2)")
 
 [node name="Ladder" parent="." unique_id=1118398914 instance=ExtResource("6")]
 position = Vector2(1900, 390)
+
+[node name="SmallRoom(4)" parent="." unique_id=2093333221 instance=ExtResource("2")]
+position = Vector2(-2120, 0)
+room_id = "Small Room (4)"
+room_width = 960.0
+
+[node name="Door(3->4)" parent="." unique_id=1453849483 instance=ExtResource("5")]
+position = Vector2(-1160, 360)
+door_id = "door_3_4"
+room_a = NodePath("../GrandRoom(3)")
+room_b = NodePath("../SmallRoom(4)")
+
+[node name="MediumRoom(12)" parent="." unique_id=430373604 instance=ExtResource("2")]
+position = Vector2(1400, 544)
+room_id = "Medium Room (12)"
+room_width = 1920.0
+
+[node name="SmallRoom(5)" parent="." unique_id=763627892 instance=ExtResource("2")]
+position = Vector2(441, 544)
+room_id = "Small Room (5)"
+room_width = 960.0
+
+[node name="MediumRoom(6)" parent="." unique_id=595460909 instance=ExtResource("2")]
+position = Vector2(-1478, 544)
+room_id = "Medium Room (6)"
+room_width = 1920.0
+
+[node name="MediumRoom(11)" parent="." unique_id=802109340 instance=ExtResource("2")]
+position = Vector2(3319, 544)
+room_id = "Medium Room (11)"
+room_width = 1920.0
+
+[node name="SmallRoom(13)" parent="." unique_id=168679868 instance=ExtResource("2")]
+position = Vector2(5237, 544)
+room_id = "Small Room (13)"
+room_width = 960.0
+
+[node name="Door(5->6)" parent="." unique_id=1603556959 instance=ExtResource("5")]
+position = Vector2(441, 929)
+door_id = "door_5_6"
+room_a = NodePath("../SmallRoom(5)")
+room_b = NodePath("../MediumRoom(6)")
+
+[node name="Door(5->12)" parent="." unique_id=344066897 instance=ExtResource("5")]
+position = Vector2(1400, 929)
+door_id = "door_5_12"
+room_a = NodePath("../SmallRoom(5)")
+room_b = NodePath("../MediumRoom(12)")
+
+[node name="Door(12->11)" parent="." unique_id=31961224 instance=ExtResource("5")]
+position = Vector2(3319, 929)
+door_id = "door_12_11"
+room_a = NodePath("../MediumRoom(12)")
+room_b = NodePath("../MediumRoom(11)")
+
+[node name="Door(11->13)" parent="." unique_id=1524400508 instance=ExtResource("5")]
+position = Vector2(5237, 929)
+door_id = "door_11_13"
+room_a = NodePath("../MediumRoom(11)")
+room_b = NodePath("../SmallRoom(13)")
+
+[node name="GrandRoom(14)" parent="." unique_id=2105652066 instance=ExtResource("3")]
+position = Vector2(5237, 1080)
+room_id = "Grand room (14)"
+room_width = 2560.0
+
+[node name="SmallRoom(10)" parent="." unique_id=1297926878 instance=ExtResource("2")]
+position = Vector2(4283, 1080)
+room_id = "Small Room (10)"
+room_width = 960.0
+
+[node name="SmallRoom(9)" parent="." unique_id=1599503778 instance=ExtResource("2")]
+position = Vector2(3319, 1080)
+room_id = "Small Room (9)"
+room_width = 960.0
+
+[node name="GrandRoom(8)" parent="." unique_id=1181456887 instance=ExtResource("3")]
+position = Vector2(760, 1080)
+room_id = "Grand room (8)"
+room_width = 2560.0
+
+[node name="MediumRoom(7)" parent="." unique_id=562048639 instance=ExtResource("2")]
+position = Vector2(-1160, 1080)
+room_id = "Medium Room (7)"
+room_width = 1920.0
+
+[node name="MediumRoom(20)" parent="." unique_id=1076044589 instance=ExtResource("2")]
+position = Vector2(-3083, 1080)
+room_id = "Medium Room (20)"
+room_width = 1920.0
+
+[node name="MediumRoom(21)" parent="." unique_id=1194045686 instance=ExtResource("2")]
+position = Vector2(-3083, 1623)
+room_id = "Medium Room (21)"
+room_width = 1920.0
+
+[node name="SmallRoom(19)" parent="." unique_id=949248559 instance=ExtResource("2")]
+position = Vector2(-1160, 1623)
+room_id = "Small Room (19)"
+room_width = 960.0
+
+[node name="GrandRoom(18)" parent="." unique_id=1134672112 instance=ExtResource("3")]
+position = Vector2(-199, 1623)
+room_id = "Grand room (18)"
+room_width = 2560.0
+
+[node name="GrandRoom(17)" parent="." unique_id=1769129778 instance=ExtResource("3")]
+position = Vector2(2360, 1623)
+room_id = "Grand room (17)"
+room_width = 2560.0
+
+[node name="MediumRoom(16)" parent="." unique_id=1098503692 instance=ExtResource("2")]
+position = Vector2(4907, 1623)
+room_id = "Medium Room (16)"
+room_width = 1920.0
+
+[node name="SmallRoom(15)" parent="." unique_id=1729461421 instance=ExtResource("2")]
+position = Vector2(6824, 1623)
+room_id = "Small Room (15)"
+room_width = 960.0
+
+[node name="MediumRoom(23)" parent="." unique_id=1352849256 instance=ExtResource("2")]
+position = Vector2(441, 2162)
+room_id = "Medium Room (23)"
+room_width = 1920.0
+
+[node name="SmallRoom(22)" parent="." unique_id=2085050354 instance=ExtResource("2")]
+position = Vector2(2360, 2162)
+room_id = "Small Room (22)"
+room_width = 960.0
+
+[node name="MediumRoom(24)" parent="." unique_id=1370423739 instance=ExtResource("2")]
+position = Vector2(3319, 2162)
+room_id = "Medium Room (24)"
+room_width = 1920.0
+
+[node name="SmallRoom(25)" parent="." unique_id=14207188 instance=ExtResource("2")]
+position = Vector2(5237, 2162)
+room_id = "Small Room (25)"
+room_width = 960.0
+
+[node name="MediumRoom(26)" parent="." unique_id=205536626 instance=ExtResource("2")]
+position = Vector2(2360, 2699)
+room_id = "Medium Room (26)"
+room_width = 1920.0
+
+[node name="SmallRoom(27)" parent="." unique_id=1116352653 instance=ExtResource("2")]
+position = Vector2(4283, 2699)
+room_id = "Small Room (27)"
+room_width = 960.0
