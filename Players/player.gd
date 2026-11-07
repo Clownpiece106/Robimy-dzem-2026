@@ -5,7 +5,7 @@ enum DepthPlane { BACKGROUND, FOREGROUND }
 @onready var test_sprite = $TestSprite
 
 const SPEED := 220.0
-const GRV := 50.0
+const GRV := 0.0
 const MAX_VSP := 300.0
 const INTERACT_ACTION := "p%d_interact"
 const DROP_SLOT_ACTION := "inventory_drop_slot_%d"
@@ -62,7 +62,7 @@ func _setup_interaction() -> void:
 func _process(delta: float) -> void:
 	
 	#region Plane switching
-	is_on_stairs = check_tile_data()
+	is_on_stairs = false #check_tile_data()
 	print(current_tilemap_ref)
 	if(!is_on_stairs):
 		if Input.is_action_just_pressed(background_action):
@@ -84,6 +84,11 @@ func _process(delta: float) -> void:
 	#endregion
 	
 	#region Interactions
+	var direction := Input.get_axis(left_action, right_action)
+	var next_x := position.x + direction * SPEED * delta
+	if map_instance != null and map_instance.has_method("constrain_mansion_movement"):
+		next_x = map_instance.constrain_mansion_movement(position.x, next_x, position.y)
+	position.x = next_x
 	_process_inventory_drop()
 	if Input.is_action_just_pressed(interact_action) and interaction_sensor != null:
 		var target := interaction_sensor.get_closest_interactable()
@@ -114,6 +119,9 @@ func _process_inventory_drop() -> void:
 			return
 
 func get_current_tile_coords() -> Vector2i:
+	if(!current_tilemap_ref):
+		return Vector2(0,0)
+		
 	# Convert player's global position to local TileMap position
 	var check_pos = Vector2(global_position.x, global_position.y+32)
 	var local_pos = current_tilemap_ref.to_local(check_pos)
@@ -121,6 +129,8 @@ func get_current_tile_coords() -> Vector2i:
 	return current_tilemap_ref.local_to_map(local_pos)
 
 func check_tile_data():
+	if(!current_tilemap_ref):
+		return Vector2(0,0)
 	var coords = get_current_tile_coords()
 	
 	# Get the source ID of the tile at these coordinates (layer 0)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/mansion_room.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/interactive_objects/mansion_ladder.gd" id="2"]
+[sub_resource type="RectangleShape2D" id="shape"]
+size = Vector2(80, 120)
+
+[node name="big_room" type="Node2D"]
+script = ExtResource("1")
+room_id = "Grand room"
+room_width = 1620.0
+door_ids = Array[String](["left", "right"])
+
+[node name="LadderUp" type="Node2D" parent="."]
+position = Vector2(810, 390)
+script = ExtResource("2")
+destination_y = -150.0
+
+[node name="InteractionArea" type="Area2D" parent="LadderUp"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderUp/InteractionArea"]
+shape = SubResource("shape")

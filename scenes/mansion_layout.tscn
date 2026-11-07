@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/rooms/small_room.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/big_room.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/medium_room.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/upper_big_room.tscn" id="4"]
+
+[node name="Mansion" type="Node2D"]
+[node name="SmallRoom" parent="." instance=ExtResource("1")]
+[node name="BigRoom" parent="." instance=ExtResource("2")]
+position = Vector2(540, 0)
+[node name="MediumRoom" parent="." instance=ExtResource("3")]
+position = Vector2(2160, 0)
+[node name="UpperBigRoom" parent="." instance=ExtResource("4")]
+position = Vector2(540, -540)
