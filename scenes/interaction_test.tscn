@@ -6,15 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://bsmss4341f13c" path="res://Players/PlayerDark.tscn" id="5_dark"]
 [ext_resource type="PackedScene" uid="uid://cbtpv6q65uhu7" path="res://Players/PlayerLight.tscn" id="6_light"]
 [ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="7_ghost"]
-[ext_resource type="Script" uid="uid://b5fq473jtmob" path="res://scripts/tests/interaction_test_object.gd" id="8_object"]
-[ext_resource type="Script" uid="uid://ct43on1lckifp" path="res://scripts/interactive_objects/linked_lever.gd" id="9_lever"]
+[ext_resource type="Script" path="res://scripts/interactive_objects/collectible_item.gd" id="8_collectible"]
 [ext_resource type="Script" uid="uid://cny1mh1khhxqm" path="res://scripts/interactive_objects/linked_door.gd" id="10_door"]
 
 [sub_resource type="CircleShape2D" id="object_shape"]
 radius = 38.0
 
-[sub_resource type="RectangleShape2D" id="lever_shape"]
-size = Vector2(48, 60)
+[sub_resource type="RectangleShape2D" id="door_shape"]
+size = Vector2(80, 120)
 
 [node name="InteractionTest" type="Node2D" unique_id=2008589841]
 script = ExtResource("1_root")
@@ -54,16 +53,43 @@ player_id = 1
 position = Vector2(220, 390)
 script = ExtResource("7_ghost")
 
-[node name="MusicBox" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=673477612]
+[node name="Key" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=673477612]
 position = Vector2(430, 390)
-script = ExtResource("8_object")
-object_label = "Music box"
+script = ExtResource("8_collectible")
+item_kind = "key"
+item_label = "Key"
+shared_object_id = "key_1"
 
-[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox" unique_id=622846218]
+[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Key" unique_id=622846218]
+color = Color(0.95, 0.8, 0.28, 1)
+polygon = PackedVector2Array(-30, -8, 6, -8, 6, -18, 24, -18, 24, -4, 8, -4, 8, 8, -30, 8)
+
+[node name="Label" type="Label" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Key" unique_id=783803569]
+offset_left = -55.0
+offset_top = 8.0
+offset_right = 55.0
+offset_bottom = 30.0
+text = "KEY"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Key" unique_id=1598990354]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Key/InteractionArea" unique_id=140652936]
+shape = SubResource("object_shape")
+
+[node name="MusicBox" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1"]
+position = Vector2(800, 390)
+script = ExtResource("8_collectible")
+item_kind = "music_box"
+item_label = "Music box"
+shared_object_id = "music_box_1"
+
+[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox"]
 color = Color(0.31, 0.72, 0.85, 1)
 polygon = PackedVector2Array(-24, -44, 24, -44, 24, 0, -24, 0)
 
-[node name="Label" type="Label" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox" unique_id=783803569]
+[node name="Label" type="Label" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox"]
 offset_left = -55.0
 offset_top = 8.0
 offset_right = 55.0
@@ -71,22 +97,24 @@ offset_bottom = 30.0
 text = "MUSIC BOX"
 horizontal_alignment = 1
 
-[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox" unique_id=1598990354]
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox"]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox/InteractionArea" unique_id=140652936]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/MusicBox/InteractionArea"]
 shape = SubResource("object_shape")
 
-[node name="Candle" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1272063907]
-position = Vector2(800, 390)
-script = ExtResource("8_object")
-object_label = "Candle"
+[node name="Candle" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1"]
+position = Vector2(1100, 390)
+script = ExtResource("8_collectible")
+item_kind = "candle"
+item_label = "Candle"
+shared_object_id = "candle_1"
 
-[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle" unique_id=918695890]
+[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle"]
 color = Color(0.96, 0.68, 0.33, 1)
 polygon = PackedVector2Array(-14, -50, 14, -50, 14, 0, -14, 0)
 
-[node name="Label" type="Label" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle" unique_id=1859866215]
+[node name="Label" type="Label" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle"]
 offset_left = -45.0
 offset_top = 8.0
 offset_right = 45.0
@@ -94,25 +122,21 @@ offset_bottom = 30.0
 text = "CANDLE"
 horizontal_alignment = 1
 
-[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle" unique_id=866470977]
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle"]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle/InteractionArea" unique_id=146712078]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Candle/InteractionArea"]
 shape = SubResource("object_shape")
-
-[node name="Lever" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1059416473]
-position = Vector2(1050, 390)
-script = ExtResource("9_lever")
-
-[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Lever" unique_id=275641221]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Lever/InteractionArea" unique_id=780767694]
-shape = SubResource("lever_shape")
 
 [node name="Door" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1067462543]
 position = Vector2(1500, 390)
 script = ExtResource("10_door")
+
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Door"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1/Door/InteractionArea"]
+shape = SubResource("door_shape")
 
 [node name="Camera2D" type="Camera2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=454123597]
 position = Vector2(480, 270)
@@ -153,16 +177,43 @@ player_id = 2
 position = Vector2(220, 390)
 script = ExtResource("7_ghost")
 
-[node name="MusicBox" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1049849291]
+[node name="Key" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1049849291]
 position = Vector2(430, 390)
-script = ExtResource("8_object")
-object_label = "Music box"
+script = ExtResource("8_collectible")
+item_kind = "key"
+item_label = "Key"
+shared_object_id = "key_1"
 
-[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox" unique_id=20321001]
+[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Key" unique_id=20321001]
+color = Color(0.95, 0.8, 0.28, 1)
+polygon = PackedVector2Array(-30, -8, 6, -8, 6, -18, 24, -18, 24, -4, 8, -4, 8, 8, -30, 8)
+
+[node name="Label" type="Label" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Key" unique_id=1101287200]
+offset_left = -55.0
+offset_top = 8.0
+offset_right = 55.0
+offset_bottom = 30.0
+text = "KEY"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Key" unique_id=1618362451]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Key/InteractionArea" unique_id=491333474]
+shape = SubResource("object_shape")
+
+[node name="MusicBox" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2"]
+position = Vector2(800, 390)
+script = ExtResource("8_collectible")
+item_kind = "music_box"
+item_label = "Music box"
+shared_object_id = "music_box_1"
+
+[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox"]
 color = Color(0.31, 0.72, 0.85, 1)
 polygon = PackedVector2Array(-24, -44, 24, -44, 24, 0, -24, 0)
 
-[node name="Label" type="Label" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox" unique_id=1101287200]
+[node name="Label" type="Label" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox"]
 offset_left = -55.0
 offset_top = 8.0
 offset_right = 55.0
@@ -170,22 +221,24 @@ offset_bottom = 30.0
 text = "MUSIC BOX"
 horizontal_alignment = 1
 
-[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox" unique_id=1618362451]
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox"]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox/InteractionArea" unique_id=491333474]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/MusicBox/InteractionArea"]
 shape = SubResource("object_shape")
 
-[node name="Candle" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1178091903]
-position = Vector2(800, 390)
-script = ExtResource("8_object")
-object_label = "Candle"
+[node name="Candle" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2"]
+position = Vector2(1100, 390)
+script = ExtResource("8_collectible")
+item_kind = "candle"
+item_label = "Candle"
+shared_object_id = "candle_1"
 
-[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle" unique_id=386507916]
+[node name="Visual" type="Polygon2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle"]
 color = Color(0.96, 0.68, 0.33, 1)
 polygon = PackedVector2Array(-14, -50, 14, -50, 14, 0, -14, 0)
 
-[node name="Label" type="Label" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle" unique_id=434590740]
+[node name="Label" type="Label" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle"]
 offset_left = -45.0
 offset_top = 8.0
 offset_right = 45.0
@@ -193,25 +246,21 @@ offset_bottom = 30.0
 text = "CANDLE"
 horizontal_alignment = 1
 
-[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle" unique_id=1845902619]
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle"]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle/InteractionArea" unique_id=220080821]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Candle/InteractionArea"]
 shape = SubResource("object_shape")
-
-[node name="Lever" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1103034040]
-position = Vector2(1050, 390)
-script = ExtResource("9_lever")
-
-[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Lever" unique_id=1125293311]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Lever/InteractionArea" unique_id=1636468443]
-shape = SubResource("lever_shape")
 
 [node name="Door" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=2114732223]
 position = Vector2(1500, 390)
 script = ExtResource("10_door")
+
+[node name="InteractionArea" type="Area2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Door"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2/Door/InteractionArea"]
+shape = SubResource("door_shape")
 
 [node name="Camera2D" type="Camera2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=738913755]
 position = Vector2(480, 270)
@@ -228,7 +277,7 @@ layer = 10
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 620.0
-offset_bottom = 118.0
+offset_bottom = 144.0
 mouse_filter = 2
 color = Color(0.0470588, 0.0627451, 0.0980392, 0.88)
 
@@ -237,12 +286,21 @@ layout_mode = 0
 offset_left = 16.0
 offset_top = 10.0
 offset_right = 590.0
-offset_bottom = 90.0
+offset_bottom = 116.0
 theme_override_colors/font_color = Color(0.886275, 0.909804, 0.941176, 1)
 theme_override_font_sizes/font_size = 16
 text = "CO-OP MOVEMENT / INTERACTION TEST
 P1: A/D + E    P2: Arrow keys + Enter
-Each half is a separate world. Check Output for interaction logs."
+Pick up items. The key unlocks doors; music boxes and candles are regular shared collectibles."
+
+[node name="Inventory" type="Label" parent="Instructions" unique_id=109517246]
+offset_left = 20.0
+offset_top = 154.0
+offset_right = 620.0
+offset_bottom = 210.0
+theme_override_colors/font_color = Color(0.886275, 0.909804, 0.941176, 1)
+theme_override_font_sizes/font_size = 16
+text = "SHARED INVENTORY  [6] Empty   [7] Empty   [8] Empty"
 
 [node name="SplitSeparator" type="ColorRect" parent="Instructions" unique_id=2096509968]
 offset_left = 958.0
