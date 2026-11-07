@@ -3,6 +3,7 @@ extends Node2D
 
 const PLAYER_DARK_SCENE := preload("res://Players/PlayerDark.tscn")
 const PLAYER_LIGHT_SCENE := preload("res://Players/PlayerLight.tscn")
+const INVERT_ENVIRONMENT := preload("res://shaders/invert_environment.tres")
 
 const MAP_WIDTH := 3240.0
 const MANSION_SCENE := preload("res://scenes/mansion_layout.tscn")
@@ -34,6 +35,7 @@ func configure(game_session: GameSession, owning_player_id: int) -> void:
 func configure_existing(game_session: GameSession, owning_player_id: int) -> void:
 	session = game_session
 	local_player_id = owning_player_id
+	_apply_environment_appearance()
 	_connect_collectible_signals()
 	player = get_node("Player") as CoopPlayer
 	player.configure_for_map(local_player_id, self, session)
@@ -93,8 +95,18 @@ func _configure_layout() -> void:
 	mansion_rooms.clear()
 	mansion_doors.clear()
 	_collect_layout_nodes(mansion)
+	_apply_environment_appearance()
 	for door in mansion_doors:
 		door.configure(session)
+
+func _apply_environment_appearance() -> void:
+	var environment_material: Material = INVERT_ENVIRONMENT if local_player_id == GameSession.PLAYER_2 else null
+	for room in mansion_rooms:
+		room.material = environment_material
+	for node_name in ["Background", "Floor", "BgPhysicsTileMap", "FgPhysicsTileMap"]:
+		var environment_node := get_node_or_null(node_name) as CanvasItem
+		if environment_node != null:
+			environment_node.material = environment_material
 
 func _collect_layout_nodes(node: Node) -> void:
 	if node is MansionRoom:
