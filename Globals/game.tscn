@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dy075er6h742q"]
+
+[ext_resource type="PackedScene" uid="uid://7ffhdyfwwbbb" path="res://Split Screen/Split Screen Manager.tscn" id="1_hv63o"]
+[ext_resource type="PackedScene" uid="uid://dipkr8d5n52q6" path="res://Split Screen/SubViewport.tscn" id="2_7rqii"]
+[ext_resource type="PackedScene" uid="uid://bsmss4341f13c" path="res://Players/PlayerDark.tscn" id="3_j27jc"]
+[ext_resource type="PackedScene" uid="uid://cbtpv6q65uhu7" path="res://Players/PlayerLight.tscn" id="4_c673k"]
+
+[node name="Game" type="Node" unique_id=199296077]
+
+[node name="SplitScreenManager" parent="." unique_id=1459630031 instance=ExtResource("1_hv63o")]
+
+[node name="SubViewportRight" parent="SplitScreenManager" unique_id=718671119 instance=ExtResource("2_7rqii")]
+
+[node name="PlayerDark" parent="SplitScreenManager/SubViewportRight" unique_id=499025125 instance=ExtResource("3_j27jc")]
+position = Vector2(458, 543)
+player_id = 1
+
+[node name="SubViewportLeft" parent="SplitScreenManager" unique_id=1792267137 instance=ExtResource("2_7rqii")]
+offset_left = 960.0
+offset_right = 1920.0
+
+[node name="PlayerLight" parent="SplitScreenManager/SubViewportLeft" unique_id=1063871248 instance=ExtResource("4_c673k")]
+position = Vector2(502, 546)
+player_id = 2

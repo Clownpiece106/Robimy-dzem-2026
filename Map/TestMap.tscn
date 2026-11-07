@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bvkq02tk27mox"]
+
+[ext_resource type="Texture2D" uid="uid://cu1b7wxbo1lsm" path="res://Trash/Sprite-0001.png" id="1_1xvyj"]
+
+[node name="TestMap" type="Node2D" unique_id=1849948652]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1006741657]
+position = Vector2(985, 501.99997)
+scale = Vector2(7.64, 4.2799997)
+texture = ExtResource("1_1xvyj")

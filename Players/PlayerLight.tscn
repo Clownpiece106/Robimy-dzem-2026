@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cbtpv6q65uhu7"]
+
+[ext_resource type="Script" uid="uid://htlrgw0ela7d" path="res://Players/player.gd" id="1_ryju4"]
+[ext_resource type="Texture2D" uid="uid://uvqa6xy1roya" path="res://Players/LightPlayerPlaceholder.png" id="2_4o6vt"]
+
+[node name="PlayerLight" type="Node2D" unique_id=1063871248]
+script = ExtResource("1_ryju4")
+
+[node name="LightSprite" type="Sprite2D" parent="." unique_id=1055661282]
+texture = ExtResource("2_4o6vt")
