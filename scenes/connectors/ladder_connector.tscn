@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactive_objects/mansion_ladder.gd" id="1"]
+[sub_resource type="RectangleShape2D" id="shape"]
+size = Vector2(80, 120)
+
+[node name="LadderConnector" type="Node2D"]
+
+[node name="LowerEndpoint" type="Node2D" parent="."]
+script = ExtResource("1")
+destination = NodePath("../UpperEndpoint/ArrivalMarker")
+[node name="InteractionArea" type="Area2D" parent="LowerEndpoint"]
+collision_mask = 0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerEndpoint/InteractionArea"]
+shape = SubResource("shape")
+[node name="ArrivalMarker" type="Marker2D" parent="LowerEndpoint"]
+
+[node name="UpperEndpoint" type="Node2D" parent="."]
+position = Vector2(0, -540)
+script = ExtResource("1")
+destination = NodePath("../LowerEndpoint/ArrivalMarker")
+[node name="InteractionArea" type="Area2D" parent="UpperEndpoint"]
+collision_mask = 0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperEndpoint/InteractionArea"]
+shape = SubResource("shape")
+[node name="ArrivalMarker" type="Marker2D" parent="UpperEndpoint"]

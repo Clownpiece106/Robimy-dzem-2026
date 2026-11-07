@@ -1,9 +1,18 @@
+@tool
 class_name MansionLadder
 extends Interactable
-@export var destination_y := 390.0
+
+@export var destination: NodePath
+
+func can_interact(_player: CoopPlayer) -> bool:
+	return get_node_or_null(destination) is Marker2D
+
 func interact(player: CoopPlayer) -> void:
-	player.position.y = destination_y
-	print("P%d used ladder to floor y=%s" % [player.player_id, destination_y])
+	var marker := get_node_or_null(destination) as Marker2D
+	if marker != null:
+		player.global_position = marker.global_position
+		print("P%d used ladder at %s" % [player.player_id, name])
+
 func _draw() -> void:
 	draw_line(Vector2(-20, -110), Vector2(-20, 0), Color("#c09b6c"), 5.0)
 	draw_line(Vector2(20, -110), Vector2(20, 0), Color("#c09b6c"), 5.0)

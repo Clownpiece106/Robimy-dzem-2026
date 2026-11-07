@@ -1,15 +1,44 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://7oaf5eia4x8l"]
 
 [ext_resource type="PackedScene" path="res://scenes/rooms/small_room.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/rooms/big_room.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/rooms/medium_room.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://scenes/rooms/upper_big_room.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/connectors/door_connector.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/connectors/ladder_connector.tscn" id="6"]
 
-[node name="Mansion" type="Node2D"]
-[node name="SmallRoom" parent="." instance=ExtResource("1")]
-[node name="BigRoom" parent="." instance=ExtResource("2")]
-position = Vector2(540, 0)
-[node name="MediumRoom" parent="." instance=ExtResource("3")]
-position = Vector2(2160, 0)
-[node name="UpperBigRoom" parent="." instance=ExtResource("4")]
+[node name="Mansion" type="Node2D" unique_id=1829639342]
+
+[node name="GrandRoom(3)" parent="." unique_id=944792952 instance=ExtResource("1")]
+position = Vector2(-1100, 0)
+room_id = "Grand room (3)"
+room_width = 2560.0
+
+[node name="SmallRoom(1)" parent="." unique_id=1795200022 instance=ExtResource("2")]
+position = Vector2(1400, 0)
+room_id = "Small Room (1)"
+room_width = 960.0
+
+[node name="GrandRoom(2)" parent="." unique_id=909740865 instance=ExtResource("3")]
+position = Vector2(2360, 0)
+room_id = "Grand room (2)"
+room_width = 2560.0
+
+[node name="Attic" parent="." unique_id=1468339878 instance=ExtResource("2")]
 position = Vector2(540, -540)
+room_id = "Attic"
+room_width = 2560.0
+
+[node name="Door(1->3)" parent="." unique_id=102103879 instance=ExtResource("5")]
+position = Vector2(1400, 390)
+door_id = "left"
+room_a = NodePath("../GrandRoom(3)")
+room_b = NodePath("../SmallRoom(1)")
+
+[node name="Door(1->2)" parent="." unique_id=145244419 instance=ExtResource("5")]
+position = Vector2(2360, 390)
+door_id = "right"
+room_a = NodePath("../SmallRoom(1)")
+room_b = NodePath("../GrandRoom(2)")
+
+[node name="Ladder" parent="." unique_id=1118398914 instance=ExtResource("6")]
+position = Vector2(1900, 390)

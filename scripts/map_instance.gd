@@ -7,6 +7,8 @@ const PLAYER_LIGHT_SCENE := preload("res://Players/PlayerLight.tscn")
 const MAP_WIDTH := 3240.0
 const MANSION_SCENE := preload("res://scenes/mansion_layout.tscn")
 var mansion: Node2D
+var mansion_rooms: Array[MansionRoom] = []
+var mansion_doors: Array[MansionDoor] = []
 const BACKGROUND_LANE_Y := 260.0
 const FOREGROUND_LANE_Y := 390.0
 const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
@@ -55,12 +57,12 @@ func configure_mansion(game_session: GameSession, owning_player_id: int) -> void
 	ghost = get_node("OtherPlayerGhost") as CoopGhost
 	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
 	mansion = get_node("Mansion") as Node2D
-	for room in mansion.get_children():
-		room.configure(session)
-		for object in room.get_children():
-			if object is MansionDoor:
-				object.configure(session)
+	_configure_layout()
 	camera = get_node("Camera2D") as Camera2D
+	camera.limit_left = -10000000
+	camera.limit_top = -10000000
+	camera.limit_right = 10000000
+	camera.limit_bottom = 10000000
 	camera.enabled = true
 	camera.make_current()
 
@@ -85,32 +87,53 @@ func _create_world() -> void:
 	mansion.name = "Mansion"
 	mansion.z_index = -1
 	add_child(mansion)
-	for room in mansion.get_children():
-		room.configure(session)
-		for object in room.get_children():
-			if object is MansionDoor:
-				object.configure(session)
+	_configure_layout()
+
+func _configure_layout() -> void:
+	mansion_rooms.clear()
+	mansion_doors.clear()
+	_collect_layout_nodes(mansion)
+	for door in mansion_doors:
+		door.configure(session)
+
+func _collect_layout_nodes(node: Node) -> void:
+	if node is MansionRoom:
+		mansion_rooms.append(node as MansionRoom)
+	if node is MansionDoor:
+		mansion_doors.append(node as MansionDoor)
+	for child in node.get_children():
+		_collect_layout_nodes(child)
+
+func _room_at(point: Vector2) -> MansionRoom:
+	for room in mansion_rooms:
+		if Rect2(to_local(room.global_position), Vector2(room.room_width, ROOM_VIEW_SIZE.y)).has_point(point):
+			return room
+	return null
 
 func constrain_mansion_movement(old_x: float, new_x: float, y: float) -> float:
-	if mansion == null:
+	if mansion == null or is_equal_approx(old_x, new_x):
 		return new_x
-	if y < 0.0:
-		return clampf(new_x, 540.0, 2159.0)
-	new_x = clampf(new_x, 0.0, MAP_WIDTH - 1.0)
-	for boundary in [540.0, 2160.0]:
-		var id := "left" if boundary == 540.0 else "right"
-		if session.is_mansion_door_locked(id) and ((old_x < boundary and new_x >= boundary) or (old_x >= boundary and new_x < boundary)):
-			return boundary - 1.0 if old_x < boundary else boundary
-	return new_x
+	var current := _room_at(Vector2(old_x, y))
+	if current == null:
+		return old_x
+	var room_left := to_local(current.global_position).x
+	var room_right := room_left + current.room_width
+	if new_x >= room_left and new_x < room_right:
+		return new_x
+	var moving_right := new_x > old_x
+	var boundary := room_right if moving_right else room_left
+	var other := _room_at(Vector2(boundary + (0.01 if moving_right else -0.01), y))
+	for door in mansion_doors:
+		var door_pos := to_local(door.global_position)
+		if other != null and door.connects_pair(current, other) and absf(door_pos.x - boundary) < 1.0 and absf(door_pos.y - y) < 80.0 and not session.is_mansion_door_locked(door.door_id):
+			return new_x
+	return boundary - 0.01 if moving_right else boundary
 
 func same_mansion_room(a: Vector2, b: Vector2) -> bool:
 	if mansion == null:
 		return true
-	for room in mansion.get_children():
-		var bounds := Rect2(room.global_position, Vector2(room.room_width, 540.0))
-		if bounds.has_point(a) and bounds.has_point(b):
-			return true
-	return false
+	var room := _room_at(a)
+	return room != null and room == _room_at(b)
 
 func set_camera(active_camera: Camera2D) -> void:
 	camera = active_camera
@@ -158,8 +181,8 @@ func spawn_dropped_collectible(collectible_id: String, item: Dictionary, drop_po
 
 func _process(_delta: float) -> void:
 	if mansion != null and player != null:
-		for room in mansion.get_children():
-			room.update_visibility(player.global_position)
+		for room in mansion_rooms:
+			room.update_visibility(player.global_position, mansion_doors)
 	if camera != null and player != null:
 		if mansion != null:
 			_update_mansion_camera()
@@ -174,8 +197,8 @@ func _update_mansion_camera() -> void:
 	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
 		return
 	camera.zoom = viewport_size / ROOM_VIEW_SIZE
-	for room in mansion.get_children():
-		var bounds := Rect2(room.position, Vector2(room.room_width, ROOM_VIEW_SIZE.y))
+	for room in mansion_rooms:
+		var bounds := Rect2(to_local(room.global_position), Vector2(room.room_width, ROOM_VIEW_SIZE.y))
 		if bounds.has_point(player.position):
 			camera.position = Vector2(
 				clampf(player.position.x, bounds.position.x + ROOM_VIEW_SIZE.x / 2.0, bounds.end.x - ROOM_VIEW_SIZE.x / 2.0),
