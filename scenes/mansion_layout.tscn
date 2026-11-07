@@ -264,3 +264,33 @@ position = Vector2(4283, 3045)
 door_id = "door_26_27"
 room_a = NodePath("../SmallRoom(25)")
 room_b = NodePath("../MediumRoom(24)")
+
+[node name="Ladder(7-19)" parent="." instance=ExtResource("6")]
+position = Vector2(-680, 2013)
+
+[node name="UpperEndpoint" parent="Ladder(7-19)" index="1"]
+position = Vector2(0, -543)
+
+[node name="Ladder(14-15)" parent="." instance=ExtResource("6")]
+position = Vector2(7000, 2013)
+
+[node name="UpperEndpoint" parent="Ladder(14-15)" index="1"]
+position = Vector2(0, -543)
+
+[node name="Ladder(17-22)" parent="." instance=ExtResource("6")]
+position = Vector2(2500, 2552)
+
+[node name="UpperEndpoint" parent="Ladder(17-22)" index="1"]
+position = Vector2(0, -539)
+
+[node name="Ladder(9-17)" parent="." instance=ExtResource("6")]
+position = Vector2(3500, 2013)
+
+[node name="UpperEndpoint" parent="Ladder(9-17)" index="1"]
+position = Vector2(0, -543)
+
+[node name="Ladder(16-25)" parent="." instance=ExtResource("6")]
+position = Vector2(5500, 2552)
+
+[node name="UpperEndpoint" parent="Ladder(16-25)" index="1"]
+position = Vector2(0, -539)
