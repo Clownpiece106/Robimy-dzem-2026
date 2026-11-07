@@ -39,14 +39,27 @@ func connects_pair(a: Node, b: Node) -> bool:
 	return horizontal_edge and absf(door_position.x - (a_rect.end.x if is_equal_approx(a_rect.end.x, b_rect.position.x) else b_rect.end.x)) < 1.0 and door_position.y >= a_rect.position.y and door_position.y <= a_rect.end.y
 
 func interact(player: CoopPlayer) -> void:
-	if session != null and not door_id.is_empty():
-		session.set_mansion_door_locked(door_id, not session.is_mansion_door_locked(door_id), player.player_id)
+	if session == null or door_id.is_empty():
+		return
+	var state := session.get_mansion_door_state(door_id)
+	if state == GameSession.MansionDoorState.LOCKED:
+		if session.has_inventory_item("key"):
+			session.set_mansion_door_state(door_id, GameSession.MansionDoorState.OPEN, player.player_id)
+		else:
+			print("P%d needs a key for door %s" % [player.player_id, door_id])
+	else:
+		var next := GameSession.MansionDoorState.CLOSED if state == GameSession.MansionDoorState.OPEN else GameSession.MansionDoorState.OPEN
+		session.set_mansion_door_state(door_id, next, player.player_id)
 
 func _on_event(event_name: String, payload: Dictionary) -> void:
 	if event_name == "mansion_door_changed" and payload.get("door_id") == door_id:
 		queue_redraw()
 
 func _draw() -> void:
-	var locked := initially_locked if session == null else session.is_mansion_door_locked(door_id)
-	draw_rect(Rect2(-24, -110, 48, 110), Color("#a05d60") if locked else Color("#79a887"))
-	draw_string(ThemeDB.fallback_font, Vector2(-42, 24), "LOCKED" if locked else "UNLOCKED", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+	var state := GameSession.MansionDoorState.LOCKED if initially_locked else GameSession.MansionDoorState.OPEN
+	if session != null:
+		state = session.get_mansion_door_state(door_id)
+	var colors := [Color("#79a887"), Color("#b28b5a"), Color("#a05d60")]
+	var labels := ["OPEN", "CLOSED", "LOCKED"]
+	draw_rect(Rect2(-24, -110, 48, 110), colors[state])
+	draw_string(ThemeDB.fallback_font, Vector2(-42, 24), labels[state], HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)

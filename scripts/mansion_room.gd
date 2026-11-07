@@ -34,7 +34,7 @@ func update_visibility(player_position: Vector2, doors: Array) -> void:
 	for door in doors:
 		if door.connects(self):
 			has_door = true
-			if not door.session.is_mansion_door_locked(door.door_id):
+			if door.session.get_mansion_door_state(door.door_id) == GameSession.MansionDoorState.OPEN:
 				unlocked = true
 	var next_visible := inside or not has_door or unlocked
 	if room_visible != next_visible:

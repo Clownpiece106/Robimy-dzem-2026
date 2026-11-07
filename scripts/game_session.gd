@@ -18,22 +18,31 @@ var player_states: Dictionary = {
 var mansion_doors: Dictionary = {}
 var mansion_door_defaults: Dictionary = {}
 
+enum MansionDoorState { OPEN, CLOSED, LOCKED }
+
 func register_mansion_door(id: String, initially_locked: bool) -> void:
+	var initial_state := MansionDoorState.LOCKED if initially_locked else MansionDoorState.OPEN
 	if not mansion_door_defaults.has(id):
-		mansion_door_defaults[id] = initially_locked
-		mansion_doors[id] = initially_locked
-	elif mansion_door_defaults[id] != initially_locked:
+		mansion_door_defaults[id] = initial_state
+		mansion_doors[id] = initial_state
+	elif mansion_door_defaults[id] != initial_state:
 		push_warning("Conflicting initial state for mansion door %s" % id)
 
 func is_mansion_door_locked(id: String) -> bool:
-	return mansion_doors.get(id, true)
+	return get_mansion_door_state(id) == MansionDoorState.LOCKED
+
+func get_mansion_door_state(id: String) -> int:
+	return mansion_doors.get(id, MansionDoorState.LOCKED)
+
+func set_mansion_door_state(id: String, state: int, actor_id: int) -> void:
+	if not mansion_doors.has(id) or state < MansionDoorState.OPEN or state > MansionDoorState.LOCKED or mansion_doors[id] == state:
+		return
+	mansion_doors[id] = state
+	print("Actor %d changed door %s state=%d" % [actor_id, id, state])
+	emit_cross_map_event("mansion_door_changed", {"door_id": id, "state": state, "locked": state == MansionDoorState.LOCKED, "source_player": actor_id})
 
 func set_mansion_door_locked(id: String, locked: bool, actor_id: int) -> void:
-	if not mansion_doors.has(id):
-		return
-	mansion_doors[id] = locked
-	print("P%d changed door %s locked=%s" % [actor_id, id, locked])
-	emit_cross_map_event("mansion_door_changed", {"door_id": id, "locked": locked, "source_player": actor_id})
+	set_mansion_door_state(id, MansionDoorState.LOCKED if locked else MansionDoorState.OPEN, actor_id)
 
 var inventory_slots: Array[Dictionary] = [{}, {}, {}]
 var inventory_actor_id := 0

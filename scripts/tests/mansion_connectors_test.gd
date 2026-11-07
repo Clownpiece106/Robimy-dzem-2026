@@ -32,6 +32,7 @@ func check() -> void:
 	await physics_frame
 	Input.action_release("p1_move_right")
 	assert(map.player.position.x <= -1160.0)
+	game.get_node("GameSession").add_inventory_item({"kind": "key"}, 1)
 	door.interact(map.player)
 	assert(not game.get_node("GameSession").is_mansion_door_locked("door_3_4"))
 	assert(map.constrain_mansion_movement(-1161, -1159, 390) == -1159)
@@ -47,6 +48,7 @@ func check() -> void:
 	await physics_frame
 	Input.action_release("p2_move_right")
 	assert(second_map.player.position.x <= -1160.0)
+	game.get_node("GameSession").add_inventory_item({"kind": "key"}, 2)
 	second_door.interact(second_map.player)
 	second_map.player.position = Vector2(-1161, 390)
 	Input.action_press("p2_move_right")

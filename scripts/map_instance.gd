@@ -98,6 +98,9 @@ func _configure_layout() -> void:
 	_apply_environment_appearance()
 	for door in mansion_doors:
 		door.configure(session)
+	var monster := mansion.get_node_or_null("Monster") as MansionMonster
+	if monster != null:
+		monster.configure(self, session, player)
 
 func _apply_environment_appearance() -> void:
 	var environment_material: Material = INVERT_ENVIRONMENT if local_player_id == GameSession.PLAYER_2 else null
@@ -138,7 +141,7 @@ func constrain_mansion_movement(old_x: float, new_x: float, y: float) -> float:
 	for door in mansion_doors:
 		var door_pos := to_local(door.global_position)
 		var near_boundary := absf(door_pos.x - boundary) < 1.0 and absf(door_pos.y - y) < 80.0
-		if other != null and near_boundary and door.connects_pair(current, other) and not session.is_mansion_door_locked(door.door_id):
+		if other != null and near_boundary and door.connects_pair(current, other) and session.get_mansion_door_state(door.door_id) == GameSession.MansionDoorState.OPEN:
 			return new_x
 	return boundary - 0.01 if moving_right else boundary
 
@@ -168,18 +171,29 @@ func _on_collectible_dropped(collectible_id: String, item: Dictionary, world_pos
 	spawn_dropped_collectible(collectible_id, item, world_position)
 
 func _on_session_reset() -> void:
-	for child in get_children():
+	_reset_collectibles(self)
+
+func _reset_collectibles(node: Node) -> void:
+	for child in node.get_children():
 		if child is CollectibleItem:
 			var collectible := child as CollectibleItem
 			if collectible.spawned_at_runtime:
 				collectible.queue_free()
 			else:
 				collectible.reset_from_session()
+		else:
+			_reset_collectibles(child)
 
 func _find_collectible(collectible_id: String) -> CollectibleItem:
-	for child in get_children():
+	return _find_collectible_in(self, collectible_id)
+
+func _find_collectible_in(node: Node, collectible_id: String) -> CollectibleItem:
+	for child in node.get_children():
 		if child is CollectibleItem and child.shared_object_id == collectible_id:
 			return child as CollectibleItem
+		var found := _find_collectible_in(child, collectible_id)
+		if found != null:
+			return found
 	return null
 
 func spawn_dropped_collectible(collectible_id: String, item: Dictionary, drop_position: Vector2) -> void:
