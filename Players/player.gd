@@ -1,9 +1,11 @@
 class_name CoopPlayer
-extends Node2D
+extends CharacterBody2D
 
 enum DepthPlane { BACKGROUND, FOREGROUND }
 
 const SPEED := 220.0
+const GRV := 50.0
+const MAX_VSP := 300.0
 const INTERACT_ACTION := "p%d_interact"
 const DROP_SLOT_ACTION := "inventory_drop_slot_%d"
 
@@ -49,8 +51,6 @@ func _setup_interaction() -> void:
 	#position = Vector2(220.0, map_instance.get_lane_y(plane))
 
 func _process(delta: float) -> void:
-	var direction := Input.get_axis(left_action, right_action)
-	position.x = position.x + direction * SPEED * delta
 	_process_inventory_drop()
 	if Input.is_action_just_pressed(interact_action) and interaction_sensor != null:
 		var target := interaction_sensor.get_closest_interactable()
@@ -59,6 +59,12 @@ func _process(delta: float) -> void:
 			target.interact(self)
 		else:
 			print("Interaction attempt: P%d has no target in range" % player_id)
+
+func _physics_process(delta):
+	var direction := Input.get_axis(left_action, right_action)
+	velocity.x = direction * SPEED
+	velocity.y = min(velocity.y+GRV, MAX_VSP)
+	move_and_slide()
 
 func _process_inventory_drop() -> void:
 	if session == null or session.inventory_actor_id != player_id:
@@ -79,4 +85,3 @@ func _process_inventory_drop() -> void:
 	#if Input.is_action_just_pressed(foreground_action):
 		#plane = DepthPlane.FOREGROUND
 	#position.y = map_instance.get_lane_y(plane)
-

@@ -3,9 +3,15 @@
 [ext_resource type="Script" uid="uid://htlrgw0ela7d" path="res://Players/player.gd" id="1_dnjbm"]
 [ext_resource type="Texture2D" uid="uid://b8bxcqfgvqre" path="res://Players/DarkPlayerPlaceholder.png" id="1_rd1wm"]
 
-[node name="PlayerDark" type="Node2D" unique_id=499025125]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dnjbm"]
+
+[node name="PlayerDark" type="CharacterBody2D" unique_id=289977575]
 script = ExtResource("1_dnjbm")
 
 [node name="DarkSprite" type="Sprite2D" parent="." unique_id=1422889119]
-texture = ExtResource("1_rd1wm")
 modulate = Color(0, 0, 0, 1)
+texture = ExtResource("1_rd1wm")
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=2106391625]
+position = Vector2(1, 4)
+shape = SubResource("CapsuleShape2D_dnjbm")
