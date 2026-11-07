@@ -1,20 +1,29 @@
 [gd_resource type="TileSet" format=3 uid="uid://cdjw2m0pckx41"]
 
-[ext_resource type="Texture2D" uid="uid://b81cl8143h5gj" path="res://Tileset Physics/PhysicsTileset.png" id="1_axwkk"]
+[ext_resource type="Texture2D" uid="uid://cyob06pk6776m" path="res://Tileset Physics/PhysicsTilesetAlt.png" id="1_axwkk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8hab"]
 resource_name = "PhysicsAtlas"
 texture = ExtResource("1_axwkk")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.827568, -16.124332, 16.223257, -15.728644, 16.025412, 15.332956, -16.618946, 15.728645)
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16.18993, -16.22807, 15.884819, 15.961096, -16.075514, 16.037374)
+1:0/0/custom_data_0 = true
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.791378, -15.827568, 15.5308, -15.728645, 15.827568, 15.728643, -16.223255, 16.025412)
+3:0/0/custom_data_0 = true
 6:0/0 = 0
 7:0/0 = 0
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.29676723, -15.926491, 15.926491, -15.332957, 15.728646, 14.937267, -0.098921776, 15.530802)
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.332956, -15.926491, -0.09892273, -15.530802, 0.09892273, 16.124334, -16.520023, 15.926489)
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.124334, 0.29676628, 16.322178, -0.09892273, 15.926491, 16.124334, -15.728645, 15.926489)
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16.322178, -15.728646, 15.728647, -15.728646, 16.124334, 0.09892082, -15.728645, -0.2967682)
 4:1/0 = 0
 5:1/0 = 0
 6:1/0 = 0
@@ -32,7 +41,12 @@ texture_region_size = Vector2i(32, 32)
 3:3/0 = 0
 3:2/0 = 0
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(15.827568, 0.29676628, 16.025414, 16.520021, -16.618946, 15.530802)
+2:0/0/custom_data_0 = true
 
 [resource]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 2
+custom_data_layer_0/name = "IsStair"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_r8hab")

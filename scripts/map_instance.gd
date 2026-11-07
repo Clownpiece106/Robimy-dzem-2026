@@ -8,6 +8,10 @@ const MAP_WIDTH := 2400.0
 const BACKGROUND_LANE_Y := 260.0
 const FOREGROUND_LANE_Y := 390.0
 
+@onready var bg_physics_tile_map = $BgPhysicsTileMap
+@onready var fg_physics_tile_map = $FgPhysicsTileMap
+
+
 var session: GameSession
 var local_player_id: int
 var player: CoopPlayer

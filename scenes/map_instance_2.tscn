@@ -14,7 +14,7 @@ radius = 38.0
 [sub_resource type="RectangleShape2D" id="door_shape"]
 size = Vector2(80, 120)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jful"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_srsg7"]
 resource_name = "PhysicsAtlas"
 texture = ExtResource("7_srsg7")
 texture_region_size = Vector2i(32, 32)
@@ -43,9 +43,9 @@ texture_region_size = Vector2i(32, 32)
 2:1/0 = 0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 1.4019737, 16, 1.4019737, 16, 16, -16, 16)
 
-[sub_resource type="TileSet" id="TileSet_5g1yt"]
+[sub_resource type="TileSet" id="TileSet_8jful"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_8jful")
+sources/0 = SubResource("TileSetAtlasSource_srsg7")
 
 [node name="MapInstance2" type="Node2D" unique_id=772960588]
 script = ExtResource("1_84o52")
@@ -159,6 +159,9 @@ limit_top = 0
 limit_right = 2400
 limit_bottom = 540
 
-[node name="PhysicsTileMap" parent="." unique_id=462440174 instance=ExtResource("6_it7xu")]
-tile_map_data = PackedByteArray("AAAKABUAAAAAAAAAAAAKABcAAAAAAAAAAAAMABsAAAAAAAAAAAASABsAAAAAAAAAAAAUABkAAAACAAAAAAAWABgAAAABAAAAAAAYABYAAAADAAAAAAAZABQAAAAAAAAAAAAOABsAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_5g1yt")
+[node name="BgPhysicsTileMap" parent="." unique_id=462440174 instance=ExtResource("6_it7xu")]
+tile_map_data = PackedByteArray("AAAKABUAAAAAAAAAAAAKABcAAAAAAAAAAAAMABsAAAAAAAAAAAAQABsAAAAAAAAAAAASABsAAAAAAAAAAAAUABkAAAACAAAAAAAWABgAAAABAAAAAAAOABsAAAAAAAAAAAAKABsAAAADAAAAAAAIAB0AAAABAAAAAAAGAB8AAAAAAAAAAAAYABYAAAABAAAAAAAaABQAAAABAAAAAAAcABIAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_8jful")
+
+[node name="FgPhysicsTileMap" parent="." unique_id=136582323 instance=ExtResource("6_it7xu")]
+tile_map_data = PackedByteArray("AAAMABsAAAAAAAAAAAANABsAAAAAAAAAAAAOABsAAAAAAAAAAAAPABsAAAAAAAAAAAAQABsAAAAAAAAAAAARABsAAAAAAAAAAAASABsAAAAAAAAAAAATABsAAAAAAAAAAAAUABsAAAAAAAAAAAAVABsAAAAAAAAAAAAWABsAAAAAAAAAAAAXABsAAAAAAAAAAAAYABsAAAAAAAAAAAAZABsAAAAAAAAAAAAaABsAAAAAAAAAAAAbABsAAAAAAAAAAAAcABsAAAAAAAAAAAAdABsAAAAAAAAAAAAeABsAAAAAAAAAAAA=")
