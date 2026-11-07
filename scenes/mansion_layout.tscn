@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" path="res://scenes/rooms/medium_room.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/connectors/door_connector.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://scenes/connectors/ladder_connector.tscn" id="6"]
-[ext_resource type="Texture2D" uid="uid://b126o556cp312" path="res://Assets/smol room template flats.png" id="6_mq0xn"]
-[ext_resource type="Texture2D" uid="uid://je22s17llcn3" path="res://Assets/big room template flat.png" id="7_lb5pn"]
-[ext_resource type="Texture2D" uid="uid://dbxgbre6jbgx4" path="res://Assets/mid room template flat.png" id="8_5mdmh"]
+[ext_resource type="Texture2D" uid="uid://bmrq661yim81x" path="res://Assets/smol room template flats.png" id="6_mq0xn"]
+[ext_resource type="Texture2D" uid="uid://cs576abd2tfso" path="res://Assets/big room template flat.png" id="7_lb5pn"]
+[ext_resource type="Texture2D" uid="uid://13rh6fflbost" path="res://Assets/mid room template flat.png" id="8_5mdmh"]
 [ext_resource type="PackedScene" uid="uid://cm3j2ekshsqqy" path="res://Tileset Physics/PhysicsTileMapFg.tscn" id="9_w1ppb"]
 [ext_resource type="PackedScene" uid="uid://c4f7uddotrubf" path="res://Tileset Physics/PhysicsTileMapBg.tscn" id="10_lb5pn"]
 
