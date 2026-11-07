@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
 	if session == null:
 		return
 	var state := session.get_player_state(source_player_id)
-	position = Vector2(state.position.x, map_instance.get_lane_y(state.plane))
+	position = Vector2(state.position.x, state.position.y)
 	queue_redraw()
 
 func _draw() -> void:
