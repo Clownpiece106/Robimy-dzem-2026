@@ -35,6 +35,7 @@ func _ready():
 			game_root.set("player_dark_ref", self)
 		if player_id == 2:
 			game_root.set("player_light_ref", self)
+	print("player z_index is "+str(z_index))
 
 #Called by game.gd
 func configure(owning_map: Node) -> void:
@@ -65,20 +66,23 @@ func _process(delta: float) -> void:
 	
 	#region Plane switching
 	is_on_stairs = false #check_tile_data()
-	print(current_tilemap_ref)
 	if(!is_on_stairs):
 		if Input.is_action_just_pressed(background_action):
 			plane = DepthPlane.BACKGROUND
 			collision_layer = 1
 			collision_mask = 1
 			z_index = 1
+			print("going bg. z index is "+str(z_index))
+			#sprite.z_index = 1
 			sprite_depth_offset_target = sprite_depth_offset_bg
 			current_tilemap_ref = map_instance.bg_physics_tile_map
 		if Input.is_action_just_pressed(foreground_action):
 			plane = DepthPlane.FOREGROUND
 			collision_layer = 2
 			collision_mask = 2
-			z_index = 2
+			z_index = 3
+			print("going fg. z index is "+str(z_index))
+			#sprite.z_index = 3
 			sprite_depth_offset_target = sprite_depth_offset_fg
 			current_tilemap_ref = map_instance.fg_physics_tile_map
 	sprite_depth_offset = lerp(sprite_depth_offset, sprite_depth_offset_target, 0.2)
@@ -97,6 +101,7 @@ func _process(delta: float) -> void:
 	#endregion
 
 func _physics_process(delta):
+	#print(z_index)
 	var direction := Input.get_axis(left_action, right_action)
 	var next_x: float = position.x + direction * SPEED * delta
 	if map_instance != null and map_instance.has_method("constrain_mansion_movement"):
