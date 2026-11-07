@@ -12,8 +12,16 @@ var player_two_viewport: SubViewport
 
 func configure(game_session: GameSession) -> void:
 	session = game_session
-	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_create_viewports()
+	set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	if has_node("Player1ViewportContainer"):
+		player_one_container = get_node("Player1ViewportContainer")
+		player_two_container = get_node("Player2ViewportContainer")
+		player_one_viewport = player_one_container.get_node("Player1Viewport")
+		player_two_viewport = player_two_container.get_node("Player2Viewport")
+		(player_one_viewport.get_node("MapInstance1") as MapInstance).configure_mansion(session, GameSession.PLAYER_1)
+		(player_two_viewport.get_node("MapInstance2") as MapInstance).configure_mansion(session, GameSession.PLAYER_2)
+	else:
+		_create_viewports()
 	_apply_layout()
 	get_viewport().size_changed.connect(_apply_layout)
 	call_deferred("_apply_layout")
@@ -53,7 +61,7 @@ func _create_viewport(viewport_name: String, player_id: int) -> SubViewport:
 	camera.name = "Player%dCamera" % player_id
 	camera.position = Vector2(640.0, 270.0)
 	camera.limit_left = 0
-	camera.limit_top = 0
+	camera.limit_top = -540
 	camera.limit_right = int(MapInstance.MAP_WIDTH)
 	camera.limit_bottom = 540
 	camera.position_smoothing_enabled = false
@@ -65,6 +73,7 @@ func _create_viewport(viewport_name: String, player_id: int) -> SubViewport:
 func _apply_layout() -> void:
 	if player_one_container == null:
 		return
+	size = get_viewport().get_visible_rect().size
 	if layout == Layout.VERTICAL:
 		_set_rect(player_one_container, 0.0, 0.0, 0.5, 1.0)
 		_set_rect(player_two_container, 0.5, 0.0, 1.0, 1.0)

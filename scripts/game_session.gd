@@ -15,6 +15,26 @@ var player_states: Dictionary = {
 	PLAYER_1: {"position": Vector2(220.0, 0.0), "plane": 1},
 	PLAYER_2: {"position": Vector2(220.0, 0.0), "plane": 1},
 }
+var mansion_doors: Dictionary = {}
+var mansion_door_defaults: Dictionary = {}
+
+func register_mansion_door(id: String, initially_locked: bool) -> void:
+	if not mansion_door_defaults.has(id):
+		mansion_door_defaults[id] = initially_locked
+		mansion_doors[id] = initially_locked
+	elif mansion_door_defaults[id] != initially_locked:
+		push_warning("Conflicting initial state for mansion door %s" % id)
+
+func is_mansion_door_locked(id: String) -> bool:
+	return mansion_doors.get(id, true)
+
+func set_mansion_door_locked(id: String, locked: bool, actor_id: int) -> void:
+	if not mansion_doors.has(id):
+		return
+	mansion_doors[id] = locked
+	print("P%d changed door %s locked=%s" % [actor_id, id, locked])
+	emit_cross_map_event("mansion_door_changed", {"door_id": id, "locked": locked, "source_player": actor_id})
+
 var inventory_slots: Array[Dictionary] = [{}, {}, {}]
 var inventory_actor_id := 0
 var collected_collectible_ids: Dictionary = {}
@@ -68,6 +88,7 @@ func emit_cross_map_event(event_name: String, payload: Dictionary = {}) -> void:
 	cross_map_event.emit(event_name, payload)
 
 func reset() -> void:
+	mansion_doors = mansion_door_defaults.duplicate()
 	player_states[PLAYER_1] = {"position": Vector2(220.0, 0.0), "plane": 1}
 	player_states[PLAYER_2] = {"position": Vector2(220.0, 0.0), "plane": 1}
 	inventory_slots = [{}, {}, {}]

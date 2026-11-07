@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/mansion_room.gd" id="1"]
+
+[node name="big_room" type="Node2D"]
+script = ExtResource("1")
+room_id = "Grand room"
+room_width = 1620.0

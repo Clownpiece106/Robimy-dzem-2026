@@ -4,9 +4,14 @@ extends Node2D
 const PLAYER_DARK_SCENE := preload("res://Players/PlayerDark.tscn")
 const PLAYER_LIGHT_SCENE := preload("res://Players/PlayerLight.tscn")
 
-const MAP_WIDTH := 2400.0
+const MAP_WIDTH := 3240.0
+const MANSION_SCENE := preload("res://scenes/mansion_layout.tscn")
+var mansion: Node2D
+var mansion_rooms: Array[MansionRoom] = []
+var mansion_doors: Array[MansionDoor] = []
 const BACKGROUND_LANE_Y := 260.0
 const FOREGROUND_LANE_Y := 390.0
+const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
 
 @onready var bg_physics_tile_map = $BgPhysicsTileMap
 @onready var fg_physics_tile_map = $FgPhysicsTileMap
@@ -43,6 +48,24 @@ func configure_existing(game_session: GameSession, owning_player_id: int) -> voi
 	camera.enabled = true
 	camera.make_current()
 
+func configure_mansion(game_session: GameSession, owning_player_id: int) -> void:
+	session = game_session
+	local_player_id = owning_player_id
+	_connect_collectible_signals()
+	player = get_node("Player") as CoopPlayer
+	player.configure_for_map(local_player_id, self, session)
+	ghost = get_node("OtherPlayerGhost") as CoopGhost
+	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
+	mansion = get_node("Mansion") as Node2D
+	_configure_layout()
+	camera = get_node("Camera2D") as Camera2D
+	camera.limit_left = -10000000
+	camera.limit_top = -10000000
+	camera.limit_right = 10000000
+	camera.limit_bottom = 10000000
+	camera.enabled = true
+	camera.make_current()
+
 func get_lane_y(plane: int) -> float:
 	return BACKGROUND_LANE_Y if plane == CoopPlayer.DepthPlane.BACKGROUND else FOREGROUND_LANE_Y
 
@@ -60,22 +83,58 @@ func _create_world() -> void:
 	add_child(ghost)
 	ghost.configure(GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2, session, self)
 
-	if local_player_id == GameSession.PLAYER_1:
-		lever = LinkedLever.new()
-		lever.position = Vector2(1050.0, FOREGROUND_LANE_Y)
-		add_child(lever)
-		lever.configure(session)
-	else:
-		lever = LinkedLever.new()
-		lever.name = "Lever"
-		lever.position = Vector2(1050.0, FOREGROUND_LANE_Y)
-		add_child(lever)
-		lever.configure(session)
-		door = LinkedDoor.new()
-		door.position = Vector2(1500.0, FOREGROUND_LANE_Y)
-		add_child(door)
+	mansion = MANSION_SCENE.instantiate()
+	mansion.name = "Mansion"
+	mansion.z_index = -1
+	add_child(mansion)
+	_configure_layout()
+
+func _configure_layout() -> void:
+	mansion_rooms.clear()
+	mansion_doors.clear()
+	_collect_layout_nodes(mansion)
+	for door in mansion_doors:
 		door.configure(session)
-	queue_redraw()
+
+func _collect_layout_nodes(node: Node) -> void:
+	if node is MansionRoom:
+		mansion_rooms.append(node as MansionRoom)
+	if node is MansionDoor:
+		mansion_doors.append(node as MansionDoor)
+	for child in node.get_children():
+		_collect_layout_nodes(child)
+
+func _room_at(point: Vector2) -> MansionRoom:
+	for room in mansion_rooms:
+		if Rect2(to_local(room.global_position), Vector2(room.room_width, ROOM_VIEW_SIZE.y)).has_point(point):
+			return room
+	return null
+
+func constrain_mansion_movement(old_x: float, new_x: float, y: float) -> float:
+	if mansion == null or is_equal_approx(old_x, new_x):
+		return new_x
+	var current := _room_at(Vector2(old_x, y))
+	if current == null:
+		return old_x
+	var room_left := to_local(current.global_position).x
+	var room_right := room_left + current.room_width
+	if new_x >= room_left and new_x < room_right:
+		return new_x
+	var moving_right := new_x > old_x
+	var boundary := room_right if moving_right else room_left
+	var other := _room_at(Vector2(boundary + (0.01 if moving_right else -0.01), y))
+	for door in mansion_doors:
+		var door_pos := to_local(door.global_position)
+		var near_boundary := absf(door_pos.x - boundary) < 1.0 and absf(door_pos.y - y) < 80.0
+		if other != null and near_boundary and door.connects_pair(current, other) and not session.is_mansion_door_locked(door.door_id):
+			return new_x
+	return boundary - 0.01 if moving_right else boundary
+
+func same_mansion_room(a: Vector2, b: Vector2) -> bool:
+	if mansion == null:
+		return true
+	var room := _room_at(a)
+	return room != null and room == _room_at(b)
 
 func set_camera(active_camera: Camera2D) -> void:
 	camera = active_camera
@@ -122,15 +181,28 @@ func spawn_dropped_collectible(collectible_id: String, item: Dictionary, drop_po
 	add_child(collectible)
 
 func _process(_delta: float) -> void:
+	if mansion != null and player != null:
+		for room in mansion_rooms:
+			room.update_visibility(player.global_position, mansion_doors)
 	if camera != null and player != null:
-		camera.position = player.position
+		if mansion != null:
+			_update_mansion_camera()
+		else:
+			camera.position = player.position
 	if session != null and player != null:
 		session.update_player_state(local_player_id, player.position, player.plane)
 
-func _draw() -> void:
-	draw_rect(Rect2(0.0, 0.0, MAP_WIDTH, 540.0), Color("#121827"), true)
-	draw_rect(Rect2(0.0, BACKGROUND_LANE_Y + 18.0, MAP_WIDTH, 6.0), Color("#4a5568"), true)
-	draw_rect(Rect2(0.0, FOREGROUND_LANE_Y + 18.0, MAP_WIDTH, 6.0), Color("#718096"), true)
-	draw_string(ThemeDB.fallback_font, Vector2(40.0, 48.0), "PARALLEL MAP %d" % local_player_id, HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color("#cbd5e0"))
-	draw_string(ThemeDB.fallback_font, Vector2(40.0, BACKGROUND_LANE_Y - 30.0), "BACKGROUND PLANE", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#718096"))
-	draw_string(ThemeDB.fallback_font, Vector2(40.0, FOREGROUND_LANE_Y - 30.0), "FOREGROUND PLANE", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#a0aec0"))
+func _update_mansion_camera() -> void:
+	# Match the logical room dimensions to the actual split viewport size.
+	var viewport_size := Vector2(get_viewport().get_visible_rect().size)
+	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
+		return
+	camera.zoom = viewport_size / ROOM_VIEW_SIZE
+	for room in mansion_rooms:
+		var bounds := Rect2(to_local(room.global_position), Vector2(room.room_width, ROOM_VIEW_SIZE.y))
+		if bounds.has_point(player.position):
+			camera.position = Vector2(
+				clampf(player.position.x, bounds.position.x + ROOM_VIEW_SIZE.x / 2.0, bounds.end.x - ROOM_VIEW_SIZE.x / 2.0),
+				bounds.position.y + ROOM_VIEW_SIZE.y / 2.0
+			)
+			return
