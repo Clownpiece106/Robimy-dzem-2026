@@ -5,14 +5,14 @@ enum DepthPlane { BACKGROUND, FOREGROUND }
 @onready var test_sprite = $TestSprite
 
 const SPEED := 220.0
-const GRV := 0.0
+const GRV := 50.0
 const MAX_VSP := 300.0
 const INTERACT_ACTION := "p%d_interact"
 const DROP_SLOT_ACTION := "inventory_drop_slot_%d"
 @onready var sprite = $Sprite
 var sprite_depth_offset := 0.0
 var sprite_depth_offset_target := 0.0
-var sprite_depth_offset_bg := -8.0
+var sprite_depth_offset_bg := -32.0
 var sprite_depth_offset_fg := 0.0
 var current_tilemap_ref : TileMapLayer
 var is_on_stairs := false

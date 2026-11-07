@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" format=3 uid="uid://cdjw2m0pckx41"]
 
-[ext_resource type="Texture2D" uid="uid://cyob06pk6776m" path="res://Tileset Physics/PhysicsTilesetAlt.png" id="1_axwkk"]
+[ext_resource type="Texture2D" uid="uid://cyob06pk6776m" path="res://Tileset Physics/PhysicsTilesetAlt.png" id="1_w3dkk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8hab"]
 resource_name = "PhysicsAtlas"
-texture = ExtResource("1_axwkk")
+texture = ExtResource("1_w3dkk")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.827568, -16.124332, 16.223257, -15.728644, 16.025412, 15.332956, -16.618946, 15.728645)

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c4f7uddotrubf"]
+
+[ext_resource type="TileSet" uid="uid://djbyx8u2bi5ny" path="res://Tileset Physics/physics_tileset_bg.tres" id="1_ny62n"]
+
+[node name="PhysicsTileMap" type="TileMapLayer" unique_id=462440174]
+tile_set = ExtResource("1_ny62n")
