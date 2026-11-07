@@ -86,11 +86,6 @@ func _process(delta: float) -> void:
 	#endregion
 	
 	#region Interactions
-	var direction := Input.get_axis(left_action, right_action)
-	var next_x := position.x + direction * SPEED * delta
-	if map_instance != null and map_instance.has_method("constrain_mansion_movement"):
-		next_x = map_instance.constrain_mansion_movement(position.x, next_x, position.y)
-	position.x = next_x
 	_process_inventory_drop()
 	if Input.is_action_just_pressed(interact_action) and interaction_sensor != null:
 		var target := interaction_sensor.get_closest_interactable()
@@ -103,7 +98,10 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta):
 	var direction := Input.get_axis(left_action, right_action)
-	velocity.x = direction * SPEED
+	var next_x: float = position.x + direction * SPEED * delta
+	if map_instance != null and map_instance.has_method("constrain_mansion_movement"):
+		next_x = map_instance.constrain_mansion_movement(position.x, next_x, position.y)
+	velocity.x = (next_x - position.x) / delta
 	velocity.y = min(velocity.y+GRV, MAX_VSP)
 	move_and_slide()
 
