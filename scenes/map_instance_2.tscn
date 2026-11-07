@@ -22,6 +22,7 @@ texture_region_size = Vector2i(32, 32)
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, 16, -16, 16, 16)
+1:0/0/custom_data_0 = true
 0:1/0 = 0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.17524719, -16, 16, -16, 16, 16, -0.5257416, 16)
 1:1/0 = 0
@@ -36,8 +37,10 @@ texture_region_size = Vector2i(32, 32)
 3:2/0 = 0
 2:0/0 = 0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, 16, 0, 16, 16, 16, 16)
+2:0/0/custom_data_0 = true
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, -0.87623596, -16, 16, -16, 16, 16)
+3:0/0/custom_data_0 = true
 3:1/0 = 0
 3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, -0.70098877, -16, -1.0514832)
 2:1/0 = 0
@@ -45,6 +48,8 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_8jful"]
 physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "IsStair"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_srsg7")
 
 [node name="MapInstance2" type="Node2D" unique_id=772960588]
@@ -160,8 +165,10 @@ limit_right = 2400
 limit_bottom = 540
 
 [node name="BgPhysicsTileMap" parent="." unique_id=462440174 instance=ExtResource("6_it7xu")]
+self_modulate = Color(1, 1, 1, 0.5019608)
 tile_map_data = PackedByteArray("AAAKABUAAAAAAAAAAAAKABcAAAAAAAAAAAAMABsAAAAAAAAAAAAQABsAAAAAAAAAAAASABsAAAAAAAAAAAAUABkAAAACAAAAAAAWABgAAAABAAAAAAAOABsAAAAAAAAAAAAKABsAAAADAAAAAAAIAB0AAAABAAAAAAAGAB8AAAAAAAAAAAAYABYAAAABAAAAAAAaABQAAAABAAAAAAAcABIAAAABAAAAAAA=")
 tile_set = SubResource("TileSet_8jful")
 
 [node name="FgPhysicsTileMap" parent="." unique_id=136582323 instance=ExtResource("6_it7xu")]
+self_modulate = Color(1, 1, 1, 0.5019608)
 tile_map_data = PackedByteArray("AAAMABsAAAAAAAAAAAANABsAAAAAAAAAAAAOABsAAAAAAAAAAAAPABsAAAAAAAAAAAAQABsAAAAAAAAAAAARABsAAAAAAAAAAAASABsAAAAAAAAAAAATABsAAAAAAAAAAAAUABsAAAAAAAAAAAAVABsAAAAAAAAAAAAWABsAAAAAAAAAAAAXABsAAAAAAAAAAAAYABsAAAAAAAAAAAAZABsAAAAAAAAAAAAaABsAAAAAAAAAAAAbABsAAAAAAAAAAAAcABsAAAAAAAAAAAAdABsAAAAAAAAAAAAeABsAAAAAAAAAAAA=")
