@@ -1,18 +1,31 @@
 [gd_scene format=3 uid="uid://dy075er6h742q"]
 
-[ext_resource type="Script" path="res://scripts/mansion_game.gd" id="mansion_game"]
 [ext_resource type="Script" uid="uid://csa427j33unif" path="res://scripts/game_session.gd" id="1_a75qt"]
 [ext_resource type="Script" uid="uid://bud1eb3sqnykp" path="res://scripts/split_screen_manager.gd" id="2_ox044"]
 [ext_resource type="Script" uid="uid://dwgen5pfslrem" path="res://scripts/map_instance.gd" id="3_f235b"]
 [ext_resource type="PackedScene" uid="uid://bsmss4341f13c" path="res://Players/PlayerDark.tscn" id="3_j27jc"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/big_room.tscn" id="3_nnuyt"]
 [ext_resource type="PackedScene" uid="uid://cbtpv6q65uhu7" path="res://Players/PlayerLight.tscn" id="4_c673k"]
-[ext_resource type="PackedScene" path="res://scenes/mansion_layout.tscn" id="4_nnuyt"]
+[ext_resource type="PackedScene" uid="uid://7oaf5eia4x8l" path="res://scenes/mansion_layout.tscn" id="4_nnuyt"]
+[ext_resource type="PackedScene" path="res://scenes/connectors/door_connector.tscn" id="4_vt647"]
 [ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="6_vt647"]
+[ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
 
 [node name="Game" type="Node2D" unique_id=199296077]
 script = ExtResource("mansion_game")
 
-[node name="MansionLayout" parent="." instance=ExtResource("4_nnuyt")]
+[node name="MansionLayout" parent="." unique_id=569955723 instance=ExtResource("4_nnuyt")]
+
+[node name="SmallRoom(4)" parent="MansionLayout" unique_id=1516342474 instance=ExtResource("3_nnuyt")]
+position = Vector2(-2120, 0)
+room_id = "Small Room (4)"
+room_width = 960.0
+
+[node name="Door(3->4)" parent="MansionLayout" unique_id=2061000891 instance=ExtResource("4_vt647")]
+position = Vector2(-1160, 390)
+door_id = "door_3_4"
+room_a = NodePath("../GrandRoom(3)")
+room_b = NodePath("../SmallRoom(4)")
 
 [node name="GameSession" type="Node" parent="." unique_id=882710083]
 script = ExtResource("1_a75qt")

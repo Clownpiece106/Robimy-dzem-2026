@@ -22,7 +22,21 @@ func connects(room: Node) -> bool:
 	return room != null and (get_node_or_null(room_a) == room or get_node_or_null(room_b) == room)
 
 func connects_pair(a: Node, b: Node) -> bool:
-	return a != b and connects(a) and connects(b)
+	if a == b:
+		return false
+	if connects(a) and connects(b):
+		return true
+	# Keep the connector usable when room nodes were renamed in the layout.
+	# The door is still authoritative by its placement at the shared boundary.
+	var room_a_node := a as MansionRoom
+	var room_b_node := b as MansionRoom
+	if room_a_node == null or room_b_node == null:
+		return false
+	var door_position := global_position
+	var a_rect := Rect2(room_a_node.global_position, Vector2(room_a_node.room_width, 540.0))
+	var b_rect := Rect2(room_b_node.global_position, Vector2(room_b_node.room_width, 540.0))
+	var horizontal_edge := is_equal_approx(a_rect.end.x, b_rect.position.x) or is_equal_approx(b_rect.end.x, a_rect.position.x)
+	return horizontal_edge and absf(door_position.x - (a_rect.end.x if is_equal_approx(a_rect.end.x, b_rect.position.x) else b_rect.end.x)) < 1.0 and door_position.y >= a_rect.position.y and door_position.y <= a_rect.end.y
 
 func interact(player: CoopPlayer) -> void:
 	if session != null and not door_id.is_empty():

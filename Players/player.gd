@@ -29,10 +29,12 @@ var session: GameSession
 var plane: int = DepthPlane.FOREGROUND
 
 func _ready():
-	if(player_id==1):
-		Game.player_dark_ref = self
-	if(player_id==2):
-		Game.player_light_ref = self
+	var game_root := get_node_or_null("/root/Game")
+	if game_root != null:
+		if player_id == 1:
+			game_root.set("player_dark_ref", self)
+		if player_id == 2:
+			game_root.set("player_light_ref", self)
 
 #Called by game.gd
 func configure(owning_map: Node) -> void:

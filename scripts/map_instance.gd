@@ -125,7 +125,8 @@ func constrain_mansion_movement(old_x: float, new_x: float, y: float) -> float:
 	var other := _room_at(Vector2(boundary + (0.01 if moving_right else -0.01), y))
 	for door in mansion_doors:
 		var door_pos := to_local(door.global_position)
-		if other != null and door.connects_pair(current, other) and absf(door_pos.x - boundary) < 1.0 and absf(door_pos.y - y) < 80.0 and not session.is_mansion_door_locked(door.door_id):
+		var near_boundary := absf(door_pos.x - boundary) < 1.0 and absf(door_pos.y - y) < 80.0
+		if other != null and near_boundary and door.connects_pair(current, other) and not session.is_mansion_door_locked(door.door_id):
 			return new_x
 	return boundary - 0.01 if moving_right else boundary
 
