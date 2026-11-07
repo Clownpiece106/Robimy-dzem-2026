@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="" load_steps=5 format=3]
+[gd_resource type="Resource" format=3 uid="uid://by31wqs8uki0"]
 
-[ext_resource type="Script" path="res://scripts/room_backgrounds.gd" id="1"]
-[ext_resource type="Texture2D" path="res://Assets/smol room template flats.png" id="2"]
-[ext_resource type="Texture2D" path="res://Assets/mid room template flat.png" id="3"]
-[ext_resource type="Texture2D" path="res://Assets/big room template flat.png" id="4"]
+[ext_resource type="Script" uid="uid://cmbgkqrqtmkdt" path="res://scripts/room_backgrounds.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://b126o556cp312" path="res://Assets/smol room template flats.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://dbxgbre6jbgx4" path="res://Assets/mid room template flat.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://je22s17llcn3" path="res://Assets/big room template flat.png" id="4"]
 
 [resource]
 script = ExtResource("1")

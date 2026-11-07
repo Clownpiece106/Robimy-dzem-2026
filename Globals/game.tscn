@@ -7,18 +7,32 @@
 [ext_resource type="PackedScene" uid="uid://cbtpv6q65uhu7" path="res://Players/PlayerLight.tscn" id="4_c673k"]
 [ext_resource type="PackedScene" uid="uid://7oaf5eia4x8l" path="res://scenes/mansion_layout.tscn" id="4_nnuyt"]
 [ext_resource type="Texture2D" uid="uid://d4k5fwi5mxpc3" path="res://Assets/dziura sufit.png" id="5_7up5f"]
+[ext_resource type="Texture2D" uid="uid://d4dbnf31yvgs8" path="res://Assets/biurko.png" id="5_al3n7"]
 [ext_resource type="Texture2D" uid="uid://dls10lgf6vjna" path="res://Assets/dziura podloga.png" id="6_1l6p8"]
+[ext_resource type="Texture2D" uid="uid://bbe5p60dg75de" path="res://Assets/krzesło.png" id="6_ccbk5"]
 [ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="6_vt647"]
 [ext_resource type="Texture2D" uid="uid://000nnvl0iff5" path="res://Assets/klapa podloga z.png" id="7_7xlw3"]
+[ext_resource type="Texture2D" uid="uid://c5mk374devoow" path="res://Assets/stoliczek.png" id="7_whacr"]
 [ext_resource type="Texture2D" uid="uid://bee5g40nt4e54" path="res://Assets/klapa sufit z.png" id="8_ylc3w"]
+[ext_resource type="Texture2D" uid="uid://272auy8x6wse" path="res://Assets/piedestał.png" id="8_ylx2x"]
 [ext_resource type="Texture2D" uid="uid://dw2ayl41oott1" path="res://Assets/lustro dlugie.png" id="9_7u5t8"]
 [ext_resource type="PackedScene" uid="uid://dx5km2yqrk0v5" path="res://Map/PlaneObject/PlaneObject.tscn" id="9_f235b"]
+[ext_resource type="Texture2D" uid="uid://cbknmqgh6d4qb" path="res://Assets/zasłona_podwójna_spięta.png" id="9_udc4d"]
+[ext_resource type="Texture2D" uid="uid://bqphf1wxwocum" path="res://Assets/zasłonka_rozwinięta_pojedyncza.png" id="10_3a2vt"]
 [ext_resource type="Texture2D" uid="uid://dlwroymjosfr8" path="res://Assets/pianino.png" id="10_e1wmv"]
+[ext_resource type="Texture2D" uid="uid://bav11y0t6r5ob" path="res://Assets/zasłona_pojedyncza_spięta.png" id="11_jgm13"]
 [ext_resource type="Texture2D" uid="uid://dgtiu8ghhurnp" path="res://Assets/wiatrodzwon.png" id="11_yte8q"]
+[ext_resource type="Texture2D" uid="uid://0gb7q4ha8wbt" path="res://Assets/świecznik_stojący.png" id="12_2slqd"]
 [ext_resource type="Texture2D" uid="uid://c0rkbevt820aj" path="res://Assets/kaluza1.png" id="12_pxf4v"]
 [ext_resource type="Texture2D" uid="uid://3un8byb3m0cg" path="res://Assets/kaluza2.png" id="13_s6srr"]
+[ext_resource type="Texture2D" uid="uid://bqayipadrk7rb" path="res://Assets/świecznik_stołowy.png" id="13_u3wr0"]
+[ext_resource type="Texture2D" uid="uid://bmxru8xosyich" path="res://Assets/świecznik_ścienny_front.png" id="14_4qlxu"]
 [ext_resource type="Texture2D" uid="uid://8ohye0omwdxh" path="res://Assets/kaluza3.png" id="14_isnp7"]
 [ext_resource type="Texture2D" uid="uid://di6x3srlcgkd2" path="res://Assets/credence.png" id="15_j1yss"]
+[ext_resource type="Texture2D" uid="uid://cjiua5oul3plw" path="res://Assets/świecznik_ścienny_boczny.png" id="15_w7ctf"]
+[ext_resource type="Texture2D" uid="uid://fwp0k1ujqv6s" path="res://Assets/toaletka.png" id="16_5a0d7"]
+[ext_resource type="Texture2D" uid="uid://dvwlih5s74xgm" path="res://Assets/lustro_ścienne.png" id="17_6ik8u"]
+[ext_resource type="Texture2D" uid="uid://cy3eirkvyduq6" path="res://Assets/skrzynia.png" id="18_5jhku"]
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
 
 [node name="Game" type="Node2D" unique_id=199296077]
@@ -65,6 +79,184 @@ z_index = 0
 position = Vector2(-1682, 1379)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_7up5f")
+
+[node name="hole8" parent="MansionLayout/PlaneObjectsContainer" unique_id=1888288201 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(1776.9998, 1820)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("5_7up5f")
+
+[node name="desk" parent="MansionLayout/PlaneObjectsContainer" unique_id=641779198 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(165, 1386)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_al3n7")
+plane = 1
+
+[node name="chair" parent="MansionLayout/PlaneObjectsContainer" unique_id=1196570703 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(255.99997, 1636.9999)
+rotation = -1.4957472
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_ccbk5")
+
+[node name="small_table" parent="MansionLayout/PlaneObjectsContainer" unique_id=1803392237 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(1051, 1343)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_whacr")
+plane = 1
+
+[node name="display6" parent="MansionLayout/PlaneObjectsContainer" unique_id=1770912935 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-274.99994, 857.00006)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_ylx2x")
+
+[node name="display0" parent="MansionLayout/PlaneObjectsContainer" unique_id=1502073630 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(1313, -288.99982)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_ylx2x")
+
+[node name="display12" parent="MansionLayout/PlaneObjectsContainer" unique_id=586949831 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(2734, 850.99994)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_ylx2x")
+plane = 1
+
+[node name="display8" parent="MansionLayout/PlaneObjectsContainer" unique_id=1309681954 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(1309, 1419)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_ylx2x")
+plane = 1
+
+[node name="display17" parent="MansionLayout/PlaneObjectsContainer" unique_id=106185499 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(3607, 1928)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_ylx2x")
+
+[node name="display24" parent="MansionLayout/PlaneObjectsContainer" unique_id=1944988514 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(3500, 2472)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_ylx2x")
+
+[node name="curtains_double" parent="MansionLayout/PlaneObjectsContainer" unique_id=314049513 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-304, 1320)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_udc4d")
+plane = 1
+
+[node name="curtains_single_not_pinned" parent="MansionLayout/PlaneObjectsContainer" unique_id=1386973053 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-2182, 1322)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_3a2vt")
+plane = 1
+
+[node name="curtains_single_not_pinned3" parent="MansionLayout/PlaneObjectsContainer" unique_id=1483847933 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(1439, 1829)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("10_3a2vt")
+plane = 1
+
+[node name="curtains_single_not_pinned2" parent="MansionLayout/PlaneObjectsContainer" unique_id=1755376800 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-2428, 1286)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("10_3a2vt")
+
+[node name="curtains_single" parent="MansionLayout/PlaneObjectsContainer" unique_id=1733079531 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(2274, 1275.0001)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("11_jgm13")
+
+[node name="candle holder20" parent="MansionLayout/PlaneObjectsContainer" unique_id=1110754736 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-2175.0002, 1337)
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("12_2slqd")
+
+[node name="candle holder18" parent="MansionLayout/PlaneObjectsContainer" unique_id=1271834070 instance=ExtResource("9_f235b")]
+z_index = 1
+position = Vector2(1185, 1816)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_u3wr0")
+plane = 1
+
+[node name="candle holder12" parent="MansionLayout/PlaneObjectsContainer" unique_id=51412599 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(2815, 1259)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("14_4qlxu")
+plane = 1
+
+[node name="candle holder0" parent="MansionLayout/PlaneObjectsContainer" unique_id=1301748807 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(2743, -371)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("14_4qlxu")
+plane = 1
+
+[node name="candle holder26" parent="MansionLayout/PlaneObjectsContainer" unique_id=271731329 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(3192.0002, 2928)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("12_2slqd")
+plane = 1
+
+[node name="candle holder15" parent="MansionLayout/PlaneObjectsContainer" unique_id=1638823783 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(7037.0005, 1830)
+scale = Vector2(-0.6, 0.6)
+texture = ExtResource("15_w7ctf")
+
+[node name="small_table_2" parent="MansionLayout/PlaneObjectsContainer" unique_id=294052678 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(667, 1830)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_whacr")
+plane = 1
+
+[node name="small_table_3" parent="MansionLayout/PlaneObjectsContainer" unique_id=1080298158 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(1395, 1824)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("16_5a0d7")
+plane = 1
+
+[node name="mirror_short" parent="MansionLayout/PlaneObjectsContainer" unique_id=2018888226 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(33, 1392)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("17_6ik8u")
+
+[node name="chest" parent="MansionLayout/PlaneObjectsContainer" unique_id=333453163 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-304, 1309)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("18_5jhku")
+plane = 1
+
+[node name="chest2" parent="MansionLayout/PlaneObjectsContainer" unique_id=2013527790 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-386, 1415)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("18_5jhku")
+plane = 1
+
+[node name="chest3" parent="MansionLayout/PlaneObjectsContainer" unique_id=1107828277 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(-649, 1360)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("18_5jhku")
 
 [node name="hole7" parent="MansionLayout/PlaneObjectsContainer" unique_id=1924054919 instance=ExtResource("9_f235b")]
 z_index = 0
@@ -141,6 +333,13 @@ texture = ExtResource("8_ylc3w")
 [node name="mirror_long" parent="MansionLayout/PlaneObjectsContainer" unique_id=1887773404 instance=ExtResource("9_f235b")]
 z_index = 0
 position = Vector2(3087.0002, 1950.0001)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("9_7u5t8")
+plane = 1
+
+[node name="mirror_long2" parent="MansionLayout/PlaneObjectsContainer" unique_id=1931214031 instance=ExtResource("9_f235b")]
+z_index = 0
+position = Vector2(2373, 1386.0001)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("9_7u5t8")
 plane = 1
