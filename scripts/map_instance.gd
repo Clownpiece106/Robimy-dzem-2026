@@ -9,6 +9,7 @@ const MANSION_SCENE := preload("res://scenes/mansion_layout.tscn")
 var mansion: Node2D
 const BACKGROUND_LANE_Y := 260.0
 const FOREGROUND_LANE_Y := 390.0
+const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
 
 @onready var bg_physics_tile_map = $BgPhysicsTileMap
 @onready var fg_physics_tile_map = $FgPhysicsTileMap
@@ -160,6 +161,24 @@ func _process(_delta: float) -> void:
 		for room in mansion.get_children():
 			room.update_visibility(player.global_position)
 	if camera != null and player != null:
-		camera.position = player.position
+		if mansion != null:
+			_update_mansion_camera()
+		else:
+			camera.position = player.position
 	if session != null and player != null:
 		session.update_player_state(local_player_id, player.position, player.plane)
+
+func _update_mansion_camera() -> void:
+	# Match the logical room dimensions to the actual split viewport size.
+	var viewport_size := Vector2(get_viewport().get_visible_rect().size)
+	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
+		return
+	camera.zoom = viewport_size / ROOM_VIEW_SIZE
+	for room in mansion.get_children():
+		var bounds := Rect2(room.position, Vector2(room.room_width, ROOM_VIEW_SIZE.y))
+		if bounds.has_point(player.position):
+			camera.position = Vector2(
+				clampf(player.position.x, bounds.position.x + ROOM_VIEW_SIZE.x / 2.0, bounds.end.x - ROOM_VIEW_SIZE.x / 2.0),
+				bounds.position.y + ROOM_VIEW_SIZE.y / 2.0
+			)
+			return
