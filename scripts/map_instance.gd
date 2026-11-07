@@ -1,6 +1,9 @@
 class_name MapInstance
 extends Node2D
 
+const PLAYER_DARK_SCENE := preload("res://Players/PlayerDark.tscn")
+const PLAYER_LIGHT_SCENE := preload("res://Players/PlayerLight.tscn")
+
 const MAP_WIDTH := 2400.0
 const BACKGROUND_LANE_Y := 260.0
 const FOREGROUND_LANE_Y := 390.0
@@ -18,14 +21,32 @@ func configure(game_session: GameSession, owning_player_id: int) -> void:
 	local_player_id = owning_player_id
 	_create_world()
 
+func configure_existing(game_session: GameSession, owning_player_id: int) -> void:
+	session = game_session
+	local_player_id = owning_player_id
+	player = get_node("Player") as CoopPlayer
+	player.configure_for_map(local_player_id, self)
+	ghost = get_node("OtherPlayerGhost") as CoopGhost
+	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
+	lever = get_node("Lever") as LinkedLever
+	lever.configure(session)
+	door = get_node("Door") as LinkedDoor
+	door.configure(session)
+	camera = get_node("Camera2D") as Camera2D
+	camera.enabled = true
+	camera.make_current()
+
 func get_lane_y(plane: int) -> float:
 	return BACKGROUND_LANE_Y if plane == CoopPlayer.DepthPlane.BACKGROUND else FOREGROUND_LANE_Y
 
 func _create_world() -> void:
-	player = CoopPlayer.new()
+	var player_scene: PackedScene = PLAYER_DARK_SCENE if local_player_id == GameSession.PLAYER_1 else PLAYER_LIGHT_SCENE
+	player = player_scene.instantiate() as CoopPlayer
 	player.name = "Player%d" % local_player_id
+	player.player_id = local_player_id
+	player.position = Vector2(220.0, FOREGROUND_LANE_Y)
 	add_child(player)
-	player.configure(local_player_id, session, self)
+	player.configure_for_map(local_player_id, self)
 
 	ghost = CoopGhost.new()
 	ghost.name = "Player%dGhost" % (GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2)
@@ -38,6 +59,11 @@ func _create_world() -> void:
 		add_child(lever)
 		lever.configure(session)
 	else:
+		lever = LinkedLever.new()
+		lever.name = "Lever"
+		lever.position = Vector2(1050.0, FOREGROUND_LANE_Y)
+		add_child(lever)
+		lever.configure(session)
 		door = LinkedDoor.new()
 		door.position = Vector2(1500.0, FOREGROUND_LANE_Y)
 		add_child(door)
@@ -50,6 +76,8 @@ func set_camera(active_camera: Camera2D) -> void:
 func _process(_delta: float) -> void:
 	if camera != null and player != null:
 		camera.position = player.position
+	if session != null and player != null:
+		session.update_player_state(local_player_id, player.position, player.plane)
 
 func _draw() -> void:
 	draw_rect(Rect2(0.0, 0.0, MAP_WIDTH, 540.0), Color("#121827"), true)

@@ -16,6 +16,7 @@ func configure(game_session: GameSession) -> void:
 	_create_viewports()
 	_apply_layout()
 	get_viewport().size_changed.connect(_apply_layout)
+	call_deferred("_apply_layout")
 
 func set_layout(next_layout: Layout) -> void:
 	layout = next_layout
@@ -35,7 +36,7 @@ func _create_viewports() -> void:
 func _create_container(container_name: String) -> SubViewportContainer:
 	var container := SubViewportContainer.new()
 	container.name = container_name
-	container.stretch = true
+	container.stretch = false
 	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return container
 
@@ -70,8 +71,8 @@ func _apply_layout() -> void:
 	else:
 		_set_rect(player_one_container, 0.0, 0.0, 1.0, 0.5)
 		_set_rect(player_two_container, 0.0, 0.5, 1.0, 1.0)
-	var size := get_viewport_rect().size
-	player_one_viewport.size = Vector2i(maxi(1, int(size.x * (0.5 if layout == Layout.VERTICAL else 1.0))), max(1, int(size.y * (1.0 if layout == Layout.VERTICAL else 0.5))))
+	var viewport_size := get_viewport().get_visible_rect().size
+	player_one_viewport.size = Vector2i(maxi(1, int(viewport_size.x * (0.5 if layout == Layout.VERTICAL else 1.0))), max(1, int(viewport_size.y * (1.0 if layout == Layout.VERTICAL else 0.5))))
 	player_two_viewport.size = player_one_viewport.size
 
 func _set_rect(control: Control, left: float, top: float, right: float, bottom: float) -> void:

@@ -10,5 +10,7 @@ func _process(delta):
 		post_ready_fired = true
 
 func post_ready():
-	player_dark_ref.configure(self)
-	player_light_ref.configure(self)
+	if player_dark_ref != null and player_dark_ref.map_instance == null:
+		player_dark_ref.configure(self)
+	if player_light_ref != null and player_light_ref.map_instance == null:
+		player_light_ref.configure(self)

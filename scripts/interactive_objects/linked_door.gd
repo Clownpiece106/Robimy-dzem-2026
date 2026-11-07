@@ -12,9 +12,10 @@ func _on_session_reset() -> void:
 	open = false
 	queue_redraw()
 
-func _on_cross_map_event(event_name: String, _payload: Dictionary) -> void:
+func _on_cross_map_event(event_name: String, payload: Dictionary) -> void:
 	if event_name == "lever_a_opened":
 		open = true
+		print("Linked door opened by player %d" % payload.get("source_player", 0))
 		queue_redraw()
 
 func _draw() -> void:
