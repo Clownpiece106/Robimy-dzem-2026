@@ -6,9 +6,11 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dnjbm"]
 
 [node name="PlayerLight" type="CharacterBody2D" unique_id=1610304169]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_ryju4")
 
-[node name="LightSprite" type="Sprite2D" parent="." unique_id=1055661282]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1055661282]
 texture = ExtResource("2_4o6vt")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=119330295]
