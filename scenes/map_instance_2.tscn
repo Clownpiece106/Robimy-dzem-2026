@@ -1,0 +1,164 @@
+[gd_scene format=4 uid="uid://i02kohnf6l4"]
+
+[ext_resource type="Script" uid="uid://dwgen5pfslrem" path="res://scripts/map_instance.gd" id="1_84o52"]
+[ext_resource type="PackedScene" uid="uid://cbtpv6q65uhu7" path="res://Players/PlayerLight.tscn" id="2_it7xu"]
+[ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="3_srsg7"]
+[ext_resource type="Script" uid="uid://dj7efh5u0c70q" path="res://scripts/interactive_objects/collectible_item.gd" id="4_8jful"]
+[ext_resource type="Script" uid="uid://cny1mh1khhxqm" path="res://scripts/interactive_objects/linked_door.gd" id="5_5g1yt"]
+[ext_resource type="PackedScene" path="res://Tileset Physics/PhysicsTileMap.tscn" id="6_it7xu"]
+[ext_resource type="Texture2D" path="res://Tileset Physics/PhysicsTileset.png" id="7_srsg7"]
+
+[sub_resource type="CircleShape2D" id="object_shape"]
+radius = 38.0
+
+[sub_resource type="RectangleShape2D" id="door_shape"]
+size = Vector2(80, 120)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8jful"]
+resource_name = "PhysicsAtlas"
+texture = ExtResource("7_srsg7")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, 16, -16, 16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.17524719, -16, 16, -16, 16, 16, -0.5257416, 16)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 0.87623596, -16, 0.5257416, 16, -16, 16)
+1:2/0 = 0
+2:2/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+0:2/0 = 0
+0:3/0 = 0
+3:3/0 = 0
+3:2/0 = 0
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, 16, 0, 16, 16, 16, 16)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 16, -0.87623596, -16, 16, -16, 16, 16)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, -0.70098877, -16, -1.0514832)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 1.4019737, 16, 1.4019737, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_5g1yt"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_8jful")
+
+[node name="MapInstance2" type="Node2D" unique_id=772960588]
+script = ExtResource("1_84o52")
+
+[node name="Background" type="Polygon2D" parent="." unique_id=1502024215]
+color = Color(0.0705882, 0.0941176, 0.152941, 1)
+polygon = PackedVector2Array(0, 0, 2400, 0, 2400, 540, 0, 540)
+
+[node name="Floor" type="Polygon2D" parent="." unique_id=895777168]
+color = Color(0.443137, 0.501961, 0.564706, 1)
+polygon = PackedVector2Array(0, 408, 2400, 408, 2400, 420, 0, 420)
+
+[node name="Player" parent="." unique_id=1063871248 instance=ExtResource("2_it7xu")]
+position = Vector2(220, 390)
+player_id = 2
+
+[node name="OtherPlayerGhost" type="Node2D" parent="." unique_id=286940350]
+position = Vector2(220, 390)
+script = ExtResource("3_srsg7")
+
+[node name="Key" type="Node2D" parent="." unique_id=120608500]
+position = Vector2(430, 390)
+script = ExtResource("4_8jful")
+item_kind = "key"
+item_label = "Key"
+shared_object_id = "key_1"
+
+[node name="Visual" type="Polygon2D" parent="Key" unique_id=794004261]
+color = Color(0.95, 0.8, 0.28, 1)
+polygon = PackedVector2Array(-30, -8, 6, -8, 6, -18, 24, -18, 24, -4, 8, -4, 8, 8, -30, 8)
+
+[node name="Label" type="Label" parent="Key" unique_id=1346334784]
+offset_left = -55.0
+offset_top = 8.0
+offset_right = 55.0
+offset_bottom = 30.0
+text = "KEY"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="Key" unique_id=198004652]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Key/InteractionArea" unique_id=1397116836]
+shape = SubResource("object_shape")
+
+[node name="MusicBox" type="Node2D" parent="." unique_id=1213139141]
+position = Vector2(800, 390)
+script = ExtResource("4_8jful")
+item_kind = "music_box"
+item_label = "Music box"
+shared_object_id = "music_box_1"
+
+[node name="Visual" type="Polygon2D" parent="MusicBox" unique_id=1134474576]
+color = Color(0.31, 0.72, 0.85, 1)
+polygon = PackedVector2Array(-24, -44, 24, -44, 24, 0, -24, 0)
+
+[node name="Label" type="Label" parent="MusicBox" unique_id=794184495]
+offset_left = -55.0
+offset_top = 8.0
+offset_right = 55.0
+offset_bottom = 30.0
+text = "MUSIC BOX"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="MusicBox" unique_id=1358024956]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MusicBox/InteractionArea" unique_id=599730535]
+shape = SubResource("object_shape")
+
+[node name="Candle" type="Node2D" parent="." unique_id=41364874]
+position = Vector2(1100, 390)
+script = ExtResource("4_8jful")
+item_kind = "candle"
+item_label = "Candle"
+shared_object_id = "candle_1"
+
+[node name="Visual" type="Polygon2D" parent="Candle" unique_id=114588919]
+color = Color(0.96, 0.68, 0.33, 1)
+polygon = PackedVector2Array(-14, -50, 14, -50, 14, 0, -14, 0)
+
+[node name="Label" type="Label" parent="Candle" unique_id=222984613]
+offset_left = -45.0
+offset_top = 8.0
+offset_right = 45.0
+offset_bottom = 30.0
+text = "CANDLE"
+horizontal_alignment = 1
+
+[node name="InteractionArea" type="Area2D" parent="Candle" unique_id=493401047]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candle/InteractionArea" unique_id=205643175]
+shape = SubResource("object_shape")
+
+[node name="Door" type="Node2D" parent="." unique_id=1168308003]
+position = Vector2(1500, 390)
+script = ExtResource("5_5g1yt")
+
+[node name="InteractionArea" type="Area2D" parent="Door" unique_id=1527513400]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door/InteractionArea" unique_id=16133991]
+shape = SubResource("door_shape")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1913669624]
+position = Vector2(480, 270)
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 2400
+limit_bottom = 540
+
+[node name="PhysicsTileMap" parent="." unique_id=462440174 instance=ExtResource("6_it7xu")]
+tile_map_data = PackedByteArray("AAAKABUAAAAAAAAAAAAKABcAAAAAAAAAAAAMABsAAAAAAAAAAAASABsAAAAAAAAAAAAUABkAAAACAAAAAAAWABgAAAABAAAAAAAYABYAAAADAAAAAAAZABQAAAAAAAAAAAAOABsAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_5g1yt")
