@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="3_srsg7"]
 [ext_resource type="Script" uid="uid://dj7efh5u0c70q" path="res://scripts/interactive_objects/collectible_item.gd" id="4_8jful"]
 [ext_resource type="Script" uid="uid://cny1mh1khhxqm" path="res://scripts/interactive_objects/linked_door.gd" id="5_5g1yt"]
-[ext_resource type="PackedScene" uid="uid://cm3j2ekshsqqy" path="res://Tileset Physics/PhysicsTileMap.tscn" id="6_it7xu"]
+[ext_resource type="PackedScene" uid="uid://cm3j2ekshsqqy" path="res://Tileset Physics/PhysicsTileMapFg.tscn" id="6_it7xu"]
 [ext_resource type="Texture2D" uid="uid://b81cl8143h5gj" path="res://Tileset Physics/PhysicsTileset.png" id="7_srsg7"]
 
 [sub_resource type="CircleShape2D" id="object_shape"]
