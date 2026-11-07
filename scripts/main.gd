@@ -4,7 +4,6 @@ var session: GameSession
 var split_screen: SplitScreenManager
 
 func _ready() -> void:
-	InputSetup.configure()
 	session = GameSession.new()
 	session.name = "GameSession"
 	add_child(session)
