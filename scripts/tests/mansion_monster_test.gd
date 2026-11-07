@@ -63,6 +63,16 @@ func check() -> void:
 	map.player.global_position = Vector2(2000, 390)
 	monster._physics_process(0.1)
 	assert(monster.state == MansionMonster.State.SEARCH)
+	for initial in [GameSession.MansionDoorState.OPEN, GameSession.MansionDoorState.CLOSED, GameSession.MansionDoorState.LOCKED]:
+		var test_door: MansionDoor = load("res://scenes/connectors/door_connector.tscn").instantiate()
+		test_door.door_id = "initial_state_%d" % initial
+		test_door.initial_state = initial
+		map.mansion.add_child(test_door)
+		test_door.configure(session)
+		assert(session.get_mansion_door_state(test_door.door_id) == initial)
+		session.set_mansion_door_state(test_door.door_id, (initial + 1) % 3, 1)
+		session.reset()
+		assert(session.get_mansion_door_state(test_door.door_id) == initial)
 	print("PASS: monster navigation, shared doors, holes and capture")
 	quit()
 

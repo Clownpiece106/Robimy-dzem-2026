@@ -20,8 +20,10 @@ var mansion_door_defaults: Dictionary = {}
 
 enum MansionDoorState { OPEN, CLOSED, LOCKED }
 
-func register_mansion_door(id: String, initially_locked: bool) -> void:
-	var initial_state := MansionDoorState.LOCKED if initially_locked else MansionDoorState.OPEN
+func register_mansion_door(id: String, initial_state: int) -> void:
+	if initial_state < MansionDoorState.OPEN or initial_state > MansionDoorState.LOCKED:
+		push_warning("Invalid initial state for mansion door %s" % id)
+		return
 	if not mansion_door_defaults.has(id):
 		mansion_door_defaults[id] = initial_state
 		mansion_doors[id] = initial_state

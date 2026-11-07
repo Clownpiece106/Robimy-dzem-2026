@@ -3,7 +3,10 @@ class_name MansionDoor
 extends Interactable
 
 @export var door_id := ""
-@export var initially_locked := true
+@export_enum("Open", "Closed", "Locked") var initial_state: int = GameSession.MansionDoorState.LOCKED:
+	set(value):
+		initial_state = value
+		queue_redraw()
 @export var room_a: NodePath
 @export var room_b: NodePath
 var session: GameSession
@@ -13,7 +16,7 @@ func configure(s: GameSession) -> void:
 	if door_id.is_empty():
 		push_warning("Mansion door %s needs a unique door_id" % get_path())
 		return
-	session.register_mansion_door(door_id, initially_locked)
+	session.register_mansion_door(door_id, initial_state)
 	session.cross_map_event.connect(_on_event)
 	session.session_reset.connect(queue_redraw)
 	queue_redraw()
@@ -56,7 +59,7 @@ func _on_event(event_name: String, payload: Dictionary) -> void:
 		queue_redraw()
 
 func _draw() -> void:
-	var state := GameSession.MansionDoorState.LOCKED if initially_locked else GameSession.MansionDoorState.OPEN
+	var state := initial_state
 	if session != null:
 		state = session.get_mansion_door_state(door_id)
 	var colors := [Color("#79a887"), Color("#b28b5a"), Color("#a05d60")]

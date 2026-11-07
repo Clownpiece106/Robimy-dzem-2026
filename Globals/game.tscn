@@ -63,6 +63,7 @@ render_target_update_mode = 4
 
 [node name="MapInstance1" type="Node2D" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport" unique_id=1957489906]
 script = ExtResource("3_f235b")
+debug_follow_monster = true
 
 [node name="Mansion" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1778446873 instance=ExtResource("4_nnuyt")]
 z_index = -1
@@ -96,6 +97,7 @@ render_target_update_mode = 4
 
 [node name="MapInstance2" type="Node2D" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport" unique_id=260512688]
 script = ExtResource("3_f235b")
+debug_follow_monster = true
 
 [node name="Mansion" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=302947136 instance=ExtResource("4_nnuyt")]
 z_index = -1

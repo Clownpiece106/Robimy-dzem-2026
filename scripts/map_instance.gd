@@ -1,6 +1,8 @@
 class_name MapInstance
 extends Node2D
 
+@export var debug_follow_monster := false
+
 const PLAYER_DARK_SCENE := preload("res://Players/PlayerDark.tscn")
 const PLAYER_LIGHT_SCENE := preload("res://Players/PlayerLight.tscn")
 const INVERT_ENVIRONMENT := preload("res://shaders/invert_environment.tres")
@@ -224,11 +226,15 @@ func _update_mansion_camera() -> void:
 	if viewport_size.x <= 0.0 or viewport_size.y <= 0.0:
 		return
 	camera.zoom = viewport_size / ROOM_VIEW_SIZE
+	var camera_target := player.position
+	var monster := mansion.get_node_or_null("Monster") as MansionMonster
+	if debug_follow_monster and monster != null:
+		camera_target = to_local(monster.global_position)
 	for room in mansion_rooms:
 		var bounds := Rect2(to_local(room.global_position), Vector2(room.room_width, ROOM_VIEW_SIZE.y))
-		if bounds.has_point(player.position):
+		if bounds.has_point(camera_target):
 			camera.position = Vector2(
-				clampf(player.position.x, bounds.position.x + ROOM_VIEW_SIZE.x / 2.0, bounds.end.x - ROOM_VIEW_SIZE.x / 2.0),
+				clampf(camera_target.x, bounds.position.x + ROOM_VIEW_SIZE.x / 2.0, bounds.end.x - ROOM_VIEW_SIZE.x / 2.0),
 				bounds.position.y + ROOM_VIEW_SIZE.y / 2.0
 			)
 			return

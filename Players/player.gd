@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 	
 	#region Plane switching
 	is_on_stairs = false #check_tile_data()
-	print(current_tilemap_ref)
+	#print(current_tilemap_ref)
 	if(!is_on_stairs):
 		if Input.is_action_just_pressed(background_action):
 			plane = DepthPlane.BACKGROUND
