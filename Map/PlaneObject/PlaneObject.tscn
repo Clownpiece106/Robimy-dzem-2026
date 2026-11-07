@@ -8,6 +8,7 @@
 z_index = -1
 z_as_relative = false
 script = ExtResource("1_hm8o8")
+plane = 0
 
 [node name="Area2D" type="Area2D" parent="." unique_id=544332896]
 
