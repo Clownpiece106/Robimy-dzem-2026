@@ -13,6 +13,7 @@ var mansion_doors: Array[MansionDoor] = []
 const BACKGROUND_LANE_Y := 260.0
 const FOREGROUND_LANE_Y := 390.0
 const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
+const ATTIC_START_POSITION := Vector2(1800.0, -150.0)
 
 @onready var bg_physics_tile_map = $BgPhysicsTileMap
 @onready var fg_physics_tile_map = $FgPhysicsTileMap
@@ -55,6 +56,7 @@ func configure_mansion(game_session: GameSession, owning_player_id: int) -> void
 	local_player_id = owning_player_id
 	_connect_collectible_signals()
 	player = get_node("Player") as CoopPlayer
+	player.position = ATTIC_START_POSITION
 	player.configure_for_map(local_player_id, self, session)
 	ghost = get_node("OtherPlayerGhost") as CoopGhost
 	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)

@@ -42,14 +42,14 @@ z_index = -1
 
 [node name="Player" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1143176339 instance=ExtResource("dark")]
 z_index = 1
-position = Vector2(220, 390)
+position = Vector2(1800, -150)
 player_id = 1
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=493380077]
 script = ExtResource("ghost")
 
 [node name="Camera2D" type="Camera2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1763325501]
-position = Vector2(220, 390)
+position = Vector2(1800, -150)
 limit_left = 0
 limit_top = -540
 limit_right = 3240
@@ -75,14 +75,14 @@ z_index = -1
 
 [node name="Player" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=320048057 instance=ExtResource("light")]
 z_index = 1
-position = Vector2(220, 390)
+position = Vector2(1800, -150)
 player_id = 2
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1806265657]
 script = ExtResource("ghost")
 
 [node name="Camera2D" type="Camera2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=171244639]
-position = Vector2(220, 390)
+position = Vector2(1800, -150)
 limit_left = 0
 limit_top = -540
 limit_right = 3240

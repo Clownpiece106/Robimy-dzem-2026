@@ -69,7 +69,7 @@ z_index = -1
 
 [node name="Player" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=499025125 instance=ExtResource("3_j27jc")]
 z_index = 1
-position = Vector2(204, 978)
+position = Vector2(1800, -150)
 player_id = 1
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=812873534]
@@ -102,7 +102,7 @@ z_index = -1
 
 [node name="Player" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1063871248 instance=ExtResource("4_c673k")]
 z_index = 1
-position = Vector2(220, 390)
+position = Vector2(1800, -150)
 player_id = 2
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1634118180]
