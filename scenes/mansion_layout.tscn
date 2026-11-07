@@ -192,3 +192,75 @@ room_width = 1920.0
 position = Vector2(4283, 2699)
 room_id = "Small Room (27)"
 room_width = 960.0
+
+[node name="Door(7->20)" parent="." unique_id=1752691898 instance=ExtResource("5")]
+position = Vector2(-1160, 1437)
+door_id = "door_7_20"
+room_a = NodePath("../MediumRoom(7)")
+room_b = NodePath("../MediumRoom(20)")
+
+[node name="Door(7->8)" parent="." unique_id=715724885 instance=ExtResource("5")]
+position = Vector2(760, 1437)
+door_id = "door_7_8"
+room_a = NodePath("../MediumRoom(7)")
+room_b = NodePath("../GrandRoom(8)")
+
+[node name="Door(8->9)" parent="." unique_id=1637922177 instance=ExtResource("5")]
+position = Vector2(3319, 1437)
+door_id = "door_8_9"
+room_a = NodePath("../GrandRoom(8)")
+room_b = NodePath("../SmallRoom(9)")
+
+[node name="Door(8->9)2" parent="." unique_id=1197485567 instance=ExtResource("5")]
+position = Vector2(4283, 1437)
+door_id = "door_9_10"
+room_a = NodePath("../SmallRoom(9)")
+room_b = NodePath("../SmallRoom(10)")
+
+[node name="Door(18-19)" parent="." unique_id=1835526635 instance=ExtResource("5")]
+position = Vector2(-199, 1986)
+door_id = "door_18_19"
+room_a = NodePath("../GrandRoom(18)")
+room_b = NodePath("../SmallRoom(19)")
+
+[node name="Door(18-17)" parent="." unique_id=767194055 instance=ExtResource("5")]
+position = Vector2(2360, 1986)
+door_id = "door_18_17"
+room_a = NodePath("../GrandRoom(18)")
+room_b = NodePath("../GrandRoom(17)")
+
+[node name="Door(17-16)" parent="." unique_id=1971614695 instance=ExtResource("5")]
+position = Vector2(4907, 1986)
+door_id = "door_17_16"
+room_a = NodePath("../GrandRoom(17)")
+room_b = NodePath("../MediumRoom(16)")
+
+[node name="Door(16-15)" parent="." unique_id=1609482540 instance=ExtResource("5")]
+position = Vector2(6824, 1986)
+door_id = "door_16_15"
+room_a = NodePath("../MediumRoom(16)")
+room_b = NodePath("../SmallRoom(15)")
+
+[node name="Door(22-23)" parent="." unique_id=928516491 instance=ExtResource("5")]
+position = Vector2(2360, 2514)
+door_id = "door_22_23"
+room_a = NodePath("../SmallRoom(22)")
+room_b = NodePath("../MediumRoom(23)")
+
+[node name="Door(22-24)" parent="." unique_id=374990970 instance=ExtResource("5")]
+position = Vector2(3319, 2514)
+door_id = "door_22_24"
+room_a = NodePath("../SmallRoom(22)")
+room_b = NodePath("../MediumRoom(24)")
+
+[node name="Door(24-25)" parent="." unique_id=1156024092 instance=ExtResource("5")]
+position = Vector2(5237, 2514)
+door_id = "door_24_25"
+room_a = NodePath("../SmallRoom(25)")
+room_b = NodePath("../MediumRoom(24)")
+
+[node name="Door(26-27)" parent="." unique_id=1676644975 instance=ExtResource("5")]
+position = Vector2(4283, 3045)
+door_id = "door_26_27"
+room_a = NodePath("../SmallRoom(25)")
+room_b = NodePath("../MediumRoom(24)")
