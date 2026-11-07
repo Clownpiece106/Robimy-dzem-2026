@@ -19,7 +19,7 @@ func configure(game_session: GameSession, owning_player_id: int) -> void:
 	_create_world()
 
 func get_lane_y(plane: int) -> float:
-	return BACKGROUND_LANE_Y if plane == CoopPlayer.Plane.BACKGROUND else FOREGROUND_LANE_Y
+	return BACKGROUND_LANE_Y if plane == CoopPlayer.DepthPlane.BACKGROUND else FOREGROUND_LANE_Y
 
 func _create_world() -> void:
 	player = CoopPlayer.new()

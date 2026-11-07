@@ -1,7 +1,7 @@
 class_name CoopPlayer
 extends Node2D
 
-enum Plane { BACKGROUND, FOREGROUND }
+enum DepthPlane { BACKGROUND, FOREGROUND }
 
 const SPEED := 220.0
 const MAP_LEFT := 80.0
@@ -14,7 +14,7 @@ var left_action: String
 var right_action: String
 var background_action: String
 var foreground_action: String
-var plane: int = Plane.FOREGROUND
+var plane: int = DepthPlane.FOREGROUND
 
 func configure(id: int, game_session: GameSession, owning_map: Node) -> void:
 	player_id = id
@@ -30,7 +30,7 @@ func configure(id: int, game_session: GameSession, owning_map: Node) -> void:
 	queue_redraw()
 
 func _on_session_reset() -> void:
-	plane = Plane.FOREGROUND
+	plane = DepthPlane.FOREGROUND
 	position = Vector2(220.0, map_instance.get_lane_y(plane))
 	session.update_player_state(player_id, position, plane)
 	queue_redraw()
@@ -42,9 +42,9 @@ func _process(delta: float) -> void:
 	var direction := Input.get_axis(left_action, right_action)
 	position.x = clampf(position.x + direction * SPEED * delta, MAP_LEFT, MAP_RIGHT)
 	if Input.is_action_just_pressed(background_action):
-		plane = Plane.BACKGROUND
+		plane = DepthPlane.BACKGROUND
 	if Input.is_action_just_pressed(foreground_action):
-		plane = Plane.FOREGROUND
+		plane = DepthPlane.FOREGROUND
 	position.y = map_instance.get_lane_y(plane)
 	session.update_player_state(player_id, position, plane)
 	queue_redraw()
