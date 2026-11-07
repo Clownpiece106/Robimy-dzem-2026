@@ -4,7 +4,7 @@ extends CharacterBody2D
 enum DepthPlane { BACKGROUND, FOREGROUND }
 @onready var test_sprite = $TestSprite
 
-const SPEED := 220.0
+const SPEED := 420.0
 const GRV := 50.0
 const MAX_VSP := 300.0
 const INTERACT_ACTION := "p%d_interact"
