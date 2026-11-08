@@ -69,7 +69,7 @@ offset_right = 620.0
 offset_bottom = 210.0
 theme_override_colors/font_color = Color(0.886275, 0.909804, 0.941176, 1)
 theme_override_font_sizes/font_size = 16
-text = "SHARED INVENTORY  [6] Empty   [7] Empty   [8] Empty"
+text = "SHARED INVENTORY\n[6] Empty   [7] Empty   [8] Empty"
 script = ExtResource("5_inventory")
 
 [node name="SplitSeparator" type="ColorRect" parent="Instructions" unique_id=2096509968]
