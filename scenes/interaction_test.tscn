@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://csa427j33unif" path="res://scripts/game_session.gd" id="2_session"]
 [ext_resource type="PackedScene" uid="uid://ct7ffxk7u3vix" path="res://Map/map_instance_1.tscn" id="3_rptuy"]
 [ext_resource type="PackedScene" uid="uid://7cpgts3riqmj" path="res://scenes/map_instance_2.tscn" id="4_xvjjl"]
+[ext_resource type="Script" path="res://scripts/shared_inventory_label.gd" id="5_inventory"]
 
 [node name="InteractionTest" type="Node2D" unique_id=2008589841]
 script = ExtResource("1_root")
@@ -69,6 +70,7 @@ offset_bottom = 210.0
 theme_override_colors/font_color = Color(0.886275, 0.909804, 0.941176, 1)
 theme_override_font_sizes/font_size = 16
 text = "SHARED INVENTORY  [6] Empty   [7] Empty   [8] Empty"
+script = ExtResource("5_inventory")
 
 [node name="SplitSeparator" type="ColorRect" parent="Instructions" unique_id=2096509968]
 offset_left = 958.0

@@ -5,17 +5,14 @@ const PLAYER_DARK_SCENE := preload("res://Players/PlayerDark.tscn")
 const PLAYER_LIGHT_SCENE := preload("res://Players/PlayerLight.tscn")
 const INVERT_ENVIRONMENT := preload("res://shaders/invert_environment.tres")
 
-const MAP_WIDTH := 3240.0
 const MANSION_SCENE := preload("res://scenes/mansion_layout.tscn")
 var mansion: Node2D
 var mansion_rooms: Array[MansionRoom] = []
 var mansion_doors: Array[MansionDoor] = []
-const BACKGROUND_LANE_Y := 260.0
-const FOREGROUND_LANE_Y := 390.0
 const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
 
-@onready var bg_physics_tile_map = $BgPhysicsTileMap
-@onready var fg_physics_tile_map = $FgPhysicsTileMap
+@onready var bg_physics_tile_map := get_node_or_null("BgPhysicsTileMap") as TileMapLayer
+@onready var fg_physics_tile_map := get_node_or_null("FgPhysicsTileMap") as TileMapLayer
 
 
 var session: GameSession
@@ -39,6 +36,7 @@ func configure_existing(game_session: GameSession, owning_player_id: int) -> voi
 	_connect_collectible_signals()
 	player = get_node("Player") as CoopPlayer
 	player.configure_for_map(local_player_id, self, session)
+	player.publish_position()
 	ghost = get_node("OtherPlayerGhost") as CoopGhost
 	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
 	lever = get_node_or_null("Lever") as LinkedLever
@@ -54,44 +52,47 @@ func configure_mansion(game_session: GameSession, owning_player_id: int) -> void
 	session = game_session
 	local_player_id = owning_player_id
 	_connect_collectible_signals()
-	player = get_node("Player") as CoopPlayer
-	player.configure_for_map(local_player_id, self, session)
-	ghost = get_node("OtherPlayerGhost") as CoopGhost
-	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
 	mansion = get_node("Mansion") as Node2D
 	_configure_layout()
-	camera = get_node("Camera2D") as Camera2D
-	camera.limit_left = -10000000
-	camera.limit_top = -10000000
-	camera.limit_right = 10000000
-	camera.limit_bottom = 10000000
-	camera.enabled = true
-	camera.make_current()
-
-func get_lane_y(plane: int) -> float:
-	return BACKGROUND_LANE_Y if plane == CoopPlayer.DepthPlane.BACKGROUND else FOREGROUND_LANE_Y
+	player = get_node("Player") as CoopPlayer
+	player.configure_for_map(local_player_id, self, session)
+	_spawn_in_attic()
+	ghost = get_node("OtherPlayerGhost") as CoopGhost
+	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
+	set_camera(get_node("Camera2D") as Camera2D)
 
 func _create_world() -> void:
-	var player_scene: PackedScene = PLAYER_DARK_SCENE if local_player_id == GameSession.PLAYER_1 else PLAYER_LIGHT_SCENE
-	player = player_scene.instantiate() as CoopPlayer
-	player.name = "Player%d" % local_player_id
-	player.player_id = local_player_id
-	player.position = Vector2(220.0, FOREGROUND_LANE_Y)
-	add_child(player)
-	player.configure_for_map(local_player_id, self, session)
-
-	ghost = CoopGhost.new()
-	ghost.name = "Player%dGhost" % (GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2)
-	add_child(ghost)
-	ghost.configure(GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2, session, self)
-
 	mansion = MANSION_SCENE.instantiate()
 	mansion.name = "Mansion"
 	mansion.z_index = -1
 	add_child(mansion)
 	_configure_layout()
 
+	var player_scene: PackedScene = PLAYER_DARK_SCENE if local_player_id == GameSession.PLAYER_1 else PLAYER_LIGHT_SCENE
+	player = player_scene.instantiate() as CoopPlayer
+	player.name = "Player%d" % local_player_id
+	player.player_id = local_player_id
+	add_child(player)
+	player.configure_for_map(local_player_id, self, session)
+	_spawn_in_attic()
+
+	ghost = CoopGhost.new()
+	ghost.name = "Player%dGhost" % (GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2)
+	add_child(ghost)
+	ghost.configure(GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2, session, self)
+
+func _spawn_in_attic() -> void:
+	var spawn := mansion.get_node("Attic/Player%dSpawn" % local_player_id) as Marker2D
+	player.global_position = spawn.global_position
+	player.velocity = Vector2.ZERO
+	player.set_depth_plane(CoopPlayer.DepthPlane.FOREGROUND)
+	player.sprite_depth_offset = 0.0
+	player.sprite.position.y = 0.0
+	player.publish_position()
+
 func _configure_layout() -> void:
+	bg_physics_tile_map = mansion.get_node_or_null("PhysicsTileMapBg") as TileMapLayer
+	fg_physics_tile_map = mansion.get_node_or_null("PhysicsTileMapFg") as TileMapLayer
 	mansion_rooms.clear()
 	mansion_doors.clear()
 	_collect_layout_nodes(mansion)
@@ -135,10 +136,11 @@ func constrain_mansion_movement(old_x: float, new_x: float, y: float) -> float:
 	var moving_right := new_x > old_x
 	var boundary := room_right if moving_right else room_left
 	var other := _room_at(Vector2(boundary + (0.01 if moving_right else -0.01), y))
+	var floor_top := to_local(current.global_position).y
 	for door in mansion_doors:
 		var door_pos := to_local(door.global_position)
-		var near_boundary := absf(door_pos.x - boundary) < 1.0 and absf(door_pos.y - y) < 80.0
-		if other != null and near_boundary and door.connects_pair(current, other) and not session.is_mansion_door_locked(door.door_id):
+		var at_boundary := absf(door_pos.x - boundary) < 1.0 and door_pos.y >= floor_top and door_pos.y < floor_top + ROOM_VIEW_SIZE.y
+		if other != null and at_boundary and door.connects_pair(current, other) and door.is_open():
 			return new_x
 	return boundary - 0.01 if moving_right else boundary
 
@@ -150,6 +152,13 @@ func same_mansion_room(a: Vector2, b: Vector2) -> bool:
 
 func set_camera(active_camera: Camera2D) -> void:
 	camera = active_camera
+	camera.limit_left = -10000000
+	camera.limit_top = -10000000
+	camera.limit_right = 10000000
+	camera.limit_bottom = 10000000
+	camera.enabled = true
+	camera.make_current()
+	_update_mansion_camera()
 
 func _connect_collectible_signals() -> void:
 	if not session.collectible_collected.is_connected(_on_collectible_collected):
@@ -168,19 +177,27 @@ func _on_collectible_dropped(collectible_id: String, item: Dictionary, world_pos
 	spawn_dropped_collectible(collectible_id, item, world_position)
 
 func _on_session_reset() -> void:
-	for child in get_children():
-		if child is CollectibleItem:
-			var collectible := child as CollectibleItem
-			if collectible.spawned_at_runtime:
-				collectible.queue_free()
-			else:
-				collectible.reset_from_session()
+	for collectible in _get_collectibles():
+		if collectible.spawned_at_runtime:
+			collectible.set_collected_from_session()
+			collectible.queue_free()
+		else:
+			collectible.reset_from_session()
+	if mansion != null:
+		_spawn_in_attic()
 
 func _find_collectible(collectible_id: String) -> CollectibleItem:
-	for child in get_children():
-		if child is CollectibleItem and child.shared_object_id == collectible_id:
-			return child as CollectibleItem
+	for collectible in _get_collectibles():
+		if collectible.shared_object_id == collectible_id and not collectible.is_queued_for_deletion():
+			return collectible
 	return null
+
+func _get_collectibles() -> Array[CollectibleItem]:
+	var collectibles: Array[CollectibleItem] = []
+	for child in find_children("*", "Node2D", true, false):
+		if child is CollectibleItem:
+			collectibles.append(child)
+	return collectibles
 
 func spawn_dropped_collectible(collectible_id: String, item: Dictionary, drop_position: Vector2) -> void:
 	var collectible := CollectibleItem.new()
@@ -201,8 +218,6 @@ func _process(_delta: float) -> void:
 			_update_mansion_camera()
 		else:
 			camera.position = player.position
-	if session != null and player != null:
-		session.update_player_state(local_player_id, player.position, player.plane)
 
 func _update_mansion_camera() -> void:
 	# Match the logical room dimensions to the actual split viewport size.

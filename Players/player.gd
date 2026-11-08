@@ -2,7 +2,6 @@ class_name CoopPlayer
 extends CharacterBody2D
 
 enum DepthPlane { BACKGROUND, FOREGROUND }
-@onready var test_sprite = $TestSprite
 
 const SPEED := 220.0
 const GRV := 50.0
@@ -46,7 +45,7 @@ func configure_for_map(id: int, owning_map: Node, game_session: GameSession = nu
 	player_id = id
 	map_instance = owning_map
 	session = game_session
-	current_tilemap_ref = map_instance.fg_physics_tile_map
+	set_depth_plane(DepthPlane.FOREGROUND)
 	_setup_interaction()
 
 func _setup_interaction() -> void:
@@ -60,31 +59,29 @@ func _setup_interaction() -> void:
 		interaction_sensor.name = "InteractionSensor"
 		interaction_sensor.player = self
 		add_child(interaction_sensor)
-	#position = Vector2(220.0, map_instance.get_lane_y(plane))
 
-func _process(delta: float) -> void:
+func set_depth_plane(next_plane: DepthPlane) -> void:
+	plane = next_plane
+	var background := plane == DepthPlane.BACKGROUND
+	collision_layer = 1 if background else 2
+	collision_mask = collision_layer
+	z_index = 1 if background else 3
+	sprite_depth_offset_target = sprite_depth_offset_bg if background else sprite_depth_offset_fg
+	current_tilemap_ref = map_instance.bg_physics_tile_map if background else map_instance.fg_physics_tile_map
+
+func publish_position() -> void:
+	if session != null:
+		session.update_player_state(player_id, position, sprite.position.y, z_index)
+
+func _process(_delta: float) -> void:
 	
 	#region Plane switching
 	is_on_stairs = false #check_tile_data()
 	if(!is_on_stairs):
 		if Input.is_action_just_pressed(background_action):
-			plane = DepthPlane.BACKGROUND
-			collision_layer = 1
-			collision_mask = 1
-			z_index = 1
-			print("going bg. z index is "+str(z_index))
-			#sprite.z_index = 1
-			sprite_depth_offset_target = sprite_depth_offset_bg
-			current_tilemap_ref = map_instance.bg_physics_tile_map
+			set_depth_plane(DepthPlane.BACKGROUND)
 		if Input.is_action_just_pressed(foreground_action):
-			plane = DepthPlane.FOREGROUND
-			collision_layer = 2
-			collision_mask = 2
-			z_index = 3
-			print("going fg. z index is "+str(z_index))
-			#sprite.z_index = 3
-			sprite_depth_offset_target = sprite_depth_offset_fg
-			current_tilemap_ref = map_instance.fg_physics_tile_map
+			set_depth_plane(DepthPlane.FOREGROUND)
 	sprite_depth_offset = lerp(sprite_depth_offset, sprite_depth_offset_target, 0.2)
 	sprite.position.y = sprite_depth_offset
 	#endregion
@@ -99,6 +96,7 @@ func _process(delta: float) -> void:
 		else:
 			print("Interaction attempt: P%d has no target in range" % player_id)
 	#endregion
+	publish_position()
 
 func _physics_process(delta):
 	#print(z_index)

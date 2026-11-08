@@ -1,5 +1,7 @@
 extends Node2D
 
+const INVENTORY_LABEL := preload("res://scripts/shared_inventory_label.gd")
+
 @onready var session: GameSession = $GameSession
 
 func _ready() -> void:
@@ -21,6 +23,16 @@ func _ready() -> void:
 			map.add_child(layout)
 		template.visible = false
 	split_screen.configure(session)
+	var hud := CanvasLayer.new()
+	hud.layer = 10
+	add_child(hud)
+	var inventory := INVENTORY_LABEL.new()
+	hud.add_child(inventory)
+	inventory.position = Vector2(20, 20)
+	inventory.add_theme_font_size_override("font_size", 20)
+	inventory.add_theme_color_override("font_outline_color", Color.BLACK)
+	inventory.add_theme_constant_override("outline_size", 6)
+	inventory.configure(session)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
