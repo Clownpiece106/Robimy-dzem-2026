@@ -35,7 +35,7 @@ func _ready():
 [node name="Mansion" type="Node2D" unique_id=1829639342]
 
 [node name="Player1Spawn" type="Marker2D" parent="." unique_id=811967878]
-position = Vector2(3767, 2947)
+position = Vector2(3640, 2944)
 
 [node name="GrandRoom(3)" parent="." unique_id=944792952 instance=ExtResource("1")]
 position = Vector2(-1160, 0)

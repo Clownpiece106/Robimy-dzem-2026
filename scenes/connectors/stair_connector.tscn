@@ -36,13 +36,13 @@ texture = ExtResource("2")
 region_enabled = true
 region_rect = Rect2(170, 970, 620, 370)
 
-[node name="EnteringArea" type="Area2D" parent="DownEndpoint"]
+[node name="InteractionArea" type="Area2D" parent="DownEndpoint"]
 collision_mask = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DownEndpoint/EnteringArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DownEndpoint/InteractionArea"]
 shape = SubResource("interaction_shape")
 
 [node name="ArrivalMarker" type="Marker2D" parent="DownEndpoint"]
 
 [connection signal="body_entered" from="UpEndpoint/EnteringArea" to="UpEndpoint" method="_on_entering_area_body_entered"]
-[connection signal="body_entered" from="DownEndpoint/EnteringArea" to="DownEndpoint" method="_on_entering_area_body_entered"]
+[connection signal="body_entered" from="DownEndpoint/InteractionArea" to="DownEndpoint" method="_on_entering_area_body_entered"]
