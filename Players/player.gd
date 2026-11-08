@@ -5,6 +5,7 @@ signal health_changed(hearts: int)
 
 enum DepthPlane { BACKGROUND, FOREGROUND }
 
+const MAX_HEALTH := 3
 const SPEED := 420.0
 const GRV := 50.0
 const MAX_VSP := 300.0
@@ -13,8 +14,8 @@ const DROP_SLOT_ACTION := "inventory_drop_slot_%d"
 @onready var sprite = $Sprite
 var sprite_depth_offset := 0.0
 var sprite_depth_offset_target := 0.0
-var sprite_depth_offset_bg := -32.0
-var sprite_depth_offset_fg := 0.0
+var sprite_depth_offset_bg := 0.0
+var sprite_depth_offset_fg := 32.0
 var current_tilemap_ref : TileMapLayer
 var is_on_stairs := false
 
@@ -48,9 +49,9 @@ func _ready():
 	print("player z_index is "+str(z_index))
 
 #Called by game.gd
-func configure(owning_map: Node) -> void:
-	map_instance = owning_map
-	_setup_interaction()
+#func configure(owning_map: Node) -> void:
+	#map_instance = owning_map
+	#_setup_interaction()
 
 func configure_for_map(id: int, owning_map: Node, game_session: GameSession = null) -> void:
 	player_id = id

@@ -25,6 +25,7 @@ func connects(room: Node) -> bool:
 	return room != null and (get_node_or_null(room_a) == room or get_node_or_null(room_b) == room)
 
 func connects_pair(a: Node, b: Node) -> bool:
+	print("connected pair")
 	if a == b:
 		return false
 	if connects(a) and connects(b):
