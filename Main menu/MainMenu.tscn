@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://b10ojsbiphspy"]
+
+[ext_resource type="Script" uid="uid://njsn4rcu1mn7" path="res://Main menu/main_menu.gd" id="1_g5vev"]
+[ext_resource type="Texture2D" uid="uid://cwd6j4nfdcygm" path="res://Assets/main screen.png" id="2_1vovh"]
+[ext_resource type="Texture2D" uid="uid://im4rdjk5ogj8" path="res://Assets/main screen ramka.png" id="3_cryvr"]
+
+[node name="MainMenu" type="Control" unique_id=782438245]
+z_index = 6
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g5vev")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=138815314]
+layout_mode = 1
+offset_right = 2560.0
+offset_bottom = 1440.0
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_1vovh")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=78368492]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_cryvr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="." unique_id=191385261]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 1186.0001
+offset_top = 604.0
+offset_right = 1194.0001
+offset_bottom = 612.0
+scale = Vector2(28.044153, 9.317622)
+
+[node name="Button2" type="Button" parent="." unique_id=2142435654]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 1186.0001
+offset_top = 734.0
+offset_right = 1194.0001
+offset_bottom = 742.0
+scale = Vector2(28.044153, 9.317622)
+
+[node name="Button3" type="Button" parent="." unique_id=2085929477]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 1186.0001
+offset_top = 858.0
+offset_right = 1194.0001
+offset_bottom = 866.0
+scale = Vector2(28.044153, 9.317622)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=184116918]
+visible = false
+layout_mode = 0
+offset_left = 1597.0
+offset_top = 611.0
+offset_right = 1909.65
+offset_bottom = 900.525
+color = Color(0.15307665, 0.15307653, 0.15307647, 0.58431375)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1282519717]
+z_index = 4
+layout_mode = 0
+offset_left = 11.9
+offset_right = 311.9
+offset_bottom = 285.0
+theme_override_font_sizes/font_size = 32
+text = "Anna Sierka
+Danisel
+Kinga K.
+Kinga K.
+Zuzanna Jurkowska
+Żon żony"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=51206784]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 68.0
+offset_right = 471.33
+offset_bottom = 169.0
+alignment = 2
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=171636277]
+layout_mode = 2
+text = "WASD - walk
+E - interact
+Gather 🕯️CANDLES🕯️
+Place 🎶MUSIC BOX🎶"
+
+[node name="MarginContainer" type="Control" parent="HBoxContainer" unique_id=1838442185]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="HBoxContainer" unique_id=714652752]
+layout_mode = 2
+text = "←↑→↓ - walk
+ENTER - interact
+Gather 🎶MUSIC BOX🎶
+Place 🕯️CANDLES🕯️"
+
+[node name="Label" type="Label" parent="." unique_id=216126914]
+layout_mode = 0
+offset_left = 178.0
+offset_top = 187.0
+offset_right = 323.0
+offset_bottom = 236.0
+text = "Shared inventory
+6, 7, 8 to drop item"
+horizontal_alignment = 1
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="Button2" to="." method="_on_button_2_button_down"]
+[connection signal="button_down" from="Button3" to="." method="_on_button_3_button_down"]
