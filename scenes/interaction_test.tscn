@@ -68,10 +68,10 @@ Pick up items. The key unlocks doors; music boxes and candles are regular shared
 [node name="Inventory" type="Label" parent="Instructions" unique_id=109517246]
 offset_left = 20.0
 offset_top = 154.0
-offset_right = 620.0
-offset_bottom = 210.0
+offset_right = 940.0
+offset_bottom = 250.0
 theme_override_colors/font_color = Color(0.886275, 0.909804, 0.941176, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 32
 text = "SHARED INVENTORY\n[6] Empty   [7] Empty   [8] Empty"
 script = ExtResource("5_inventory")
 
