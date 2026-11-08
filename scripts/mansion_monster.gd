@@ -9,6 +9,11 @@ const HIT_DISTANCE := 52.0
 const RECOVERY_SECONDS := 7.0
 const ARRIVAL_DISTANCE := 18.0
 
+var plane_swap_timer := 0
+var plane_swap_max_delay := 300
+var plane_swap_min_delay := 120
+var rng
+
 @export var player_id := 1
 
 @export var anim_eye : SpriteFrames
@@ -25,6 +30,9 @@ var patrol_link: Dictionary = {}
 var links: Array[Dictionary] = []
 
 @onready var sprite: Sprite2D = $Sprite2D
+
+func _ready():
+	rng = RandomNumberGenerator.new()
 
 func configure(owning_map: MapInstance, target: CoopPlayer, game_session: GameSession) -> void:
 	map = owning_map
@@ -92,30 +100,38 @@ func _physics_process(delta: float) -> void:
 		_traverse(link)
 		patrol_target = Vector2.INF
 		patrol_link = {}
-	if alerted and recovery_left <= 0.0 and own_room == player_room and player.health > 0 and global_position.distance_to(player.global_position) <= HIT_DISTANCE:
+	if (z_index == player.z_index)&& alerted and recovery_left <= 0.0 and own_room == player_room and player.health > 0 and global_position.distance_to(player.global_position) <= HIT_DISTANCE:
 		player.take_damage(1)
 		recovery_left = RECOVERY_SECONDS
 		print("Monster P%d hit player: %d hearts left" % [player_id, player.health])
 	_sprite_plane()
+	
+	if(plane_swap_timer>0):
+		plane_swap_timer -=1
+		print(plane_swap_timer)
+		if(plane_swap_timer==0):
+			z_index = player.z_index
+			animated_sprite_2d.offset.y = player.sprite.position.y
 
 func _move_toward(target: Vector2, distance: float) -> void:
-	if target == Vector2.INF:
-		return
-	var before := global_position.x
-	global_position = global_position.move_toward(target, distance)
-	if not is_equal_approx(before, global_position.x):
-		sprite.flip_h = global_position.x < before
+	if(!MainMenu.visible):
+		if target == Vector2.INF:
+			return
+		var before := global_position.x
+		global_position = global_position.move_toward(target, distance)
+		if not is_equal_approx(before, global_position.x):
+			sprite.flip_h = global_position.x < before
 
 func _sprite_plane() -> void:
 	var own_room := map._room_at(map.to_local(global_position))
 	var player_room := map._room_at(map.to_local(player.global_position))
 	visible = own_room != null and own_room.room_visible
 	if own_room == player_room:
-		z_index = player.z_index
-		sprite.position.y = player.sprite.position.y
+		if(z_index!=player.z_index)&&(plane_swap_timer==0):
+			plane_swap_timer = randi_range(plane_swap_min_delay, plane_swap_max_delay)
 	else:
 		z_index = 3
-		sprite.position.y = -32.0
+		animated_sprite_2d.offset.y = -32.0
 	sprite.modulate = Color(0.65, 0.7, 1.0, 0.7) if recovery_left > 0.0 else Color.WHITE
 
 func _choose_patrol_target(room: MansionRoom) -> void:
