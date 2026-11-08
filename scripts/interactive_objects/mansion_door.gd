@@ -3,7 +3,10 @@ class_name MansionDoor
 extends Interactable
 
 @export var door_id := ""
-@export var initially_locked := true
+@export var initial_state: GameSession.DoorState = GameSession.DoorState.LOCKED:
+	set(value):
+		initial_state = value
+		queue_redraw()
 @export var room_a: NodePath
 @export var room_b: NodePath
 var session: GameSession
@@ -13,7 +16,7 @@ func configure(s: GameSession) -> void:
 	if door_id.is_empty():
 		push_warning("Mansion door %s needs a unique door_id" % get_path())
 		return
-	session.register_mansion_door(door_id, initially_locked)
+	session.register_mansion_door(door_id, initial_state)
 	session.cross_map_event.connect(_on_event)
 	session.session_reset.connect(queue_redraw)
 	queue_redraw()
@@ -39,14 +42,30 @@ func connects_pair(a: Node, b: Node) -> bool:
 	return horizontal_edge and absf(door_position.x - (a_rect.end.x if is_equal_approx(a_rect.end.x, b_rect.position.x) else b_rect.end.x)) < 1.0 and door_position.y >= a_rect.position.y and door_position.y <= a_rect.end.y
 
 func interact(player: CoopPlayer) -> void:
-	if session != null and not door_id.is_empty():
-		session.set_mansion_door_locked(door_id, not session.is_mansion_door_locked(door_id), player.player_id)
+	if session != null:
+		session.toggle_mansion_door(door_id, player.player_id)
+
+func is_open() -> bool:
+	return session != null and session.get_mansion_door_state(door_id) == GameSession.DoorState.OPEN
 
 func _on_event(event_name: String, payload: Dictionary) -> void:
 	if event_name == "mansion_door_changed" and payload.get("door_id") == door_id:
 		queue_redraw()
 
 func _draw() -> void:
-	var locked := initially_locked if session == null else session.is_mansion_door_locked(door_id)
-	draw_rect(Rect2(-24, -110, 48, 110), Color("#a05d60") if locked else Color("#79a887"))
-	draw_string(ThemeDB.fallback_font, Vector2(-42, 24), "LOCKED" if locked else "UNLOCKED", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+	var state := initial_state if session == null else session.get_mansion_door_state(door_id)
+	var color := Color("#c49961")
+	var label := "CLOSED"
+	match state:
+		GameSession.DoorState.LOCKED:
+			color = Color("#a05d60")
+			label = "LOCKED"
+		GameSession.DoorState.OPEN:
+			color = Color("#79a887")
+			label = "OPEN"
+	var frame := Rect2(-24, -110, 48, 110)
+	if state == GameSession.DoorState.OPEN:
+		draw_rect(frame, color, false, 3.0)
+	else:
+		draw_rect(frame, color)
+	draw_string(ThemeDB.fallback_font, Vector2(-42, 24), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)

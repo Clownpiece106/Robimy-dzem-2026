@@ -18,6 +18,8 @@ func configure(game_session: GameSession) -> void:
 		player_two_container = get_node("Player2ViewportContainer")
 		player_one_viewport = player_one_container.get_node("Player1Viewport")
 		player_two_viewport = player_two_container.get_node("Player2Viewport")
+		player_one_viewport.world_2d = World2D.new()
+		player_two_viewport.world_2d = World2D.new()
 		(player_one_viewport.get_node("MapInstance1") as MapInstance).configure_mansion(session, GameSession.PLAYER_1)
 		(player_two_viewport.get_node("MapInstance2") as MapInstance).configure_mansion(session, GameSession.PLAYER_2)
 	else:
@@ -36,10 +38,8 @@ func _create_viewports() -> void:
 	add_child(player_one_container)
 	add_child(player_two_container)
 
-	player_one_viewport = _create_viewport("Player1Viewport", GameSession.PLAYER_1)
-	player_two_viewport = _create_viewport("Player2Viewport", GameSession.PLAYER_2)
-	player_one_container.add_child(player_one_viewport)
-	player_two_container.add_child(player_two_viewport)
+	player_one_viewport = _create_viewport(player_one_container, "Player1Viewport", GameSession.PLAYER_1)
+	player_two_viewport = _create_viewport(player_two_container, "Player2Viewport", GameSession.PLAYER_2)
 
 func _create_container(container_name: String) -> SubViewportContainer:
 	var container := SubViewportContainer.new()
@@ -48,26 +48,21 @@ func _create_container(container_name: String) -> SubViewportContainer:
 	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return container
 
-func _create_viewport(viewport_name: String, player_id: int) -> SubViewport:
+func _create_viewport(container: SubViewportContainer, viewport_name: String, player_id: int) -> SubViewport:
 	var viewport := SubViewport.new()
 	viewport.name = viewport_name
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	viewport.transparent_bg = false
+	viewport.world_2d = World2D.new()
+	container.add_child(viewport)
 	var map := MapInstance.new()
 	map.name = "MapInstance%d" % player_id
 	viewport.add_child(map)
 	map.configure(session, player_id)
 	var camera := Camera2D.new()
 	camera.name = "Player%dCamera" % player_id
-	camera.position = Vector2(640.0, 270.0)
-	camera.limit_left = 0
-	camera.limit_top = -540
-	camera.limit_right = int(MapInstance.MAP_WIDTH)
-	camera.limit_bottom = 540
-	camera.position_smoothing_enabled = false
 	map.add_child(camera)
 	map.set_camera(camera)
-	camera.position = map.player.position
 	return viewport
 
 func _apply_layout() -> void:
