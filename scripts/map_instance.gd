@@ -20,6 +20,7 @@ const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
 var session: GameSession
 var local_player_id: int
 var player: CoopPlayer
+var monster: Node2D
 var ghost: CoopGhost
 var door: LinkedDoor
 var lever: LinkedLever
@@ -60,6 +61,7 @@ func configure_mansion(game_session: GameSession, owning_player_id: int) -> void
 	player = get_node("Player") as CoopPlayer
 	player.configure_for_map(local_player_id, self, session)
 	_spawn_in_attic()
+	_configure_monster()
 	ghost = get_node("OtherPlayerGhost") as CoopGhost
 	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session)
 	set_camera(get_node("Camera2D") as Camera2D)
@@ -78,6 +80,7 @@ func _create_world() -> void:
 	add_child(player)
 	player.configure_for_map(local_player_id, self, session)
 	_spawn_in_attic()
+	_configure_monster()
 
 	ghost = CoopGhost.new()
 	ghost.name = "Player%dGhost" % (GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2)
@@ -95,6 +98,14 @@ func _spawn_in_attic() -> void:
 	player.sprite_depth_offset = 0.0
 	player.sprite.position.y = 0.0
 	player.publish_position()
+
+func _configure_monster() -> void:
+	monster = get_node_or_null("Monster") as Node2D
+	if monster == null:
+		monster = load("res://Monster/monster.tscn").instantiate() as Node2D
+		monster.name = "Monster"
+		add_child(monster)
+	monster.configure(self, player, session)
 
 func _configure_layout() -> void:
 	bg_physics_tile_map = mansion.get_node_or_null("PhysicsTileMapBg") as TileMapLayer

@@ -47,6 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://b10ojsbiphspy" path="res://Main menu/MainMenu.tscn" id="40_jgm13"]
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
 [ext_resource type="PackedScene" path="res://scenes/interactive_objects/placement_surface.tscn" id="placement_surface"]
+[ext_resource type="PackedScene" path="res://Monster/monster.tscn" id="monster"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlxu"]
 size = Vector2(479, 120)
@@ -231,9 +232,6 @@ position = Vector2(3320, 1506)
 [node name="Door(8->9)2" parent="MansionLayout/Doors" index="10" unique_id=63810849]
 position = Vector2(4280, 1505)
 
-[node name="DoorL" parent="MansionLayout/Doors/Door(8->9)2" index="0" unique_id=285493679]
-position = Vector2(-132, -81)
-
 [node name="CollisionShape2D" parent="MansionLayout/Doors/Door(8->9)2/InteractionArea" parent_id_path=PackedInt32Array(569955723, 63810849, 950921253) index="0" unique_id=1904547995]
 position = Vector2(34, 0)
 shape = SubResource("RectangleShape2D_3a2vt")
@@ -265,9 +263,6 @@ position = Vector2(5241, 2586)
 
 [node name="Door(26-27)" parent="MansionLayout/Doors" index="18" unique_id=323283891]
 position = Vector2(4280, 3126)
-
-[node name="DoorL" parent="MansionLayout/Doors/Door(26-27)" index="0" unique_id=285493679]
-position = Vector2(-46, -77)
 
 [node name="CollisionShape2D" parent="MansionLayout/Doors/Door(26-27)/InteractionArea" parent_id_path=PackedInt32Array(569955723, 323283891, 950921253) index="0" unique_id=1904547995]
 position = Vector2(101, 0)
@@ -949,6 +944,9 @@ position = Vector2(204, 978)
 floor_max_angle = 0.7853982
 player_id = 1
 
+[node name="Monster" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" instance=ExtResource("monster")]
+player_id = 1
+
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=812873534]
 script = ExtResource("6_vt647")
 
@@ -979,6 +977,9 @@ z_index = -1
 
 [node name="Player" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1063871248 instance=ExtResource("4_c673k")]
 z_index = 3
+player_id = 2
+
+[node name="Monster" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" instance=ExtResource("monster")]
 player_id = 2
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1634118180]
