@@ -11,6 +11,10 @@ extends Interactable
 @export var room_b: NodePath
 var session: GameSession
 @onready var interaction_collision_shape = $InteractionArea/CollisionShape2D
+@export var text_door_open : Texture2D
+@export var text_door_closed : Texture2D
+@onready var spr_door_l = $DoorL
+@onready var spr_door_r = $DoorR
 
 func configure(s: GameSession) -> void:
 	session = s
@@ -45,6 +49,12 @@ func connects_pair(a: Node, b: Node) -> bool:
 func interact(player: CoopPlayer) -> void:
 	if session != null:
 		session.toggle_mansion_door(door_id, player.player_id)
+	if(is_open()):
+		spr_door_l.texture = text_door_open
+		spr_door_r.texture = text_door_open
+	else:
+		spr_door_l.texture = text_door_closed
+		spr_door_r.texture = text_door_closed
 
 func is_open() -> bool:
 	return session != null and session.get_mansion_door_state(door_id) == GameSession.DoorState.OPEN
@@ -55,14 +65,14 @@ func _on_event(event_name: String, payload: Dictionary) -> void:
 
 func _draw() -> void:
 	var state := initial_state if session == null else session.get_mansion_door_state(door_id)
-	var color := Color("#c49961")
+	var color := Color("c4996100")
 	var label := "CLOSED"
 	match state:
 		GameSession.DoorState.LOCKED:
-			color = Color("#a05d60")
+			color = Color("a05d6000")
 			label = "LOCKED"
 		GameSession.DoorState.OPEN:
-			color = Color("#79a887")
+			color = Color("79a88700")
 			label = "OPEN"
 	var frame := Rect2(-24, -110, 48, 110)
 	if state == GameSession.DoorState.OPEN:
@@ -74,12 +84,15 @@ func _draw() -> void:
 
 #Teleport the player to the other side
 func _on_body_entered(body):
-	if(body.is_in_group("Player")):
+	print("tenrered")
+	if(body.is_in_group("Player"))&&(is_open()):
 		if(body.position.x>position.x):
 			#Player is going from right to left
+			body.position.x = position.x - (interaction_collision_shape.shape.size.x/2)
 			pass
 		else:
 			#Player is going from left to right
+			body.position.x = position.x + (interaction_collision_shape.shape.size.x/2)
 			pass
 		#print(position)
 		#print(interaction_collision_shape.shape.size)
