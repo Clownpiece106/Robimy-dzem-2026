@@ -10,6 +10,7 @@ extends Interactable
 @export var room_a: NodePath
 @export var room_b: NodePath
 var session: GameSession
+@onready var interaction_collision_shape = $InteractionArea/CollisionShape2D
 
 func configure(s: GameSession) -> void:
 	session = s
@@ -25,7 +26,6 @@ func connects(room: Node) -> bool:
 	return room != null and (get_node_or_null(room_a) == room or get_node_or_null(room_b) == room)
 
 func connects_pair(a: Node, b: Node) -> bool:
-	print("connected pair")
 	if a == b:
 		return false
 	if connects(a) and connects(b):
@@ -70,3 +70,17 @@ func _draw() -> void:
 	else:
 		draw_rect(frame, color)
 	draw_string(ThemeDB.fallback_font, Vector2(-42, 24), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+
+
+#Teleport the player to the other side
+func _on_body_entered(body):
+	if(body.is_in_group("Player")):
+		if(body.position.x>position.x):
+			#Player is going from right to left
+			pass
+		else:
+			#Player is going from left to right
+			pass
+		#print(position)
+		#print(interaction_collision_shape.shape.size)
+		#print(str(position.x+interaction_collision_shape.shape.size.x))
