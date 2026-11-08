@@ -1,15 +1,28 @@
 class_name CollectibleItem
 extends Interactable
 
+const ITEM_TEXTURES := {
+	"key": preload("res://Assets/collectibles/klucz.png"),
+	"music_box": preload("res://Assets/collectibles/pozytywka.png"),
+	"candle": preload("res://Assets/collectibles/swieczka.png"),
+}
+const ITEM_REGIONS := {
+	"key": Rect2(1105, 800, 35, 89),
+	"music_box": Rect2(1556, 780, 143, 181),
+	"candle": Rect2(1031, 786, 30, 102),
+}
+const ITEM_VISUAL_SCALE := Vector2(0.5, 0.5)
+
 @export var item_kind := "collectible"
 @export var item_label := "Collectible"
 @export var shared_object_id := ""
 
 var collected := false
 var spawned_at_runtime := false
+var available_to_local_player := true
 
 func interact(player: CoopPlayer) -> void:
-	if collected or player.session == null:
+	if player.session == null or not can_interact(player):
 		return
 	var slot_index := player.session.collect_shared_collectible(shared_object_id, {
 		"kind": item_kind,
@@ -29,31 +42,60 @@ func set_collected_from_session() -> void:
 
 func reset_from_session() -> void:
 	collected = false
-	visible = true
+	visible = available_to_local_player
 	var interaction_area := get_node_or_null("InteractionArea") as Area2D
 	if interaction_area != null:
-		interaction_area.set_deferred("monitorable", true)
+		interaction_area.set_deferred("monitorable", available_to_local_player)
 
-func can_interact(_player: CoopPlayer) -> bool:
-	return not collected
+func can_interact(player: CoopPlayer) -> bool:
+	return not collected and available_to_local_player and _can_player_pick_up(player.player_id)
+
+func configure_for_local_player(local_player_id: int) -> void:
+	available_to_local_player = _can_player_pick_up(local_player_id)
+	visible = not collected and available_to_local_player
+	var interaction_area := get_node_or_null("InteractionArea") as Area2D
+	if interaction_area != null:
+		interaction_area.set_deferred("monitorable", not collected and available_to_local_player)
+
+func _can_player_pick_up(player_id: int) -> bool:
+	match item_kind:
+		"candle":
+			return player_id == GameSession.PLAYER_1
+		"music_box":
+			return player_id == GameSession.PLAYER_2
+		_:
+			return true
 
 func build_runtime_nodes() -> void:
-	if get_node_or_null("InteractionArea") != null:
-		return
-	var interaction_area := Area2D.new()
-	interaction_area.name = "InteractionArea"
-	interaction_area.collision_layer = 1
-	interaction_area.collision_mask = 0
-	var collision_shape := CollisionShape2D.new()
-	var circle := CircleShape2D.new()
-	circle.radius = 38.0
-	collision_shape.shape = circle
-	interaction_area.add_child(collision_shape)
-	add_child(interaction_area)
-	queue_redraw()
+	if get_node_or_null("InteractionArea") == null:
+		var interaction_area := Area2D.new()
+		interaction_area.name = "InteractionArea"
+		interaction_area.collision_layer = 1
+		interaction_area.collision_mask = 0
+		var collision_shape := CollisionShape2D.new()
+		var circle := CircleShape2D.new()
+		circle.radius = 38.0
+		collision_shape.shape = circle
+		interaction_area.add_child(collision_shape)
+		add_child(interaction_area)
+	_build_visual()
 
 func _ready() -> void:
 	build_runtime_nodes()
+
+func _build_visual() -> void:
+	if get_node_or_null("Visual") != null or not ITEM_TEXTURES.has(item_kind):
+		queue_redraw()
+		return
+	var atlas := AtlasTexture.new()
+	atlas.atlas = ITEM_TEXTURES[item_kind]
+	atlas.region = ITEM_REGIONS[item_kind]
+	var visual := Sprite2D.new()
+	visual.name = "Visual"
+	visual.texture = atlas
+	visual.scale = ITEM_VISUAL_SCALE
+	visual.position.y = -atlas.get_height() * ITEM_VISUAL_SCALE.y * 0.5
+	add_child(visual)
 
 func _draw() -> void:
 	if get_node_or_null("Visual") != null:

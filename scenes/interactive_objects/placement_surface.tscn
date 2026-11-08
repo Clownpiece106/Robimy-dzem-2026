@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactive_objects/placement_surface.gd" id="1"]
+
+[sub_resource type="CircleShape2D" id="interaction_shape"]
+radius = 72.0
+
+[node name="PlacementSurface" type="Node2D"]
+z_index = 2
+script = ExtResource("1")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("interaction_shape")
