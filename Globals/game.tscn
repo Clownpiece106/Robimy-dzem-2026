@@ -53,6 +53,9 @@ size = Vector2(80, 100)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7ctf"]
 size = Vector2(80, 100)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5a0d7"]
+size = Vector2(80, 80)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3a2vt"]
 size = Vector2(576, 120)
 
@@ -224,6 +227,27 @@ position = Vector2(192, -89)
 
 [node name="Stairs_9_11" parent="MansionLayout/Stairs" parent_id_path=PackedInt32Array(569955723, 898855841) index="10" unique_id=1866866398]
 position = Vector2(4012, 1020)
+
+[node name="CollisionShape2D" parent="MansionLayout/Stairs/Stairs_9_11/UpEndpoint/EnteringArea" index="0"]
+position = Vector2(15, 300)
+
+[node name="ArrivalMarker" parent="MansionLayout/Stairs/Stairs_9_11/UpEndpoint" index="1"]
+position = Vector2(-98, 363)
+
+[node name="DownSprite" parent="MansionLayout/Stairs/Stairs_9_11/DownEndpoint" index="0"]
+position = Vector2(-293, -202)
+texture = ExtResource("5_jgm13")
+region_enabled = false
+
+[node name="InteractionArea" parent="MansionLayout/Stairs/Stairs_9_11/DownEndpoint" index="1"]
+position = Vector2(-186, -60)
+
+[node name="CollisionShape2D" parent="MansionLayout/Stairs/Stairs_9_11/DownEndpoint/InteractionArea" index="0"]
+position = Vector2(0, 23)
+shape = SubResource("RectangleShape2D_5a0d7")
+
+[node name="ArrivalMarker" parent="MansionLayout/Stairs/Stairs_9_11/DownEndpoint" index="2"]
+position = Vector2(-34, -100)
 
 [node name="Stairs_26_24" parent="MansionLayout/Stairs" parent_id_path=PackedInt32Array(569955723, 898855841) index="11" unique_id=2111032843]
 position = Vector2(3978, 2660)
