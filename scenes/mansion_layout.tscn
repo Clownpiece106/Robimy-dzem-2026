@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cnehrbejyvo5" path="res://Assets/balkonik.png" id="11_qtsgh"]
 [ext_resource type="Texture2D" uid="uid://sefypjto3arl" path="res://Assets/5p.png" id="12_v4trw"]
 [ext_resource type="Texture2D" uid="uid://c6m5rgh8sf2sv" path="res://Assets/9p.png" id="13_1g2my"]
+[ext_resource type="PackedScene" path="res://scenes/connectors/stair_connector.tscn" id="14_stairs"]
 
 [sub_resource type="GDScript" id="GDScript_wqeed"]
 script/source = "extends TileMapLayer
@@ -32,6 +33,9 @@ func _ready():
 "
 
 [node name="Mansion" type="Node2D" unique_id=1829639342]
+
+[node name="Player1Spawn" type="Marker2D" parent="." unique_id=811967878]
+position = Vector2(1080, 789)
 
 [node name="GrandRoom(3)" parent="." unique_id=944792952 instance=ExtResource("1")]
 position = Vector2(-1160, 0)
@@ -110,6 +114,14 @@ room_width = 1920.0
 position = Vector2(441, 540)
 room_id = "Small Room (5)"
 room_width = 960.0
+
+[node name="Candle_Room9_1" type="Node2D" parent="SmallRoom(5)" unique_id=133736225]
+z_index = 2
+position = Vector2(480, 480)
+script = ExtResource("11_collectible")
+item_kind = "candle"
+item_label = "Candle"
+shared_object_id = "mansion_candle_room_9_1"
 
 [node name="MediumRoom(6)" parent="." unique_id=595460909 instance=ExtResource("2")]
 position = Vector2(-1479, 540)
@@ -418,12 +430,13 @@ texture = ExtResource("12_v4trw")
 region_enabled = true
 region_rect = Rect2(0, 32, 776, 1409.1757)
 
-[node name="Stairs (5)" parent="Stairs" unique_id=1317519370 instance=ExtResource("5")]
-visible = false
-position = Vector2(630, 821)
-door_id = "stairs_5"
-room_a = NodePath("../../SmallRoom(5)")
-room_b = NodePath("../../GrandRoom(3)")
+[node name="Stairs_5_3" parent="Stairs" unique_id=315274621 instance=ExtResource("14_stairs")]
+
+[node name="Stairs_21_20" parent="Stairs" unique_id=65584124 instance=ExtResource("14_stairs")]
+
+[node name="Stairs_9_11" parent="Stairs" unique_id=1866866398 instance=ExtResource("14_stairs")]
+
+[node name="Stairs_26_24" parent="Stairs" unique_id=2111032843 instance=ExtResource("14_stairs")]
 
 [node name="Doors" type="Node2D" parent="." unique_id=1653110097]
 position = Vector2(0, 33)

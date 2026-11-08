@@ -113,6 +113,9 @@ func _apply_environment_appearance() -> void:
 		room.material = environment_material
 	for trapdoor in mansion_trapdoors:
 		trapdoor.material = environment_material
+	if mansion != null:
+		for stairs in mansion.find_children("Stairs_*", "Node2D", true, false):
+			stairs.material = environment_material
 	for node_name in ["Background", "Floor", "BgPhysicsTileMap", "FgPhysicsTileMap"]:
 		var environment_node := get_node_or_null(node_name) as CanvasItem
 		if environment_node != null:
