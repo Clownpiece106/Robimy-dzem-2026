@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bo3easq7q1tgn"]
 
-[ext_resource type="Script" uid="uid://f0r2hlsli4pd" path="res://scripts/mansion_monster.gd" id="1_4x6lt"]
+[ext_resource type="Script" path="res://scripts/mansion_monster.gd" id="1_4x6lt"]
 [ext_resource type="Texture2D" uid="uid://cmjfk5velwc04" path="res://Monster/placeholder.png" id="2_4bnr3"]
 
 [node name="Monster" type="Node2D" unique_id=1824643736]
@@ -8,4 +8,5 @@ z_index = 3
 script = ExtResource("1_4x6lt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=304742424]
+scale = Vector2(2.0, 2.0)
 texture = ExtResource("2_4bnr3")

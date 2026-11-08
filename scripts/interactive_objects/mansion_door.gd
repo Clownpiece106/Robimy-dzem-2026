@@ -24,8 +24,8 @@ func configure(s: GameSession) -> void:
 		return
 	session.register_mansion_door(door_id, initial_state)
 	session.cross_map_event.connect(_on_event)
-	session.session_reset.connect(queue_redraw)
-	queue_redraw()
+	session.session_reset.connect(_update_visuals)
+	_update_visuals()
 
 func connects(room: Node) -> bool:
 	return room != null and (get_node_or_null(room_a) == room or get_node_or_null(room_b) == room)
@@ -50,20 +50,22 @@ func connects_pair(a: Node, b: Node) -> bool:
 func interact(player: CoopPlayer) -> void:
 	if session != null:
 		session.toggle_mansion_door(door_id, player.player_id)
-	
-	if(is_open()):
-		door_l.texture = text_door_open
-		door_r.texture = text_door_open
-	else:
-		door_l.texture = text_door_closed
-		door_r.texture = text_door_closed
+	_update_visuals()
 
 func is_open() -> bool:
 	return session != null and session.get_mansion_door_state(door_id) == GameSession.DoorState.OPEN
 
 func _on_event(event_name: String, payload: Dictionary) -> void:
 	if event_name == "mansion_door_changed" and payload.get("door_id") == door_id:
-		queue_redraw()
+		_update_visuals()
+
+func _update_visuals() -> void:
+	var texture := text_door_open if is_open() else text_door_closed
+	if door_l != null:
+		door_l.texture = texture
+	if door_r != null:
+		door_r.texture = texture
+	queue_redraw()
 
 func _draw() -> void:
 	var state := initial_state if session == null else session.get_mansion_door_state(door_id)

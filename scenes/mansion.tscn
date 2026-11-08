@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="root"]
 [ext_resource type="Script" uid="uid://csa427j33unif" path="res://scripts/game_session.gd" id="session"]
 [ext_resource type="Script" uid="uid://bud1eb3sqnykp" path="res://scripts/split_screen_manager.gd" id="split"]
+[ext_resource type="PackedScene" path="res://Monster/monster.tscn" id="monster"]
 
 [node name="Mansion" type="Node2D" unique_id=519039024]
 script = ExtResource("root")
@@ -45,6 +46,9 @@ z_index = 1
 position = Vector2(220, 390)
 player_id = 1
 
+[node name="Monster" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" instance=ExtResource("monster")]
+player_id = 1
+
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=493380077]
 script = ExtResource("ghost")
 
@@ -76,6 +80,9 @@ z_index = -1
 [node name="Player" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=320048057 instance=ExtResource("light")]
 z_index = 1
 position = Vector2(220, 390)
+player_id = 2
+
+[node name="Monster" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" instance=ExtResource("monster")]
 player_id = 2
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1806265657]

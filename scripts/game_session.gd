@@ -46,6 +46,15 @@ func toggle_mansion_door(id: String, actor_id: int) -> void:
 		take_inventory_slot(key_slot)
 	emit_cross_map_event("mansion_door_changed", {"door_id": id, "state": next_state, "source_player": actor_id})
 
+func open_mansion_door_for_monster(id: String, monster_player_id: int) -> bool:
+	var state := get_mansion_door_state(id)
+	if state == DoorState.LOCKED:
+		return false
+	if state == DoorState.CLOSED:
+		mansion_doors[id] = DoorState.OPEN
+		emit_cross_map_event("mansion_door_changed", {"door_id": id, "state": DoorState.OPEN, "source_monster": monster_player_id})
+	return true
+
 func register_mansion_trapdoor(id: String, initial_state: DoorState) -> void:
 	if not mansion_trapdoor_defaults.has(id):
 		mansion_trapdoor_defaults[id] = initial_state
@@ -71,6 +80,15 @@ func toggle_mansion_trapdoor(id: String, actor_id: int) -> void:
 	if key_slot >= 0:
 		take_inventory_slot(key_slot)
 	emit_cross_map_event("mansion_trapdoor_changed", {"trapdoor_id": id, "state": next_state, "source_player": actor_id})
+
+func open_mansion_trapdoor_for_monster(id: String, monster_player_id: int) -> bool:
+	var state := get_mansion_trapdoor_state(id)
+	if state == DoorState.LOCKED:
+		return false
+	if state == DoorState.CLOSED:
+		mansion_trapdoors[id] = DoorState.OPEN
+		emit_cross_map_event("mansion_trapdoor_changed", {"trapdoor_id": id, "state": DoorState.OPEN, "source_monster": monster_player_id})
+	return true
 
 var inventory_slots: Array[Dictionary] = [{}, {}, {}]
 var inventory_actor_id := 0
