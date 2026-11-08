@@ -1,18 +1,61 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/game_over_overlay.gd" id="1"]
 
 [sub_resource type="StyleBoxFlat" id="panel_style"]
-bg_color = Color(0.09, 0.08, 0.13, 0.97)
+bg_color = Color(0.09, 0.09, 0.09, 0.97)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.67, 0.43, 0.45, 1)
+border_color = Color(0.65, 0.65, 0.65, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="button_normal"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7, 0.7, 0.7, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="button_hover"]
+bg_color = Color(0.32, 0.32, 0.32, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="button_pressed"]
+bg_color = Color(0.9, 0.9, 0.9, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="button_focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="GameOverOverlay" type="CanvasLayer"]
 layer = 20
@@ -34,7 +77,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.02, 0.01, 0.04, 0.85)
+color = Color(0, 0, 0, 0.85)
 
 [node name="CenterContainer" type="CenterContainer" parent="Screen"]
 layout_mode = 1
@@ -64,14 +107,14 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Screen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.78, 0.72, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 50
 text = "GAME OVER"
 horizontal_alignment = 1
 
 [node name="Detail" type="Label" parent="Screen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.88, 0.9, 1)
+theme_override_colors/font_color = Color(0.78, 0.78, 0.78, 1)
 theme_override_font_sizes/font_size = 24
 text = "Player 1 lost all their hearts."
 horizontal_alignment = 1
@@ -84,13 +127,27 @@ alignment = 1
 [node name="RetryButton" type="Button" parent="Screen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Buttons"]
 custom_minimum_size = Vector2(180, 52)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("button_normal")
+theme_override_styles/hover = SubResource("button_hover")
+theme_override_styles/pressed = SubResource("button_pressed")
+theme_override_styles/focus = SubResource("button_focus")
 text = "Play again"
 
 [node name="QuitButton" type="Button" parent="Screen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Buttons"]
 custom_minimum_size = Vector2(180, 52)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("button_normal")
+theme_override_styles/hover = SubResource("button_hover")
+theme_override_styles/pressed = SubResource("button_pressed")
+theme_override_styles/focus = SubResource("button_focus")
 text = "Quit"
 
 [connection signal="pressed" from="Screen/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Buttons/RetryButton" to="." method="_on_retry_button_pressed"]
