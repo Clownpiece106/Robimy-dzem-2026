@@ -27,6 +27,7 @@ func _ready() -> void:
 			map.add_child(layout)
 		template.visible = false
 	split_screen.configure(session)
+	($GameOverOverlay as GameOverOverlay).configure(session)
 	var hud := CanvasLayer.new()
 	hud.layer = 10
 	add_child(hud)

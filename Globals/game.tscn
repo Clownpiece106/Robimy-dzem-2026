@@ -47,6 +47,8 @@
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
 [ext_resource type="PackedScene" uid="uid://bo3easq7q1tgn" path="res://Monster/monster.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://scenes/interactive_objects/placement_surface.tscn" id="placement_surface"]
+[ext_resource type="PackedScene" path="res://scenes/game_over_overlay.tscn" id="game_over_overlay"]
+[ext_resource type="PackedScene" path="res://Monster/monster.tscn" id="monster"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlxu"]
 size = Vector2(479, 120)
@@ -908,6 +910,8 @@ position = Vector2(-142.50035, 220.24974)
 
 [node name="GameSession" type="Node" parent="." unique_id=882710083]
 script = ExtResource("1_a75qt")
+
+[node name="GameOverOverlay" parent="." instance=ExtResource("game_over_overlay")]
 
 [node name="SplitScreenManager2" type="Control" parent="." unique_id=981131928]
 layout_mode = 3

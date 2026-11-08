@@ -116,14 +116,6 @@ position = Vector2(441, 540)
 room_id = "Small Room (5)"
 room_width = 960.0
 
-[node name="Candle_Room9_1" type="Node2D" parent="SmallRoom(5)" unique_id=133736225]
-z_index = 2
-position = Vector2(480, 480)
-script = ExtResource("11_collectible")
-item_kind = "candle"
-item_label = "Candle"
-shared_object_id = "mansion_candle_room_9_1"
-
 [node name="MediumRoom(6)" parent="." unique_id=595460909 instance=ExtResource("2")]
 position = Vector2(-1479, 540)
 room_id = "Medium Room (6)"

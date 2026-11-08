@@ -7,6 +7,7 @@ signal inventory_changed(slots: Array)
 signal collectible_collected(collectible_id: String)
 signal collectible_dropped(collectible_id: String, item: Dictionary, world_position: Vector2)
 signal placement_changed(placement_id: String, item_kind: String)
+signal game_ended(ending: String, player_id: int)
 
 const PLAYER_1 := 1
 const PLAYER_2 := 2
@@ -95,6 +96,45 @@ var inventory_actor_id := 0
 var collected_collectible_ids: Dictionary = {}
 var next_dropped_collectible_id := 1
 var placed_items: Dictionary = {}
+var placement_kinds: Dictionary = {}
+var is_game_over := false
+var ending := ""
+
+func register_placement(placement_id: String, item_kind: String) -> void:
+	if placement_id.is_empty():
+		return
+	if placement_kinds.has(placement_id) and placement_kinds[placement_id] != item_kind:
+		push_warning("Conflicting item kind for placement %s" % placement_id)
+		return
+	placement_kinds[placement_id] = item_kind
+
+func player_died(player_id: int) -> void:
+	if is_game_over:
+		return
+	_finish_game("bad", player_id)
+
+func _check_good_ending() -> void:
+	if is_game_over or placement_kinds.is_empty():
+		return
+	var has_candle := false
+	var has_music_box := false
+	for placement_id in placement_kinds:
+		var item_kind: String = placement_kinds[placement_id]
+		has_candle = has_candle or item_kind == "candle"
+		has_music_box = has_music_box or item_kind == "music_box"
+		if placed_items.get(placement_id, "") != item_kind:
+			return
+	if has_candle and has_music_box:
+		_finish_game("good", 0)
+
+func _finish_game(result: String, player_id: int) -> void:
+	is_game_over = true
+	ending = result
+	var death_detail := ""
+	if player_id > 0:
+		death_detail = " (P%d died)" % player_id
+	print("Game ended: %s ending%s" % [result, death_detail])
+	game_ended.emit(result, player_id)
 
 func add_inventory_item(item: Dictionary, actor_id: int) -> int:
 	for slot_index in INVENTORY_SLOT_COUNT:
@@ -138,7 +178,7 @@ func find_inventory_slot(item_kind: String) -> int:
 	return -1
 
 func place_inventory_item(placement_id: String, item_kind: String, actor_id: int) -> bool:
-	if placement_id.is_empty() or placed_items.has(placement_id):
+	if is_game_over or placement_id.is_empty() or item_kind.is_empty() or placement_kinds.get(placement_id, "") != item_kind or placed_items.has(placement_id):
 		return false
 	var slot_index := find_inventory_slot(item_kind)
 	if slot_index < 0:
@@ -147,6 +187,7 @@ func place_inventory_item(placement_id: String, item_kind: String, actor_id: int
 	placed_items[placement_id] = item_kind
 	placement_changed.emit(placement_id, item_kind)
 	print("P%d placed %s on %s" % [actor_id, item_kind, placement_id])
+	_check_good_ending()
 	return true
 
 func get_placed_item(placement_id: String) -> String:
@@ -171,6 +212,8 @@ func emit_cross_map_event(event_name: String, payload: Dictionary = {}) -> void:
 	cross_map_event.emit(event_name, payload)
 
 func reset() -> void:
+	is_game_over = false
+	ending = ""
 	mansion_doors = mansion_door_defaults.duplicate()
 	mansion_trapdoors = mansion_trapdoor_defaults.duplicate()
 	inventory_slots = [{}, {}, {}]
