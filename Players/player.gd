@@ -18,6 +18,7 @@ var sprite_depth_offset_bg := -92.0
 var sprite_depth_offset_fg := -32.0
 var current_tilemap_ref : TileMapLayer
 var is_on_stairs := false
+var is_configured := false
 
 @export var player_id: int
 var map_instance: Node
@@ -59,6 +60,7 @@ func configure_for_map(id: int, owning_map: Node, game_session: GameSession = nu
 	session = game_session
 	set_depth_plane(DepthPlane.FOREGROUND)
 	_setup_interaction()
+	is_configured = true
 
 func _setup_interaction() -> void:
 	left_action = "p%d_move_left" % player_id
@@ -86,6 +88,8 @@ func publish_position() -> void:
 		session.update_player_state(player_id, position, sprite.position.y, z_index)
 
 func _process(_delta: float) -> void:
+	if not is_configured:
+		return
 	
 	#region Plane switching
 	is_on_stairs = false #check_tile_data()
@@ -111,6 +115,8 @@ func _process(_delta: float) -> void:
 	publish_position()
 
 func _physics_process(delta):
+	if not is_configured:
+		return
 	#print(z_index)
 	var direction := Input.get_axis(left_action, right_action)
 	var next_x: float = position.x + direction * SPEED * delta

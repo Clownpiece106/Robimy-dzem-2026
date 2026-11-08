@@ -18,8 +18,6 @@ func configure(game_session: GameSession) -> void:
 		player_two_container = get_node("Player2ViewportContainer")
 		player_one_viewport = player_one_container.get_node("Player1Viewport")
 		player_two_viewport = player_two_container.get_node("Player2Viewport")
-		player_one_viewport.world_2d = World2D.new()
-		player_two_viewport.world_2d = World2D.new()
 		(player_one_viewport.get_node("MapInstance1") as MapInstance).configure_mansion(session, GameSession.PLAYER_1)
 		(player_two_viewport.get_node("MapInstance2") as MapInstance).configure_mansion(session, GameSession.PLAYER_2)
 	else:
