@@ -79,6 +79,8 @@ func check() -> void:
 	door.interact(map.player)
 	assert(session.get_mansion_door_state(door.door_id) == GameSession.DoorState.LOCKED)
 	assert(map.constrain_mansion_movement(-1161, -1159, 486) == -1160.01)
+	await assert_closed_door_blocks(map, door, "p1_move_right")
+	await assert_closed_door_blocks(second_map, second_door, "p2_move_right")
 	var key := map.mansion.get_node("MediumRoom(7)/Key_Room7_1") as CollectibleItem
 	var second_key := second_map.mansion.get_node("MediumRoom(7)/Key_Room7_1") as CollectibleItem
 	map.player.global_position = key.global_position
@@ -95,6 +97,9 @@ func check() -> void:
 	assert(second_map.ghost.position.is_equal_approx(map.player.position))
 	await press("p2_interact")
 	assert(door.is_open() and second_door.is_open())
+	await wait_for_overlap()
+	assert(door.get_node("DoorBlocker/CollisionShape2D").disabled)
+	assert(second_door.get_node("DoorBlocker/CollisionShape2D").disabled)
 	assert(session.inventory_slots[0].is_empty())
 	assert(session.find_inventory_slot("key") == 1)
 	assert(map._find_collectible("dropped_1") == null)
@@ -106,6 +111,8 @@ func check() -> void:
 	second_door.interact(second_map.player)
 	assert(session.get_mansion_door_state(door.door_id) == GameSession.DoorState.CLOSED)
 	assert(second_map.constrain_mansion_movement(-1161, -1159, 486) == -1160.01)
+	await assert_closed_door_blocks(map, door, "p1_move_right")
+	await assert_closed_door_blocks(second_map, second_door, "p2_move_right")
 	await press("inventory_drop_slot_2")
 	assert(not session.has_inventory_item("key"))
 	assert(map._find_collectible("dropped_1").position == second_map._find_collectible("dropped_1").position)
@@ -150,6 +157,21 @@ func wait_for_overlap() -> void:
 	await physics_frame
 	await physics_frame
 	await physics_frame
+
+func assert_closed_door_blocks(world: MapInstance, door: MansionDoor, action: String) -> void:
+	await wait_for_overlap()
+	assert(not door.get_node("DoorBlocker/CollisionShape2D").disabled)
+	var previous_position := world.player.position
+	world.player.position = world.to_local(door.global_position) + Vector2(-75, 96)
+	world.player.velocity = Vector2.ZERO
+	await wait_for_overlap()
+	Input.action_press(action)
+	for frame in 16:
+		await physics_frame
+	Input.action_release(action)
+	assert(world.player.position.x < world.to_local(door.global_position).x - 24.0)
+	world.player.position = previous_position
+	world.player.velocity = Vector2.ZERO
 
 func press(action: String) -> void:
 	Input.action_press(action)

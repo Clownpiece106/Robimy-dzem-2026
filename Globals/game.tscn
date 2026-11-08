@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dwgen5pfslrem" path="res://scripts/map_instance.gd" id="3_f235b"]
 [ext_resource type="PackedScene" uid="uid://bsmss4341f13c" path="res://Players/PlayerDark.tscn" id="3_j27jc"]
 [ext_resource type="Texture2D" uid="uid://sefypjto3arl" path="res://Assets/5p.png" id="3_nnuyt"]
+[ext_resource type="Script" uid="uid://dj7efh5u0c70q" path="res://scripts/interactive_objects/collectible_item.gd" id="3_tscqe"]
 [ext_resource type="PackedScene" uid="uid://cbtpv6q65uhu7" path="res://Players/PlayerLight.tscn" id="4_c673k"]
 [ext_resource type="PackedScene" uid="uid://7oaf5eia4x8l" path="res://scenes/mansion_layout.tscn" id="4_nnuyt"]
 [ext_resource type="Texture2D" uid="uid://c6m5rgh8sf2sv" path="res://Assets/9p.png" id="4_vt647"]
@@ -45,10 +46,10 @@
 [ext_resource type="Texture2D" uid="uid://ch3wkgs4m064o" path="res://Assets/stairs/schody_na_dół_prawe.png" id="38_6ik8u"]
 [ext_resource type="Texture2D" uid="uid://dnbpfctnux361" path="res://Assets/stairs/schody na dół lewe.png" id="39_5jhku"]
 [ext_resource type="PackedScene" uid="uid://b10ojsbiphspy" path="res://Main menu/MainMenu.tscn" id="40_jgm13"]
-[ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
-[ext_resource type="PackedScene" path="res://scenes/interactive_objects/placement_surface.tscn" id="placement_surface"]
 [ext_resource type="PackedScene" path="res://scenes/game_over_overlay.tscn" id="game_over_overlay"]
-[ext_resource type="PackedScene" path="res://Monster/monster.tscn" id="monster"]
+[ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
+[ext_resource type="PackedScene" uid="uid://bo3easq7q1tgn" path="res://Monster/monster.tscn" id="monster"]
+[ext_resource type="PackedScene" path="res://scenes/interactive_objects/placement_surface.tscn" id="placement_surface"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlxu"]
 size = Vector2(479, 120)
@@ -76,6 +77,17 @@ z_as_relative = false
 
 [node name="Player1Spawn" parent="MansionLayout" index="0" unique_id=811967878]
 position = Vector2(1840, -60)
+
+[node name="Candle_Room9_1" parent="MansionLayout/SmallRoom(5)" parent_id_path=PackedInt32Array(569955723, 763627892) index="0" unique_id=133736225]
+z_index = 2
+position = Vector2(480, 480)
+script = ExtResource("3_tscqe")
+item_kind = "candle"
+item_label = "Candle"
+shared_object_id = "mansion_candle_room_9_1"
+
+[node name="Ladder(17-22)" parent="MansionLayout" index="32" unique_id=187015136]
+position = Vector2(2852, 2550)
 
 [node name="ClosedSprite" parent="MansionLayout/Trapdoor(10-17)/FloorEndpoint" index="0"]
 visible = false
@@ -264,6 +276,9 @@ position = Vector2(5241, 2586)
 
 [node name="Door(26-27)" parent="MansionLayout/Doors" index="18" unique_id=323283891]
 position = Vector2(4280, 3126)
+
+[node name="DoorL" parent="MansionLayout/Doors/Door(26-27)" index="0" unique_id=285493679]
+position = Vector2(-59, -84)
 
 [node name="CollisionShape2D" parent="MansionLayout/Doors/Door(26-27)/InteractionArea" parent_id_path=PackedInt32Array(569955723, 323283891, 950921253) index="0" unique_id=1904547995]
 position = Vector2(101, 0)
@@ -911,7 +926,7 @@ position = Vector2(-142.50035, 220.24974)
 [node name="GameSession" type="Node" parent="." unique_id=882710083]
 script = ExtResource("1_a75qt")
 
-[node name="GameOverOverlay" parent="." instance=ExtResource("game_over_overlay")]
+[node name="GameOverOverlay" parent="." unique_id=1305424399 instance=ExtResource("game_over_overlay")]
 
 [node name="SplitScreenManager2" type="Control" parent="." unique_id=981131928]
 layout_mode = 3
@@ -947,8 +962,7 @@ position = Vector2(204, 978)
 floor_max_angle = 0.7853982
 player_id = 1
 
-[node name="Monster" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" instance=ExtResource("monster")]
-player_id = 1
+[node name="Monster" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=1363447766 instance=ExtResource("monster")]
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=812873534]
 script = ExtResource("6_vt647")
@@ -982,7 +996,7 @@ z_index = -1
 z_index = 3
 player_id = 2
 
-[node name="Monster" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" instance=ExtResource("monster")]
+[node name="Monster" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=886915902 instance=ExtResource("monster")]
 player_id = 2
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1634118180]

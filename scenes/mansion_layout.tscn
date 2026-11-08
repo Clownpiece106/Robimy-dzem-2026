@@ -183,6 +183,9 @@ position = Vector2(760, 1080)
 room_id = "Grand room (8)"
 room_width = 2560.0
 
+[node name="MonsterSpawn" type="Marker2D" parent="GrandRoom(8)"]
+position = Vector2(1280, 480)
+
 [node name="MediumRoom(7)" parent="." unique_id=562048639 instance=ExtResource("2")]
 position = Vector2(-1160, 1080)
 room_id = "Medium Room (7)"
