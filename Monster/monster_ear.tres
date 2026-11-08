@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dehdcwka06b4"]
+
+[ext_resource type="Texture2D" uid="uid://gjkoeo4y4n7b" path="res://Monster/ear monster.png" id="1_fbhiu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4eqt"]
+atlas = ExtResource("1_fbhiu")
+region = Rect2(0, 0, 765, 1137)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4kgg"]
+atlas = ExtResource("1_fbhiu")
+region = Rect2(765, 0, 765, 1137)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bx1i"]
+atlas = ExtResource("1_fbhiu")
+region = Rect2(1530, 0, 765, 1137)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4eqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4kgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bx1i")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]

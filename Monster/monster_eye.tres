@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://sro1swkw0w7b"]
+
+[ext_resource type="Texture2D" uid="uid://c2yofe12ipn5v" path="res://Monster/eye monster.png" id="1_nsjew"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_037sb"]
+atlas = ExtResource("1_nsjew")
+region = Rect2(0, 0, 797, 1090)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rge5u"]
+atlas = ExtResource("1_nsjew")
+region = Rect2(797, 0, 797, 1090)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2np0"]
+atlas = ExtResource("1_nsjew")
+region = Rect2(1594, 0, 797, 1090)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0nnc"]
+atlas = ExtResource("1_nsjew")
+region = Rect2(2391, 0, 797, 1090)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_037sb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rge5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2np0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0nnc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
