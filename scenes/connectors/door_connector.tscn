@@ -1,42 +1,24 @@
 [gd_scene format=3 uid="uid://byglwqrg37ual"]
 
 [ext_resource type="Script" uid="uid://dv2dapy5y7xdd" path="res://scripts/interactive_objects/mansion_door.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://c2q2i2s5hgeg" path="res://Assets/drzwi o.png" id="2_43jai"]
-[ext_resource type="Texture2D" uid="uid://bumkb0ai48gvw" path="res://Assets/drzwi z.png" id="3_8tk7x"]
 
 [sub_resource type="RectangleShape2D" id="shape"]
-size = Vector2(644, 120)
+size = Vector2(80, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vbbky"]
-size = Vector2(422, 122)
+size = Vector2(50, 122)
 
 [node name="DoorConnector" type="Node2D" unique_id=1317519370]
 script = ExtResource("1")
-text_door_open = ExtResource("2_43jai")
-text_door_closed = ExtResource("3_8tk7x")
-
-[node name="DoorL" type="Sprite2D" parent="." unique_id=1297530156]
-position = Vector2(-191, -97.999985)
-scale = Vector2(0.485, 0.25)
-texture = ExtResource("3_8tk7x")
-
-[node name="DoorR" type="Sprite2D" parent="." unique_id=1497941702]
-position = Vector2(229, -110)
-rotation = 3.1415927
-scale = Vector2(0.485, -0.25)
-texture = ExtResource("3_8tk7x")
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=950921253]
-position = Vector2(21, 0)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1904547995]
 shape = SubResource("shape")
 
 [node name="EnteringArea" type="Area2D" parent="." unique_id=386806270]
-position = Vector2(21, 0)
-collision_layer = 3
-collision_mask = 3
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnteringArea" unique_id=35840935]
 shape = SubResource("RectangleShape2D_vbbky")
