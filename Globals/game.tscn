@@ -62,6 +62,9 @@ script = ExtResource("mansion_game")
 [node name="MansionLayout" parent="." unique_id=569955723 instance=ExtResource("4_nnuyt")]
 z_as_relative = false
 
+[node name="Player1Spawn" parent="MansionLayout/SmallRoom(10)" parent_id_path=PackedInt32Array(569955723, 1297926878) index="1" unique_id=811967878]
+position = Vector2(224, 390)
+
 [node name="ClosedSprite" parent="MansionLayout/Trapdoor(10-17)/FloorEndpoint" index="0"]
 position = Vector2(243, 109)
 
@@ -84,10 +87,12 @@ visible = true
 position = Vector2(0, -337)
 
 [node name="CollisionShape2D" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint/InteractionArea" index="0"]
-position = Vector2(0, -308)
+position = Vector2(0, -141)
+disabled = true
 
 [node name="CollisionShape2D" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint/EnteringArea" index="0"]
-position = Vector2(0, -295)
+position = Vector2(0, 20)
+disabled = true
 
 [node name="ArrivalMarker" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint" index="4"]
 position = Vector2(0, -308)
@@ -119,9 +124,11 @@ position = Vector2(0, -314)
 
 [node name="CollisionShape2D" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint/InteractionArea" index="0"]
 position = Vector2(0, -253)
+disabled = true
 
 [node name="CollisionShape2D" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint/EnteringArea" index="0"]
 position = Vector2(0, -253)
+disabled = true
 
 [node name="ArrivalMarker" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint" index="4"]
 position = Vector2(0, -285)
