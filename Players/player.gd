@@ -8,7 +8,7 @@ enum DepthPlane { BACKGROUND, FOREGROUND }
 const MAX_HEALTH := 3
 const SPEED := 420.0
 const GRV := 90.0
-const MAX_VSP := 300.0
+const MAX_VSP := 500.0
 const INTERACT_ACTION := "p%d_interact"
 const DROP_SLOT_ACTION := "inventory_drop_slot_%d"
 @onready var sprite = $Sprite

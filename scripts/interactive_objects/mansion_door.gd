@@ -86,7 +86,7 @@ func _draw() -> void:
 
 #Teleport the player to the other side
 func _on_body_entered(body):
-	if(body.is_in_group("Player")):
+	if(body.is_in_group("Player"))&&(is_open()):
 		if(body.position.x>position.x):
 			body.position.x = position.x - (interaction_collision_shape.shape.size.x/2)
 		else:

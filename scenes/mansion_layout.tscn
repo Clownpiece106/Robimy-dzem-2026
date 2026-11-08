@@ -30,6 +30,7 @@ script/source = "extends TileMapLayer
 
 func _ready():
 	visible = false
+	pass
 "
 
 [node name="Mansion" type="Node2D" unique_id=1829639342]
