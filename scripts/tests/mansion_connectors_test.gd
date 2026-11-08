@@ -14,6 +14,31 @@ func check() -> void:
 		await physics_frame
 	assert(map.player.is_on_floor() and second_map.player.is_on_floor())
 	var first_spawn := map.mansion.find_child("Player1Spawn", true, false) as Marker2D
+	for world in [map, second_map]:
+		for pair in ["Stairs_5_3", "Stairs_21_20", "Stairs_9_11", "Stairs_26_24"]:
+			var stairs: Node2D = world.mansion.get_node("Stairs/" + pair)
+			var up := stairs.get_node("UpEndpoint") as MansionStairs
+			var down := stairs.get_node("DownEndpoint") as MansionStairs
+			var lower_room: MansionRoom = world.mansion.get_node({"Stairs_5_3": "SmallRoom(5)", "Stairs_21_20": "MediumRoom(21)", "Stairs_9_11": "SmallRoom(9)", "Stairs_26_24": "MediumRoom(26)"}[pair])
+			var upper_room: MansionRoom = world.mansion.get_node({"Stairs_5_3": "GrandRoom(3)", "Stairs_21_20": "MediumRoom(20)", "Stairs_9_11": "MediumRoom(11)", "Stairs_26_24": "MediumRoom(24)"}[pair])
+			world.player.set_depth_plane(CoopPlayer.DepthPlane.FOREGROUND)
+			var previous_position: Vector2 = world.player.global_position
+			up._on_entering_area_body_entered(world.player)
+			assert(world.player.global_position == previous_position)
+			world.player.set_depth_plane(CoopPlayer.DepthPlane.BACKGROUND)
+			up._on_entering_area_body_entered(world.player)
+			assert(Rect2(upper_room.global_position, Vector2(upper_room.room_width, 540)).has_point(world.player.global_position))
+			assert(world.player.global_position.distance_to(down.global_position) > 85.0)
+			world.player.set_depth_plane(CoopPlayer.DepthPlane.FOREGROUND)
+			previous_position = world.player.global_position
+			down._on_entering_area_body_entered(world.player)
+			assert(world.player.global_position == previous_position)
+			world.player.set_depth_plane(CoopPlayer.DepthPlane.BACKGROUND)
+			down._on_entering_area_body_entered(world.player)
+			assert(Rect2(lower_room.global_position, Vector2(lower_room.room_width, 540)).has_point(world.player.global_position))
+		world.player.set_depth_plane(CoopPlayer.DepthPlane.FOREGROUND)
+	world.player.global_position = first_spawn.global_position
+	second_map.player.global_position = second_map.mansion.find_child("Player2Spawn", true, false).global_position
 	assert(not map.same_mansion_room(map.player.position, second_map.player.position))
 	assert(map.ghost.visible and map.ghost.position.is_equal_approx(second_map.player.position))
 	assert(second_map.ghost.visible and second_map.ghost.position.is_equal_approx(map.player.position))

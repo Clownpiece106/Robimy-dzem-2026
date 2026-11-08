@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactive_objects/mansion_stairs.gd" id="1"]
+[ext_resource type="Texture2D" path="res://Assets/stairs/schody na dół lewe.png" id="2"]
+
+[sub_resource type="RectangleShape2D" id="top_shape"]
+size = Vector2(90, 80)
+
+[sub_resource type="RectangleShape2D" id="interaction_shape"]
+size = Vector2(170, 120)
+
+[node name="StairConnector" type="Node2D"]
+
+[node name="UpEndpoint" type="Node2D" parent="."]
+script = ExtResource("1")
+destination = NodePath("../DownEndpoint/ArrivalMarker")
+automatic = true
+
+[node name="EnteringArea" type="Area2D" parent="UpEndpoint"]
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpEndpoint/EnteringArea"]
+shape = SubResource("top_shape")
+
+[node name="ArrivalMarker" type="Marker2D" parent="UpEndpoint"]
+
+[node name="DownEndpoint" type="Node2D" parent="."]
+script = ExtResource("1")
+destination = NodePath("../UpEndpoint/ArrivalMarker")
+automatic = true
+
+[node name="DownSprite" type="Sprite2D" parent="DownEndpoint"]
+position = Vector2(-10, -63)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("2")
+region_enabled = true
+region_rect = Rect2(170, 970, 620, 370)
+
+[node name="InteractionArea" type="Area2D" parent="DownEndpoint"]
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DownEndpoint/InteractionArea"]
+shape = SubResource("interaction_shape")
+
+[node name="ArrivalMarker" type="Marker2D" parent="DownEndpoint"]
+
+[connection signal="body_entered" from="UpEndpoint/EnteringArea" to="UpEndpoint" method="_on_entering_area_body_entered"]
+[connection signal="body_entered" from="DownEndpoint/InteractionArea" to="DownEndpoint" method="_on_entering_area_body_entered"]
