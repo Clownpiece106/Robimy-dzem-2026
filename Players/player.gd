@@ -14,8 +14,8 @@ const DROP_SLOT_ACTION := "inventory_drop_slot_%d"
 @onready var sprite = $Sprite
 var sprite_depth_offset := 0.0
 var sprite_depth_offset_target := 0.0
-var sprite_depth_offset_bg := 0.0
-var sprite_depth_offset_fg := 32.0
+var sprite_depth_offset_bg := -92.0
+var sprite_depth_offset_fg := -32.0
 var current_tilemap_ref : TileMapLayer
 var is_on_stairs := false
 
@@ -119,6 +119,16 @@ func _physics_process(delta):
 	velocity.x = (next_x - position.x) / delta
 	velocity.y = min(velocity.y+GRV, MAX_VSP)
 	move_and_slide()
+	
+	if(velocity.x>0):
+		sprite.play("default")
+		sprite.scale.x = 0.25
+	if(velocity.x<0):
+		sprite.play("default")
+		sprite.scale.x = -0.25
+	if(velocity.x==0):
+		sprite.stop()
+		#sprite.frame = 
 
 func _process_inventory_drop() -> void:
 	if session == null or session.inventory_actor_id != player_id:
