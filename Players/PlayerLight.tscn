@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dnjbm"]
 
-[node name="PlayerLight" type="CharacterBody2D" unique_id=1610304169]
+[node name="PlayerLight" type="CharacterBody2D" unique_id=1610304169 groups=["Player"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_ryju4")

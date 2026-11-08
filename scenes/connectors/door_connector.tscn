@@ -1,13 +1,27 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://byglwqrg37ual"]
 
-[ext_resource type="Script" path="res://scripts/interactive_objects/mansion_door.gd" id="1"]
+[ext_resource type="Script" uid="uid://dv2dapy5y7xdd" path="res://scripts/interactive_objects/mansion_door.gd" id="1"]
+
 [sub_resource type="RectangleShape2D" id="shape"]
 size = Vector2(80, 120)
 
-[node name="DoorConnector" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vbbky"]
+size = Vector2(50, 122)
+
+[node name="DoorConnector" type="Node2D" unique_id=1317519370]
 script = ExtResource("1")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." unique_id=950921253]
 collision_mask = 0
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=1904547995]
 shape = SubResource("shape")
+
+[node name="EnteringArea" type="Area2D" parent="." unique_id=386806270]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnteringArea" unique_id=35840935]
+shape = SubResource("RectangleShape2D_vbbky")
+debug_color = Color(0.53669, 0.5646033, 0.20507315, 0.41960785)
+
+[connection signal="body_entered" from="EnteringArea" to="." method="_on_body_entered"]
