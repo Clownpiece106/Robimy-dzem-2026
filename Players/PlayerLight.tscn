@@ -8,6 +8,7 @@
 [node name="PlayerLight" type="CharacterBody2D" unique_id=1610304169 groups=["Player"]]
 collision_layer = 2
 collision_mask = 2
+floor_max_angle = 1.0471976
 script = ExtResource("1_ryju4")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=772893517]
