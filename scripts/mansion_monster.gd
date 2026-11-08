@@ -57,14 +57,11 @@ func _on_session_reset() -> void:
 	recovery_left = 0.0
 	patrol_link = {}
 	patrol_target = Vector2.INF
-	var spawn := map.mansion.find_child("Player%dSpawn" % player_id, true, false) as Marker2D
-	if spawn != null:
-		var room := map._room_at(map.to_local(spawn.global_position))
-		if room != null:
-			var bounds := Rect2(room.global_position, Vector2(room.room_width, 540.0))
-			global_position = Vector2(clampf(spawn.global_position.x + 760.0, bounds.position.x + 100.0, bounds.end.x - 100.0), bounds.position.y + 480.0)
-			return
-	global_position = player.global_position + Vector2(760.0, 0.0)
+	var spawn := map.mansion.get_node_or_null("GrandRoom(8)/MonsterSpawn") as Marker2D
+	if spawn == null:
+		push_error("Room 8 needs a MonsterSpawn marker")
+		return
+	global_position = spawn.global_position
 
 func _physics_process(delta: float) -> void:
 	if map == null or player == null:

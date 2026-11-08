@@ -11,6 +11,7 @@ extends Interactable
 @export var room_b: NodePath
 var session: GameSession
 @onready var interaction_collision_shape = $InteractionArea/CollisionShape2D
+@onready var blocker_shape: CollisionShape2D = $DoorBlocker/CollisionShape2D
 
 @export var text_door_open : Texture2D
 @export var text_door_closed : Texture2D
@@ -61,6 +62,7 @@ func _on_event(event_name: String, payload: Dictionary) -> void:
 
 func _update_visuals() -> void:
 	var texture := text_door_open if is_open() else text_door_closed
+	blocker_shape.set_deferred("disabled", is_open())
 	if door_l != null:
 		door_l.texture = texture
 	if door_r != null:

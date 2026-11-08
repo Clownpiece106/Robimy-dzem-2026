@@ -14,6 +14,11 @@ func check() -> void:
 	assert(first.monster != second.monster)
 	assert(first.monster.player == first.player and second.monster.player == second.player)
 	assert(first.monster.get_viewport() != second.monster.get_viewport())
+	for world in [first, second]:
+		var room_8 := world.mansion.get_node("GrandRoom(8)") as MansionRoom
+		var spawn := room_8.get_node("MonsterSpawn") as Marker2D
+		assert(world.monster.global_position == spawn.global_position)
+		assert(world._room_at(world.to_local(world.monster.global_position)) == room_8)
 	second.monster.set_physics_process(false)
 	var first_x := first.player.position.x
 	var second_x := second.player.position.x
@@ -85,5 +90,7 @@ func check() -> void:
 	session.reset()
 	assert(first.player.health == CoopPlayer.MAX_HEALTH)
 	assert(first.monster.recovery_left == 0.0)
+	for world in [first, second]:
+		assert(world.monster.global_position == world.mansion.get_node("GrandRoom(8)/MonsterSpawn").global_position)
 	print("PASS: separate monsters, connector routes, locked door, damage and recovery")
 	quit()

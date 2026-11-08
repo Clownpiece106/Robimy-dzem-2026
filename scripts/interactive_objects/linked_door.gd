@@ -3,6 +3,7 @@ extends Interactable
 
 var open := false
 var session: GameSession
+@onready var blocker_shape: CollisionShape2D = $DoorBlocker/CollisionShape2D
 
 func configure(game_session: GameSession) -> void:
 	session = game_session
@@ -38,11 +39,13 @@ func interact(player: CoopPlayer) -> void:
 
 func _on_session_reset() -> void:
 	open = false
+	blocker_shape.set_deferred("disabled", false)
 	queue_redraw()
 
 func _on_cross_map_event(event_name: String, payload: Dictionary) -> void:
 	if event_name == "door_unlocked":
 		open = true
+		blocker_shape.set_deferred("disabled", true)
 		print("Door unlocked by player %d using the shared key" % payload.get("source_player", 0))
 		queue_redraw()
 
