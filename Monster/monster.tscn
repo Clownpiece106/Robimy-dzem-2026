@@ -20,5 +20,4 @@ texture = ExtResource("2_4bnr3")
 position = Vector2(0, -152)
 scale = Vector2(0.4, 0.4)
 autoplay = "default"
-frame = 1
 frame_progress = 0.0015177043

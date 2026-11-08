@@ -44,8 +44,8 @@
 [ext_resource type="PackedScene" uid="uid://sbsga8y5e74d" path="res://Tp on touch/TpOnTouch.tscn" id="37_w7ctf"]
 [ext_resource type="Texture2D" uid="uid://ch3wkgs4m064o" path="res://Assets/stairs/schody_na_dół_prawe.png" id="38_6ik8u"]
 [ext_resource type="Texture2D" uid="uid://dnbpfctnux361" path="res://Assets/stairs/schody na dół lewe.png" id="39_5jhku"]
-[ext_resource type="PackedScene" uid="uid://b10ojsbiphspy" path="res://Main menu/MainMenu.tscn" id="40_jgm13"]
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
+[ext_resource type="PackedScene" uid="uid://bo3easq7q1tgn" path="res://Monster/monster.tscn" id="monster"]
 [ext_resource type="PackedScene" path="res://scenes/interactive_objects/placement_surface.tscn" id="placement_surface"]
 [ext_resource type="PackedScene" path="res://scenes/game_over_overlay.tscn" id="game_over_overlay"]
 [ext_resource type="PackedScene" path="res://Monster/monster.tscn" id="monster"]
@@ -947,8 +947,7 @@ position = Vector2(204, 978)
 floor_max_angle = 0.7853982
 player_id = 1
 
-[node name="Monster" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" instance=ExtResource("monster")]
-player_id = 1
+[node name="Monster" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=650244909 instance=ExtResource("monster")]
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=812873534]
 script = ExtResource("6_vt647")
@@ -982,7 +981,7 @@ z_index = -1
 z_index = 3
 player_id = 2
 
-[node name="Monster" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" instance=ExtResource("monster")]
+[node name="Monster" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=274149829 instance=ExtResource("monster")]
 player_id = 2
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player2ViewportContainer/Player2Viewport/MapInstance2" unique_id=1634118180]
@@ -1004,9 +1003,6 @@ offset_left = -2.0
 offset_right = 2.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
-
-[node name="MainMenu" parent="." unique_id=782438245 instance=ExtResource("40_jgm13")]
-visible = false
 
 [editable path="MansionLayout"]
 [editable path="MansionLayout/Ladder"]
