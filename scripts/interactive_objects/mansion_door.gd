@@ -12,6 +12,11 @@ extends Interactable
 var session: GameSession
 @onready var interaction_collision_shape = $InteractionArea/CollisionShape2D
 
+@export var text_door_open : Texture2D
+@export var text_door_closed : Texture2D
+@onready var door_l = $DoorL
+@onready var door_r = $DoorR
+
 func configure(s: GameSession) -> void:
 	session = s
 	if door_id.is_empty():
@@ -45,6 +50,13 @@ func connects_pair(a: Node, b: Node) -> bool:
 func interact(player: CoopPlayer) -> void:
 	if session != null:
 		session.toggle_mansion_door(door_id, player.player_id)
+	
+	if(is_open()):
+		door_l.texture = text_door_open
+		door_r.texture = text_door_open
+	else:
+		door_l.texture = text_door_closed
+		door_r.texture = text_door_closed
 
 func is_open() -> bool:
 	return session != null and session.get_mansion_door_state(door_id) == GameSession.DoorState.OPEN
@@ -55,14 +67,14 @@ func _on_event(event_name: String, payload: Dictionary) -> void:
 
 func _draw() -> void:
 	var state := initial_state if session == null else session.get_mansion_door_state(door_id)
-	var color := Color("#c49961")
+	var color := Color("c4996100")
 	var label := "CLOSED"
 	match state:
 		GameSession.DoorState.LOCKED:
-			color = Color("#a05d60")
+			color = Color("a05d6000")
 			label = "LOCKED"
 		GameSession.DoorState.OPEN:
-			color = Color("#79a887")
+			color = Color("79a88700")
 			label = "OPEN"
 	var frame := Rect2(-24, -110, 48, 110)
 	if state == GameSession.DoorState.OPEN:
@@ -76,11 +88,9 @@ func _draw() -> void:
 func _on_body_entered(body):
 	if(body.is_in_group("Player")):
 		if(body.position.x>position.x):
-			#Player is going from right to left
-			pass
+			body.position.x = position.x - (interaction_collision_shape.shape.size.x/2)
 		else:
-			#Player is going from left to right
-			pass
+			body.position.x = position.x + (interaction_collision_shape.shape.size.x/2)
 		#print(position)
 		#print(interaction_collision_shape.shape.size)
 		#print(str(position.x+interaction_collision_shape.shape.size.x))
