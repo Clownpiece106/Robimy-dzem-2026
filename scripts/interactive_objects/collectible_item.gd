@@ -58,6 +58,18 @@ func _ready() -> void:
 func _draw() -> void:
 	if get_node_or_null("Visual") != null:
 		return
-	var color := Color("#4fd1c5") if item_kind == "music_box" else Color("#f6ad55")
+	var color := Color("#f6ad55")
+	var icon := "C"
+	match item_kind:
+		"music_box":
+			color = Color("#4fd1c5")
+			icon = "M"
+		"key":
+			color = Color("#f4d35e")
+			icon = "K"
+		"ladder":
+			color = Color("#c09b6c")
+			icon = "L"
 	draw_rect(Rect2(-20.0, -40.0, 40.0, 40.0), color, true)
+	draw_string(ThemeDB.fallback_font, Vector2(-6.0, -12.0), icon, HORIZONTAL_ALIGNMENT_CENTER, 12.0, 16, Color("#252233"))
 	draw_string(ThemeDB.fallback_font, Vector2(-48.0, 20.0), item_label, HORIZONTAL_ALIGNMENT_CENTER, 96.0, 12, Color.WHITE)
