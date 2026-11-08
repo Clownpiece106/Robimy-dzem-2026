@@ -9,6 +9,7 @@ const MANSION_SCENE := preload("res://scenes/mansion_layout.tscn")
 var mansion: Node2D
 var mansion_rooms: Array[MansionRoom] = []
 var mansion_doors: Array[MansionDoor] = []
+var mansion_trapdoors: Array[MansionTrapdoor] = []
 const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
 
 @onready var bg_physics_tile_map := get_node_or_null("BgPhysicsTileMap") as TileMapLayer
@@ -82,7 +83,10 @@ func _create_world() -> void:
 	ghost.configure(GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2, session)
 
 func _spawn_in_attic() -> void:
-	var spawn := mansion.get_node("Attic/Player%dSpawn" % local_player_id) as Marker2D
+	var spawn := mansion.find_child("Player%dSpawn" % local_player_id, true, false) as Marker2D
+	if spawn == null:
+		push_error("Missing spawn marker for player %d" % local_player_id)
+		return
 	player.global_position = spawn.global_position
 	player.velocity = Vector2.ZERO
 	player.set_depth_plane(CoopPlayer.DepthPlane.FOREGROUND)
@@ -95,15 +99,20 @@ func _configure_layout() -> void:
 	fg_physics_tile_map = mansion.get_node_or_null("PhysicsTileMapFg") as TileMapLayer
 	mansion_rooms.clear()
 	mansion_doors.clear()
+	mansion_trapdoors.clear()
 	_collect_layout_nodes(mansion)
 	_apply_environment_appearance()
 	for door in mansion_doors:
 		door.configure(session)
+	for trapdoor in mansion_trapdoors:
+		trapdoor.configure(session)
 
 func _apply_environment_appearance() -> void:
 	var environment_material: Material = INVERT_ENVIRONMENT if local_player_id == GameSession.PLAYER_2 else null
 	for room in mansion_rooms:
 		room.material = environment_material
+	for trapdoor in mansion_trapdoors:
+		trapdoor.material = environment_material
 	for node_name in ["Background", "Floor", "BgPhysicsTileMap", "FgPhysicsTileMap"]:
 		var environment_node := get_node_or_null(node_name) as CanvasItem
 		if environment_node != null:
@@ -114,6 +123,8 @@ func _collect_layout_nodes(node: Node) -> void:
 		mansion_rooms.append(node as MansionRoom)
 	if node is MansionDoor:
 		mansion_doors.append(node as MansionDoor)
+	if node is MansionTrapdoor:
+		mansion_trapdoors.append(node as MansionTrapdoor)
 	for child in node.get_children():
 		_collect_layout_nodes(child)
 

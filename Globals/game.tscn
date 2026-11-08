@@ -17,10 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://caaqpgxov8f45" path="res://Assets/ceramiki/cer5.png" id="6_jgm13"]
 [ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="6_vt647"]
 [ext_resource type="Texture2D" uid="uid://cvfqsotqiigtd" path="res://Assets/ceramiki/cer4.png" id="7_2slqd"]
-[ext_resource type="Texture2D" uid="uid://000nnvl0iff5" path="res://Assets/klapa podloga z.png" id="7_7xlw3"]
 [ext_resource type="Texture2D" uid="uid://c5mk374devoow" path="res://Assets/stoliczek.png" id="7_whacr"]
 [ext_resource type="Texture2D" uid="uid://dgbssmeum5176" path="res://Assets/ceramiki/cer3.png" id="8_u3wr0"]
-[ext_resource type="Texture2D" uid="uid://bee5g40nt4e54" path="res://Assets/klapa sufit z.png" id="8_ylc3w"]
 [ext_resource type="Texture2D" uid="uid://272auy8x6wse" path="res://Assets/piedestał.png" id="8_ylx2x"]
 [ext_resource type="Texture2D" uid="uid://b1mvbe2bvds6a" path="res://Assets/ceramiki/cer2.png" id="9_4qlxu"]
 [ext_resource type="Texture2D" uid="uid://dw2ayl41oott1" path="res://Assets/lustro dlugie.png" id="9_7u5t8"]
@@ -49,11 +47,91 @@ size = Vector2(478, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qlxu"]
 size = Vector2(408, 122)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3a2vt"]
+size = Vector2(576, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jgm13"]
+size = Vector2(375, 122)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2slqd"]
+size = Vector2(477, 120)
+
 [node name="Game" type="Node2D" unique_id=199296077]
 script = ExtResource("mansion_game")
 
 [node name="MansionLayout" parent="." unique_id=569955723 instance=ExtResource("4_nnuyt")]
 z_as_relative = false
+
+[node name="Player1Spawn" parent="MansionLayout/SmallRoom(10)" parent_id_path=PackedInt32Array(569955723, 1297926878) index="1" unique_id=811967878]
+position = Vector2(224, 390)
+
+[node name="ClosedSprite" parent="MansionLayout/Trapdoor(10-17)/FloorEndpoint" index="0"]
+position = Vector2(243, 109)
+
+[node name="OpenSprite" parent="MansionLayout/Trapdoor(10-17)/FloorEndpoint" index="1"]
+visible = true
+position = Vector2(245, 62)
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(10-17)/FloorEndpoint/InteractionArea" index="0"]
+position = Vector2(245, 62)
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(10-17)/FloorEndpoint/EnteringArea" index="0"]
+position = Vector2(243, 48)
+
+[node name="ClosedSprite" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint" index="0"]
+visible = false
+position = Vector2(0, -337)
+
+[node name="OpenSprite" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint" index="1"]
+visible = true
+position = Vector2(0, -337)
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint/InteractionArea" index="0"]
+position = Vector2(0, -141)
+disabled = true
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint/EnteringArea" index="0"]
+position = Vector2(0, 20)
+disabled = true
+
+[node name="ArrivalMarker" parent="MansionLayout/Trapdoor(10-17)/CeilingEndpoint" index="4"]
+position = Vector2(0, -308)
+
+[node name="ClosedSprite" parent="MansionLayout/Trapdoor(16-25)/FloorEndpoint" index="0"]
+visible = false
+position = Vector2(227, 90)
+
+[node name="OpenSprite" parent="MansionLayout/Trapdoor(16-25)/FloorEndpoint" index="1"]
+visible = true
+position = Vector2(227, 37)
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(16-25)/FloorEndpoint/InteractionArea" index="0"]
+position = Vector2(227, 53)
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(16-25)/FloorEndpoint/EnteringArea" index="0"]
+position = Vector2(227, 53)
+
+[node name="CeilingEndpoint" parent="MansionLayout/Trapdoor(16-25)" parent_id_path=PackedInt32Array(569955723, 234764693) index="1"]
+position = Vector2(227, -20)
+
+[node name="ClosedSprite" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint" index="0"]
+visible = false
+position = Vector2(0, -314)
+
+[node name="OpenSprite" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint" index="1"]
+visible = true
+position = Vector2(0, -314)
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint/InteractionArea" index="0"]
+position = Vector2(0, -253)
+disabled = true
+
+[node name="CollisionShape2D" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint/EnteringArea" index="0"]
+position = Vector2(0, -253)
+disabled = true
+
+[node name="ArrivalMarker" parent="MansionLayout/Trapdoor(16-25)/CeilingEndpoint" index="4"]
+position = Vector2(0, -285)
 
 [node name="SmolRoomTemplateFlats" parent="MansionLayout" index="34" unique_id=1701449546]
 visible = false
@@ -557,30 +635,6 @@ position = Vector2(4810, 2435)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("6_1l6p8")
 
-[node name="trapdoor16" parent="MansionLayout/PlaneObjectsContainer" unique_id=903849003 instance=ExtResource("9_f235b")]
-z_index = 0
-position = Vector2(5771, 1906)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("7_7xlw3")
-
-[node name="trapdoor9" parent="MansionLayout/PlaneObjectsContainer" unique_id=1345931460 instance=ExtResource("9_f235b")]
-z_index = 0
-position = Vector2(4657, 1362)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("7_7xlw3")
-
-[node name="trapdoor25" parent="MansionLayout/PlaneObjectsContainer" unique_id=1914249822 instance=ExtResource("9_f235b")]
-z_index = 0
-position = Vector2(5771, 2421)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("8_ylc3w")
-
-[node name="trapdoor17" parent="MansionLayout/PlaneObjectsContainer" unique_id=1712586201 instance=ExtResource("9_f235b")]
-z_index = 0
-position = Vector2(4521, 1899)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("8_ylc3w")
-
 [node name="mirror_long" parent="MansionLayout/PlaneObjectsContainer" unique_id=1887773404 instance=ExtResource("9_f235b")]
 z_index = 0
 position = Vector2(3087.0002, 1950.0001)
@@ -794,3 +848,5 @@ color = Color(0, 0, 0, 1)
 [editable path="MansionLayout/Doors/Door(5->6)"]
 [editable path="MansionLayout/Doors/Door(8->9)2"]
 [editable path="MansionLayout/Doors/Door(26-27)"]
+[editable path="MansionLayout/Trapdoor(10-17)"]
+[editable path="MansionLayout/Trapdoor(16-25)"]
