@@ -1,12 +1,24 @@
 [gd_scene format=3 uid="uid://bo3easq7q1tgn"]
 
-[ext_resource type="Script" path="res://scripts/mansion_monster.gd" id="1_4x6lt"]
+[ext_resource type="Script" uid="uid://bkb7xmwoy7mc5" path="res://scripts/mansion_monster.gd" id="1_4x6lt"]
 [ext_resource type="Texture2D" uid="uid://cmjfk5velwc04" path="res://Monster/placeholder.png" id="2_4bnr3"]
+[ext_resource type="SpriteFrames" uid="uid://sro1swkw0w7b" path="res://Monster/monster_eye.tres" id="3_o5aeo"]
+[ext_resource type="SpriteFrames" uid="uid://dehdcwka06b4" path="res://Monster/monster_ear.tres" id="3_w5udm"]
 
 [node name="Monster" type="Node2D" unique_id=1824643736]
 z_index = 3
 script = ExtResource("1_4x6lt")
+anim_eye = ExtResource("3_o5aeo")
+anim_ear = ExtResource("3_w5udm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=304742424]
-scale = Vector2(2.0, 2.0)
+visible = false
+scale = Vector2(2, 2)
 texture = ExtResource("2_4bnr3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1676306321]
+position = Vector2(0, -152)
+scale = Vector2(0.4, 0.4)
+autoplay = "default"
+frame = 1
+frame_progress = 0.0015177043

@@ -11,6 +11,10 @@ const ARRIVAL_DISTANCE := 18.0
 
 @export var player_id := 1
 
+@export var anim_eye : SpriteFrames
+@export var anim_ear : SpriteFrames
+@onready var animated_sprite_2d = $AnimatedSprite2D
+
 var map: MapInstance
 var player: CoopPlayer
 var session: GameSession
@@ -27,6 +31,14 @@ func configure(owning_map: MapInstance, target: CoopPlayer, game_session: GameSe
 	player = target
 	session = game_session
 	player_id = target.player_id
+	if(player_id==1):
+		animated_sprite_2d.sprite_frames = anim_ear
+		animated_sprite_2d.play("default")
+		print("set to ear")
+	if(player_id==2):
+		animated_sprite_2d.sprite_frames = anim_eye
+		animated_sprite_2d.play("default")
+		print("set to eye")
 	_rebuild_links()
 	if not session.session_reset.is_connected(_on_session_reset):
 		session.session_reset.connect(_on_session_reset)
@@ -74,6 +86,11 @@ func _physics_process(delta: float) -> void:
 		target = patrol_target
 		link = patrol_link
 	_move_toward(target, speed * delta)
+	#print(target.x)
+	if(target.x>position.x):
+		animated_sprite_2d.scale.x = 0.4
+	else:
+		animated_sprite_2d.scale.x = -0.4
 	if not link.is_empty() and global_position.distance_to(link.entry) <= ARRIVAL_DISTANCE:
 		_traverse(link)
 		patrol_target = Vector2.INF
