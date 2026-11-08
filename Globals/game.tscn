@@ -915,6 +915,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [editable path="MansionLayout"]
+[editable path="MansionLayout/Ladder"]
 [editable path="MansionLayout/Trapdoor(10-17)"]
 [editable path="MansionLayout/Trapdoor(16-25)"]
 [editable path="MansionLayout/Doors/Door(1->3)"]

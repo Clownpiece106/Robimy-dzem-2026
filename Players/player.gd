@@ -85,7 +85,7 @@ func set_depth_plane(next_plane: DepthPlane) -> void:
 
 func publish_position() -> void:
 	if session != null:
-		session.update_player_state(player_id, position, sprite.position.y, z_index)
+		session.update_player_state(player_id, position, sprite.position.y, z_index, sprite.animation, sprite.frame, sprite.frame_progress, sprite.is_playing(), sprite.scale.x)
 
 func _process(_delta: float) -> void:
 	if not is_configured:
