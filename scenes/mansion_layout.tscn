@@ -173,14 +173,6 @@ position = Vector2(4280, 1080)
 room_id = "Small Room (10)"
 room_width = 960.0
 
-[node name="Ladder_Room10_1" type="Node2D" parent="SmallRoom(10)" unique_id=1646619879]
-z_index = 2
-position = Vector2(480, 480)
-script = ExtResource("11_collectible")
-item_kind = "ladder"
-item_label = "Ladder"
-shared_object_id = "mansion_ladder_room_10_1"
-
 [node name="SmallRoom(9)" parent="." unique_id=1599503778 instance=ExtResource("2")]
 position = Vector2(3320, 1080)
 room_id = "Small Room (9)"
@@ -229,14 +221,6 @@ shared_object_id = "mansion_candle_room_20_1"
 position = Vector2(-3080, 1620)
 room_id = "Medium Room (21)"
 room_width = 1920.0
-
-[node name="Ladder_Room21_1" type="Node2D" parent="MediumRoom(21)" unique_id=1359676843]
-z_index = 2
-position = Vector2(960, 480)
-script = ExtResource("11_collectible")
-item_kind = "ladder"
-item_label = "Ladder"
-shared_object_id = "mansion_ladder_room_21_1"
 
 [node name="SmallRoom(19)" parent="." unique_id=949248559 instance=ExtResource("2")]
 position = Vector2(-1160, 1620)
@@ -291,14 +275,6 @@ script = ExtResource("11_collectible")
 item_kind = "candle"
 item_label = "Candle"
 shared_object_id = "mansion_candle_room_23_1"
-
-[node name="Ladder_Room23_1" type="Node2D" parent="MediumRoom(23)" unique_id=693481621]
-z_index = 2
-position = Vector2(1020, 480)
-script = ExtResource("11_collectible")
-item_kind = "ladder"
-item_label = "Ladder"
-shared_object_id = "mansion_ladder_room_23_1"
 
 [node name="SmallRoom(22)" parent="." unique_id=2085050354 instance=ExtResource("2")]
 position = Vector2(2361, 2160)

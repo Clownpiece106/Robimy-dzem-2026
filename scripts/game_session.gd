@@ -134,8 +134,17 @@ func place_inventory_item(placement_id: String, item_kind: String, actor_id: int
 func get_placed_item(placement_id: String) -> String:
 	return str(placed_items.get(placement_id, ""))
 
-func update_player_state(player_id: int, map_position: Vector2, sprite_offset_y: float, draw_order: int) -> void:
-	player_states[player_id] = {"position": map_position, "sprite_offset_y": sprite_offset_y, "draw_order": draw_order}
+func update_player_state(player_id: int, map_position: Vector2, sprite_offset_y: float, draw_order: int, animation: StringName, frame: int, frame_progress: float, is_playing: bool, facing_scale_x: float) -> void:
+	player_states[player_id] = {
+		"position": map_position,
+		"sprite_offset_y": sprite_offset_y,
+		"draw_order": draw_order,
+		"animation": animation,
+		"frame": frame,
+		"frame_progress": frame_progress,
+		"playing": is_playing,
+		"facing_scale_x": facing_scale_x,
+	}
 
 func get_player_state(player_id: int) -> Dictionary:
 	return player_states.get(player_id, {})

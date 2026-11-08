@@ -924,6 +924,7 @@ color = Color(0, 0, 0, 1)
 [node name="MainMenu" parent="." unique_id=782438245 instance=ExtResource("40_jgm13")]
 
 [editable path="MansionLayout"]
+[editable path="MansionLayout/Ladder"]
 [editable path="MansionLayout/Trapdoor(10-17)"]
 [editable path="MansionLayout/Trapdoor(16-25)"]
 [editable path="MansionLayout/Doors/Door(1->3)"]
