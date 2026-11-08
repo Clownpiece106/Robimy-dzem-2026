@@ -82,14 +82,7 @@ item_kind = "music_box"
 item_label = "Music Box"
 shared_object_id = "mansion_music_box_room_0_1"
 
-[node name="Door(1->3)" parent="." unique_id=102103879 instance=ExtResource("5")]
-position = Vector2(1400, 390)
-door_id = "left"
-initial_state = 0
-room_a = NodePath("../GrandRoom(3)")
-room_b = NodePath("../SmallRoom(1)")
-
-[node name="Player2Spawn" type="Marker2D" parent="Attic" unique_id=707286715]
+[node name="Player2Spawn2" type="Marker2D" parent="Attic" unique_id=707286715]
 position = Vector2(1300, 480)
 
 [node name="Key" type="Node2D" parent="Attic" unique_id=1397336827]
@@ -335,90 +328,6 @@ item_kind = "music_box"
 item_label = "Music Box"
 shared_object_id = "mansion_music_box_room_27_1"
 
-[node name="Door(7->20)" parent="." unique_id=1752691898 instance=ExtResource("5")]
-position = Vector2(-1160, 1470)
-door_id = "door_7_20"
-initial_state = 0
-room_a = NodePath("../MediumRoom(7)")
-room_b = NodePath("../MediumRoom(20)")
-
-[node name="Door(7->8)" parent="." unique_id=715724885 instance=ExtResource("5")]
-position = Vector2(760, 1470)
-door_id = "door_7_8"
-initial_state = 0
-room_a = NodePath("../MediumRoom(7)")
-room_b = NodePath("../GrandRoom(8)")
-
-[node name="Door(8->9)" parent="." unique_id=1637922177 instance=ExtResource("5")]
-position = Vector2(3320, 1470)
-door_id = "door_8_9"
-initial_state = 0
-room_a = NodePath("../GrandRoom(8)")
-room_b = NodePath("../SmallRoom(9)")
-
-[node name="Door(8->9)2" parent="." unique_id=1197485567 instance=ExtResource("5")]
-position = Vector2(4280, 1470)
-door_id = "door_9_10"
-initial_state = 0
-room_a = NodePath("../SmallRoom(9)")
-room_b = NodePath("../SmallRoom(10)")
-
-[node name="Door(18-19)" parent="." unique_id=1835526635 instance=ExtResource("5")]
-position = Vector2(-200, 2010)
-door_id = "door_18_19"
-initial_state = 0
-room_a = NodePath("../GrandRoom(18)")
-room_b = NodePath("../SmallRoom(19)")
-
-[node name="Door(18-17)" parent="." unique_id=767194055 instance=ExtResource("5")]
-position = Vector2(2360, 2010)
-door_id = "door_18_17"
-initial_state = 0
-room_a = NodePath("../GrandRoom(18)")
-room_b = NodePath("../GrandRoom(17)")
-
-[node name="Door(17-16)" parent="." unique_id=1971614695 instance=ExtResource("5")]
-position = Vector2(4920, 2010)
-door_id = "door_17_16"
-initial_state = 0
-room_a = NodePath("../GrandRoom(17)")
-room_b = NodePath("../MediumRoom(16)")
-
-[node name="Door(16-15)" parent="." unique_id=1609482540 instance=ExtResource("5")]
-position = Vector2(6840, 2010)
-door_id = "door_16_15"
-initial_state = 0
-room_a = NodePath("../MediumRoom(16)")
-room_b = NodePath("../SmallRoom(15)")
-
-[node name="Door(22-23)" parent="." unique_id=928516491 instance=ExtResource("5")]
-position = Vector2(2361, 2550)
-door_id = "door_22_23"
-initial_state = 0
-room_a = NodePath("../SmallRoom(22)")
-room_b = NodePath("../MediumRoom(23)")
-
-[node name="Door(22-24)" parent="." unique_id=374990970 instance=ExtResource("5")]
-position = Vector2(3321, 2550)
-door_id = "door_22_24"
-initial_state = 0
-room_a = NodePath("../SmallRoom(22)")
-room_b = NodePath("../MediumRoom(24)")
-
-[node name="Door(24-25)" parent="." unique_id=1156024092 instance=ExtResource("5")]
-position = Vector2(5241, 2550)
-door_id = "door_24_25"
-initial_state = 0
-room_a = NodePath("../SmallRoom(25)")
-room_b = NodePath("../MediumRoom(24)")
-
-[node name="Door(26-27)" parent="." unique_id=1676644975 instance=ExtResource("5")]
-position = Vector2(4280, 3090)
-door_id = "door_26_27"
-initial_state = 0
-room_a = NodePath("../MediumRoom(26)")
-room_b = NodePath("../SmallRoom(27)")
-
 [node name="Ladder(7-19)" parent="." unique_id=1815285540 instance=ExtResource("6")]
 position = Vector2(-680, 2010)
 
@@ -507,7 +416,7 @@ room_b = NodePath("../../GrandRoom(3)")
 [node name="Doors" type="Node2D" parent="." unique_id=1653110097]
 position = Vector2(0, 33)
 
-[node name="Door(1->3)" parent="Doors" unique_id=102103879 instance=ExtResource("5")]
+[node name="Door(1->3)" parent="Doors" unique_id=1301379231 instance=ExtResource("5")]
 position = Vector2(1400, 390)
 door_id = "left"
 initial_state = 0
@@ -555,84 +464,84 @@ initial_state = 0
 room_a = NodePath("../../MediumRoom(11)")
 room_b = NodePath("../../SmallRoom(13)")
 
-[node name="Door(7->20)" parent="Doors" unique_id=1752691898 instance=ExtResource("5")]
+[node name="Door(7->20)" parent="Doors" unique_id=805813747 instance=ExtResource("5")]
 position = Vector2(-1160, 1470)
 door_id = "door_7_20"
 initial_state = 0
 room_a = NodePath("../../MediumRoom(7)")
 room_b = NodePath("../../MediumRoom(20)")
 
-[node name="Door(7->8)" parent="Doors" unique_id=715724885 instance=ExtResource("5")]
+[node name="Door(7->8)" parent="Doors" unique_id=1682108471 instance=ExtResource("5")]
 position = Vector2(760, 1470)
 door_id = "door_7_8"
 initial_state = 0
 room_a = NodePath("../../MediumRoom(7)")
 room_b = NodePath("../../GrandRoom(8)")
 
-[node name="Door(8->9)" parent="Doors" unique_id=1637922177 instance=ExtResource("5")]
+[node name="Door(8->9)" parent="Doors" unique_id=34608012 instance=ExtResource("5")]
 position = Vector2(3320, 1470)
 door_id = "door_8_9"
 initial_state = 0
 room_a = NodePath("../../GrandRoom(8)")
 room_b = NodePath("../../SmallRoom(9)")
 
-[node name="Door(8->9)2" parent="Doors" unique_id=1197485567 instance=ExtResource("5")]
+[node name="Door(8->9)2" parent="Doors" unique_id=63810849 instance=ExtResource("5")]
 position = Vector2(4280, 1470)
 door_id = "door_9_10"
 initial_state = 0
 room_a = NodePath("../../SmallRoom(9)")
 room_b = NodePath("../../SmallRoom(10)")
 
-[node name="Door(18-19)" parent="Doors" unique_id=1835526635 instance=ExtResource("5")]
+[node name="Door(18-19)" parent="Doors" unique_id=1990005127 instance=ExtResource("5")]
 position = Vector2(-200, 2010)
 door_id = "door_18_19"
 initial_state = 0
 room_a = NodePath("../../GrandRoom(18)")
 room_b = NodePath("../../SmallRoom(19)")
 
-[node name="Door(18-17)" parent="Doors" unique_id=767194055 instance=ExtResource("5")]
+[node name="Door(18-17)" parent="Doors" unique_id=84060847 instance=ExtResource("5")]
 position = Vector2(2360, 2010)
 door_id = "door_18_17"
 initial_state = 0
 room_a = NodePath("../../GrandRoom(18)")
 room_b = NodePath("../../GrandRoom(17)")
 
-[node name="Door(17-16)" parent="Doors" unique_id=1971614695 instance=ExtResource("5")]
+[node name="Door(17-16)" parent="Doors" unique_id=559847420 instance=ExtResource("5")]
 position = Vector2(4920, 2010)
 door_id = "door_17_16"
 initial_state = 0
 room_a = NodePath("../../GrandRoom(17)")
 room_b = NodePath("../../MediumRoom(16)")
 
-[node name="Door(16-15)" parent="Doors" unique_id=1609482540 instance=ExtResource("5")]
+[node name="Door(16-15)" parent="Doors" unique_id=1128632025 instance=ExtResource("5")]
 position = Vector2(6840, 2010)
 door_id = "door_16_15"
 initial_state = 0
 room_a = NodePath("../../MediumRoom(16)")
 room_b = NodePath("../../SmallRoom(15)")
 
-[node name="Door(22-23)" parent="Doors" unique_id=928516491 instance=ExtResource("5")]
+[node name="Door(22-23)" parent="Doors" unique_id=962720564 instance=ExtResource("5")]
 position = Vector2(2361, 2550)
 door_id = "door_22_23"
 initial_state = 0
 room_a = NodePath("../../SmallRoom(22)")
 room_b = NodePath("../../MediumRoom(23)")
 
-[node name="Door(22-24)" parent="Doors" unique_id=374990970 instance=ExtResource("5")]
+[node name="Door(22-24)" parent="Doors" unique_id=929368135 instance=ExtResource("5")]
 position = Vector2(3321, 2550)
 door_id = "door_22_24"
 initial_state = 0
 room_a = NodePath("../../SmallRoom(22)")
 room_b = NodePath("../../MediumRoom(24)")
 
-[node name="Door(24-25)" parent="Doors" unique_id=1156024092 instance=ExtResource("5")]
+[node name="Door(24-25)" parent="Doors" unique_id=1402469570 instance=ExtResource("5")]
 position = Vector2(5241, 2550)
 door_id = "door_24_25"
 initial_state = 0
 room_a = NodePath("../../SmallRoom(25)")
 room_b = NodePath("../../MediumRoom(24)")
 
-[node name="Door(26-27)" parent="Doors" unique_id=1676644975 instance=ExtResource("5")]
+[node name="Door(26-27)" parent="Doors" unique_id=323283891 instance=ExtResource("5")]
 position = Vector2(4280, 3090)
 door_id = "door_26_27"
 initial_state = 0
