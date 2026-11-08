@@ -31,11 +31,16 @@ func toggle_mansion_door(id: String, actor_id: int) -> void:
 	if not mansion_doors.has(id):
 		return
 	var state := get_mansion_door_state(id)
-	if state == DoorState.LOCKED and not has_inventory_item("key"):
-		print("P%d needs a key to open %s" % [actor_id, id])
-		return
+	var key_slot := -1
+	if state == DoorState.LOCKED:
+		key_slot = find_inventory_slot("key")
+		if key_slot == -1:
+			print("P%d needs a key to open %s" % [actor_id, id])
+			return
 	var next_state := DoorState.CLOSED if state == DoorState.OPEN else DoorState.OPEN
 	mansion_doors[id] = next_state
+	if key_slot >= 0:
+		take_inventory_slot(key_slot)
 	emit_cross_map_event("mansion_door_changed", {"door_id": id, "state": next_state, "source_player": actor_id})
 
 var inventory_slots: Array[Dictionary] = [{}, {}, {}]
@@ -61,7 +66,7 @@ func collect_shared_collectible(collectible_id: String, item: Dictionary, actor_
 		collectible_collected.emit(collectible_id)
 	return slot_index
 
-func drop_inventory_slot(slot_index: int) -> Dictionary:
+func take_inventory_slot(slot_index: int) -> Dictionary:
 	if slot_index < 0 or slot_index >= INVENTORY_SLOT_COUNT or inventory_slots[slot_index].is_empty():
 		return {}
 	var item := inventory_slots[slot_index]
@@ -76,10 +81,13 @@ func drop_shared_collectible(item: Dictionary, world_position: Vector2) -> Strin
 	return collectible_id
 
 func has_inventory_item(item_kind: String) -> bool:
-	for item in inventory_slots:
-		if item.get("kind", "") == item_kind:
-			return true
-	return false
+	return find_inventory_slot(item_kind) >= 0
+
+func find_inventory_slot(item_kind: String) -> int:
+	for slot_index in INVENTORY_SLOT_COUNT:
+		if inventory_slots[slot_index].get("kind", "") == item_kind:
+			return slot_index
+	return -1
 
 func update_player_state(player_id: int, map_position: Vector2, sprite_offset_y: float, draw_order: int) -> void:
 	player_states[player_id] = {"position": map_position, "sprite_offset_y": sprite_offset_y, "draw_order": draw_order}

@@ -31,7 +31,7 @@ func can_interact(_player: CoopPlayer) -> bool:
 func interact(player: CoopPlayer) -> void:
 	if not can_interact(player):
 		return
-	if not session.has_inventory_item("key"):
+	if session.take_inventory_slot(session.find_inventory_slot("key")).is_empty():
 		print("P%d needs a key to unlock %s" % [player.player_id, name])
 		return
 	session.emit_cross_map_event("door_unlocked", {"source_player": player.player_id})

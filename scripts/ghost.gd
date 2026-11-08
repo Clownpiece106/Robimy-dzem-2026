@@ -3,13 +3,11 @@ extends Node2D
 
 var source_player_id: int
 var session: GameSession
-var map_instance: Node
 var sprite_offset_y := 0.0
 
-func configure(id: int, game_session: GameSession, owning_map: Node) -> void:
+func configure(id: int, game_session: GameSession) -> void:
 	source_player_id = id
 	session = game_session
-	map_instance = owning_map
 	# Read both players' positions after movement and interactions for this frame.
 	process_priority = 1
 	visible = false
@@ -23,7 +21,7 @@ func _process(_delta: float) -> void:
 	position = state.position
 	sprite_offset_y = state.sprite_offset_y
 	z_index = state.draw_order
-	visible = map_instance.same_mansion_room(map_instance.player.position, position)
+	visible = true
 	queue_redraw()
 
 func _draw() -> void:

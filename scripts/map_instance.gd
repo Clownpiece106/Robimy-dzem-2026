@@ -38,7 +38,7 @@ func configure_existing(game_session: GameSession, owning_player_id: int) -> voi
 	player.configure_for_map(local_player_id, self, session)
 	player.publish_position()
 	ghost = get_node("OtherPlayerGhost") as CoopGhost
-	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
+	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session)
 	lever = get_node_or_null("Lever") as LinkedLever
 	if lever != null:
 		lever.configure(session)
@@ -58,7 +58,7 @@ func configure_mansion(game_session: GameSession, owning_player_id: int) -> void
 	player.configure_for_map(local_player_id, self, session)
 	_spawn_in_attic()
 	ghost = get_node("OtherPlayerGhost") as CoopGhost
-	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session, self)
+	ghost.configure(GameSession.PLAYER_2 if local_player_id == GameSession.PLAYER_1 else GameSession.PLAYER_1, session)
 	set_camera(get_node("Camera2D") as Camera2D)
 
 func _create_world() -> void:
@@ -79,7 +79,7 @@ func _create_world() -> void:
 	ghost = CoopGhost.new()
 	ghost.name = "Player%dGhost" % (GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2)
 	add_child(ghost)
-	ghost.configure(GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2, session, self)
+	ghost.configure(GameSession.PLAYER_1 if local_player_id == GameSession.PLAYER_2 else GameSession.PLAYER_2, session)
 
 func _spawn_in_attic() -> void:
 	var spawn := mansion.get_node("Attic/Player%dSpawn" % local_player_id) as Marker2D

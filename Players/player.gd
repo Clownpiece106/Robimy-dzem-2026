@@ -113,7 +113,7 @@ func _process_inventory_drop() -> void:
 		return
 	for slot_index in GameSession.INVENTORY_SLOT_COUNT:
 		if Input.is_action_just_pressed(DROP_SLOT_ACTION % (slot_index + 1)):
-			var item := session.drop_inventory_slot(slot_index)
+			var item := session.take_inventory_slot(slot_index)
 			if item.is_empty():
 				print("P%d tried to drop empty inventory slot %d" % [player_id, slot_index + 1])
 				return
