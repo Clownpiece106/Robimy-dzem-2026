@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://sbsga8y5e74d"]
+
+[ext_resource type="Script" uid="uid://cty5m3yqtqf4r" path="res://Tp on touch/tp_on_touch.gd" id="1_n8lgg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yeiif"]
+size = Vector2(42, 74)
+
+[node name="TpOnTouch" type="Area2D" unique_id=189540670]
+script = ExtResource("1_n8lgg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=179372804]
+shape = SubResource("RectangleShape2D_yeiif")
+
+[node name="Target" type="Marker2D" parent="." unique_id=1090146913]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
