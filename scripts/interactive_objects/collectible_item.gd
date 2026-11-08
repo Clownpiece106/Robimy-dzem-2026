@@ -19,9 +19,10 @@ const ITEM_VISUAL_SCALE := Vector2(0.5, 0.5)
 
 var collected := false
 var spawned_at_runtime := false
+var available_to_local_player := true
 
 func interact(player: CoopPlayer) -> void:
-	if collected or player.session == null:
+	if player.session == null or not can_interact(player):
 		return
 	var slot_index := player.session.collect_shared_collectible(shared_object_id, {
 		"kind": item_kind,
@@ -41,13 +42,29 @@ func set_collected_from_session() -> void:
 
 func reset_from_session() -> void:
 	collected = false
-	visible = true
+	visible = available_to_local_player
 	var interaction_area := get_node_or_null("InteractionArea") as Area2D
 	if interaction_area != null:
-		interaction_area.set_deferred("monitorable", true)
+		interaction_area.set_deferred("monitorable", available_to_local_player)
 
-func can_interact(_player: CoopPlayer) -> bool:
-	return not collected
+func can_interact(player: CoopPlayer) -> bool:
+	return not collected and available_to_local_player and _can_player_pick_up(player.player_id)
+
+func configure_for_local_player(local_player_id: int) -> void:
+	available_to_local_player = _can_player_pick_up(local_player_id)
+	visible = not collected and available_to_local_player
+	var interaction_area := get_node_or_null("InteractionArea") as Area2D
+	if interaction_area != null:
+		interaction_area.set_deferred("monitorable", not collected and available_to_local_player)
+
+func _can_player_pick_up(player_id: int) -> bool:
+	match item_kind:
+		"candle":
+			return player_id == GameSession.PLAYER_1
+		"music_box":
+			return player_id == GameSession.PLAYER_2
+		_:
+			return true
 
 func build_runtime_nodes() -> void:
 	if get_node_or_null("InteractionArea") == null:

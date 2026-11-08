@@ -26,9 +26,19 @@ func configure(game_session: GameSession) -> void:
 func can_interact(player: CoopPlayer) -> bool:
 	return (
 		player.session != null
+		and _can_player_place(player.player_id)
 		and player.session.get_placed_item(placement_id).is_empty()
 		and player.session.has_inventory_item(accepted_item_kind)
 	)
+
+func _can_player_place(player_id: int) -> bool:
+	match accepted_item_kind:
+		"candle":
+			return player_id == GameSession.PLAYER_2
+		"music_box":
+			return player_id == GameSession.PLAYER_1
+		_:
+			return false
 
 func interact(player: CoopPlayer) -> void:
 	if not can_interact(player):

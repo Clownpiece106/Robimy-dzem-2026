@@ -36,6 +36,7 @@ func configure_existing(game_session: GameSession, owning_player_id: int) -> voi
 	local_player_id = owning_player_id
 	_apply_environment_appearance()
 	_connect_collectible_signals()
+	_configure_collectible_access()
 	player = get_node("Player") as CoopPlayer
 	player.configure_for_map(local_player_id, self, session)
 	player.publish_position()
@@ -110,6 +111,11 @@ func _configure_layout() -> void:
 		trapdoor.configure(session)
 	for surface in placement_surfaces:
 		surface.configure(session)
+	_configure_collectible_access()
+
+func _configure_collectible_access() -> void:
+	for collectible in _get_collectibles():
+		collectible.configure_for_local_player(local_player_id)
 
 func _apply_environment_appearance() -> void:
 	var environment_material: Material = INVERT_ENVIRONMENT if local_player_id == GameSession.PLAYER_2 else null
@@ -229,6 +235,7 @@ func spawn_dropped_collectible(collectible_id: String, item: Dictionary, drop_po
 	collectible.spawned_at_runtime = true
 	collectible.position = drop_position
 	add_child(collectible)
+	collectible.configure_for_local_player(local_player_id)
 
 func _process(_delta: float) -> void:
 	if mansion != null and player != null:
