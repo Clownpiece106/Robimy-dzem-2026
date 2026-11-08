@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dfecl7rm2i1mr"]
+
+[ext_resource type="Texture2D" uid="uid://dviccloderq2n" path="res://Players/girl walk_1.png" id="1_uclbj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bqvx"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(0, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qswy"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(486, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efr7g"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(972, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kklqa"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(1458, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui2vc"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(1944, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bysan"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(2430, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mjia"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(2916, 0, 486, 829)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lrsi8"]
+atlas = ExtResource("1_uclbj")
+region = Rect2(3402, 0, 486, 829)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bqvx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qswy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efr7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kklqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui2vc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bysan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mjia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lrsi8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]

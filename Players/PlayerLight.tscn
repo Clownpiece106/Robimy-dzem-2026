@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cbtpv6q65uhu7"]
 
 [ext_resource type="Script" uid="uid://htlrgw0ela7d" path="res://Players/player.gd" id="1_ryju4"]
-[ext_resource type="Texture2D" uid="uid://uvqa6xy1roya" path="res://Players/LightPlayerPlaceholder.png" id="2_4o6vt"]
+[ext_resource type="SpriteFrames" uid="uid://dfecl7rm2i1mr" path="res://Players/girl.tres" id="2_ryju4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dnjbm"]
 
@@ -10,8 +10,12 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_ryju4")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1055661282]
-texture = ExtResource("2_4o6vt")
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=772893517]
+position = Vector2(0, -64)
+scale = Vector2(0.25, 0.25)
+sprite_frames = ExtResource("2_ryju4")
+frame = 1
+frame_progress = 0.14983816
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=119330295]
 shape = SubResource("CapsuleShape2D_dnjbm")
