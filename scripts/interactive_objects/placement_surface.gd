@@ -17,6 +17,7 @@ func configure(game_session: GameSession) -> void:
 	if session != null and session.placement_changed.is_connected(_on_placement_changed):
 		session.placement_changed.disconnect(_on_placement_changed)
 	session = game_session
+	session.register_placement(placement_id, accepted_item_kind)
 	if not session.placement_changed.is_connected(_on_placement_changed):
 		session.placement_changed.connect(_on_placement_changed)
 	if not session.session_reset.is_connected(_on_session_reset):

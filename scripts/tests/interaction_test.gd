@@ -10,5 +10,6 @@ func _ready() -> void:
 	second_map.get_viewport().world_2d = World2D.new()
 	first_map.configure_existing(session, GameSession.PLAYER_1)
 	second_map.configure_existing(session, GameSession.PLAYER_2)
+	($GameOverOverlay as GameOverOverlay).configure(session)
 	inventory_label.configure(session)
 	print("Interaction test ready: P1 uses E, P2 uses Enter. Shared inventory uses 6, 7, and 8.")
