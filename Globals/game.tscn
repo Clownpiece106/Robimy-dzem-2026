@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d4dbnf31yvgs8" path="res://Assets/biurko.png" id="5_al3n7"]
 [ext_resource type="Texture2D" uid="uid://dasjkow1axhfk" path="res://Assets/stairs/schody na dół, środek p.png" id="5_jgm13"]
 [ext_resource type="Texture2D" uid="uid://dls10lgf6vjna" path="res://Assets/dziura podloga.png" id="6_1l6p8"]
+[ext_resource type="Texture2D" uid="uid://bo4sgq83p3lkn" path="res://Assets/stairs/schody na dół środel L.png" id="6_2slqd"]
 [ext_resource type="Texture2D" uid="uid://bbe5p60dg75de" path="res://Assets/krzesło.png" id="6_ccbk5"]
 [ext_resource type="Texture2D" uid="uid://caaqpgxov8f45" path="res://Assets/ceramiki/cer5.png" id="6_jgm13"]
 [ext_resource type="Script" uid="uid://dommt6banv0lc" path="res://scripts/ghost.gd" id="6_vt647"]
@@ -54,6 +55,9 @@ size = Vector2(80, 100)
 size = Vector2(80, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5a0d7"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ik8u"]
 size = Vector2(80, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3a2vt"]
@@ -251,6 +255,26 @@ position = Vector2(-34, -100)
 
 [node name="Stairs_26_24" parent="MansionLayout/Stairs" parent_id_path=PackedInt32Array(569955723, 898855841) index="11" unique_id=2111032843]
 position = Vector2(3978, 2660)
+
+[node name="CollisionShape2D" parent="MansionLayout/Stairs/Stairs_26_24/UpEndpoint/EnteringArea" index="0"]
+position = Vector2(153, 294)
+
+[node name="ArrivalMarker" parent="MansionLayout/Stairs/Stairs_26_24/UpEndpoint" index="1"]
+position = Vector2(64, 362)
+
+[node name="DownSprite" parent="MansionLayout/Stairs/Stairs_26_24/DownEndpoint" index="0"]
+position = Vector2(405, -225)
+texture = ExtResource("6_2slqd")
+region_enabled = false
+
+[node name="InteractionArea" parent="MansionLayout/Stairs/Stairs_26_24/DownEndpoint" index="1"]
+position = Vector2(300, -75)
+
+[node name="CollisionShape2D" parent="MansionLayout/Stairs/Stairs_26_24/DownEndpoint/InteractionArea" index="0"]
+shape = SubResource("RectangleShape2D_6ik8u")
+
+[node name="ArrivalMarker" parent="MansionLayout/Stairs/Stairs_26_24/DownEndpoint" index="2"]
+position = Vector2(103, -110)
 
 [node name="Doors" parent="MansionLayout" index="44" unique_id=1653110097]
 position = Vector2(0, 0)
