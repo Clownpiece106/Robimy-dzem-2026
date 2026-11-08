@@ -177,6 +177,7 @@ func _on_collectible_dropped(collectible_id: String, item: Dictionary, world_pos
 	spawn_dropped_collectible(collectible_id, item, world_position)
 
 func _on_session_reset() -> void:
+	player.health = CoopPlayer.MAX_HEALTH
 	for collectible in _get_collectibles():
 		if collectible.spawned_at_runtime:
 			collectible.set_collected_from_session()

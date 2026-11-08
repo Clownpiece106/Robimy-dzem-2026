@@ -2,6 +2,9 @@ extends Node2D
 
 const INVENTORY_LABEL := preload("res://scripts/shared_inventory_label.gd")
 const INVENTORY_TEXT_SHADER := preload("res://shaders/shared_inventory_text.gdshader")
+const HEART_ICON := preload("res://Assets/health_heart.svg")
+const FULL_HEART_COLOR := Color("#ff5a70")
+const EMPTY_HEART_COLOR := Color("#79717e")
 
 @onready var session: GameSession = $GameSession
 
@@ -41,6 +44,32 @@ func _ready() -> void:
 	text_material.shader = INVENTORY_TEXT_SHADER
 	inventory.material = text_material
 	inventory.configure(session)
+	var first_map := split_screen.player_one_viewport.get_node("MapInstance1") as MapInstance
+	var second_map := split_screen.player_two_viewport.get_node("MapInstance2") as MapInstance
+	_add_health_display(hud, first_map.player, BoxContainer.ALIGNMENT_BEGIN)
+	_add_health_display(hud, second_map.player, BoxContainer.ALIGNMENT_END)
+
+func _add_health_display(hud: CanvasLayer, player: CoopPlayer, alignment: BoxContainer.AlignmentMode) -> void:
+	var hearts := HBoxContainer.new()
+	hearts.name = "Player%dHearts" % player.player_id
+	hud.add_child(hearts)
+	hearts.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	hearts.offset_left = 20.0
+	hearts.offset_right = -20.0
+	hearts.position.y = 20.0
+	hearts.alignment = alignment
+	hearts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for index in CoopPlayer.MAX_HEALTH:
+		var icon := TextureRect.new()
+		icon.texture = HEART_ICON
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hearts.add_child(icon)
+	var update_hearts := func(health: int) -> void:
+		for index in CoopPlayer.MAX_HEALTH:
+			var icon := hearts.get_child(index) as TextureRect
+			icon.self_modulate = FULL_HEART_COLOR if index < health else EMPTY_HEART_COLOR
+	player.health_changed.connect(update_hearts)
+	update_hearts.call(player.health)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

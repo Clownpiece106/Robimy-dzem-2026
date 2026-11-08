@@ -1,8 +1,11 @@
 class_name CoopPlayer
 extends CharacterBody2D
 
+signal health_changed(hearts: int)
+
 enum DepthPlane { BACKGROUND, FOREGROUND }
 
+const MAX_HEALTH := 3
 const SPEED := 220.0
 const GRV := 50.0
 const MAX_VSP := 300.0
@@ -26,6 +29,15 @@ var interact_action: String
 var interaction_sensor: InteractionSensor
 var session: GameSession
 var plane: int = DepthPlane.FOREGROUND
+var health := MAX_HEALTH:
+	set(value):
+		var next_health := clampi(value, 0, MAX_HEALTH)
+		if health != next_health:
+			health = next_health
+			health_changed.emit(health)
+
+func take_damage(amount: int = 1) -> void:
+	health -= maxi(amount, 0)
 
 func _ready():
 	var game_root := get_node_or_null("/root/Game")
