@@ -5,7 +5,7 @@ signal health_changed(hearts: int)
 
 enum DepthPlane { BACKGROUND, FOREGROUND }
 
-const MAX_HEALTH := 3
+const MAX_HEALTH := 5
 const SPEED := 420.0
 const GRV := 90.0
 const MAX_VSP := 500.0
@@ -36,6 +36,8 @@ var health := MAX_HEALTH:
 		if health != next_health:
 			health = next_health
 			health_changed.emit(health)
+			if health == 0 and session != null:
+				session.player_died(player_id)
 
 func take_damage(amount: int = 1) -> void:
 	health -= maxi(amount, 0)
@@ -88,7 +90,7 @@ func publish_position() -> void:
 		session.update_player_state(player_id, position, sprite.position.y, z_index, sprite.animation, sprite.frame, sprite.frame_progress, sprite.is_playing(), sprite.scale.x)
 
 func _process(_delta: float) -> void:
-	if not is_configured:
+	if not is_configured or (session != null and session.is_game_over):
 		return
 	
 	#region Plane switching
@@ -115,7 +117,8 @@ func _process(_delta: float) -> void:
 	publish_position()
 
 func _physics_process(delta):
-	if not is_configured:
+	if not is_configured or (session != null and session.is_game_over):
+		velocity = Vector2.ZERO
 		return
 	#print(z_index)
 	var direction := Input.get_axis(left_action, right_action)

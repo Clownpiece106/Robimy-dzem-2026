@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="root"]
 [ext_resource type="Script" uid="uid://csa427j33unif" path="res://scripts/game_session.gd" id="session"]
 [ext_resource type="Script" uid="uid://bud1eb3sqnykp" path="res://scripts/split_screen_manager.gd" id="split"]
+[ext_resource type="PackedScene" path="res://scenes/game_over_overlay.tscn" id="game_over_overlay"]
 [ext_resource type="PackedScene" path="res://Monster/monster.tscn" id="monster"]
 
 [node name="Mansion" type="Node2D" unique_id=519039024]
@@ -15,6 +16,8 @@ script = ExtResource("root")
 
 [node name="GameSession" type="Node" parent="." unique_id=216377377]
 script = ExtResource("session")
+
+[node name="GameOverOverlay" parent="." instance=ExtResource("game_over_overlay")]
 
 [node name="SplitScreenManager" type="Control" parent="." unique_id=2105303266]
 layout_mode = 3
