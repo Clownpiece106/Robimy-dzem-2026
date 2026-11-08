@@ -25,14 +25,14 @@ func set_collected_from_session() -> void:
 	visible = false
 	var interaction_area := get_node_or_null("InteractionArea") as Area2D
 	if interaction_area != null:
-		interaction_area.set_deferred("monitoring", false)
+		interaction_area.set_deferred("monitorable", false)
 
 func reset_from_session() -> void:
 	collected = false
 	visible = true
 	var interaction_area := get_node_or_null("InteractionArea") as Area2D
 	if interaction_area != null:
-		interaction_area.set_deferred("monitoring", true)
+		interaction_area.set_deferred("monitorable", true)
 
 func can_interact(_player: CoopPlayer) -> bool:
 	return not collected

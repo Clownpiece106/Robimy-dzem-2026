@@ -14,5 +14,4 @@ script = ExtResource("1_ryju4")
 texture = ExtResource("2_4o6vt")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=119330295]
-position = Vector2(1, 4)
 shape = SubResource("CapsuleShape2D_dnjbm")

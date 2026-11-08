@@ -18,11 +18,10 @@ config/name="New Game Project"
 run/main_scene="res://Globals/game.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
-<<<<<<<HEADrun/main_scene="uid://cs7klnkm8hy7k"
 
 [autoload]
 
-Game="*uid://7xk3eqts77ip"
+Game="*res://Globals/_game.gd"
 
 [display]
 

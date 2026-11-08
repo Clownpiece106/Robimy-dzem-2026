@@ -30,13 +30,13 @@ func _background_texture() -> Texture2D:
 func update_visibility(player_position: Vector2, doors: Array) -> void:
 	var inside := Rect2(global_position, Vector2(room_width, 540.0)).has_point(player_position)
 	var has_door := false
-	var unlocked := false
+	var open_door := false
 	for door in doors:
 		if door.connects(self):
 			has_door = true
-			if not door.session.is_mansion_door_locked(door.door_id):
-				unlocked = true
-	var next_visible := inside or not has_door or unlocked
+			if door.is_open():
+				open_door = true
+	var next_visible := inside or not has_door or open_door
 	if room_visible != next_visible:
 		room_visible = next_visible
 		queue_redraw()
