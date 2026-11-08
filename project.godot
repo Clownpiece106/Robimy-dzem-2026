@@ -18,7 +18,6 @@ config/name="New Game Project"
 run/main_scene="res://Globals/game.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
-
 [autoload]
 
 Game="*res://Globals/_game.gd"
@@ -31,6 +30,10 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[global_group]
+
+Player="Used for when the player collides with smth"
 
 [input]
 

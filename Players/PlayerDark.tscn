@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dnjbm"]
 
-[node name="PlayerDark" type="CharacterBody2D" unique_id=289977575]
+[node name="PlayerDark" type="CharacterBody2D" unique_id=289977575 groups=["Player"]]
 z_index = 3
 z_as_relative = false
 collision_layer = 2
@@ -16,5 +16,5 @@ script = ExtResource("1_dnjbm")
 modulate = Color(0, 0, 0, 1)
 texture = ExtResource("1_rd1wm")
 
-[node name="Collision" type="CollisionShape2D" parent="." unique_id=2106391625]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=2106391625 groups=["Player"]]
 shape = SubResource("CapsuleShape2D_dnjbm")

@@ -16,6 +16,8 @@ enum DoorState { CLOSED, OPEN, LOCKED }
 var player_states: Dictionary = {}
 var mansion_doors: Dictionary = {}
 var mansion_door_defaults: Dictionary = {}
+var mansion_trapdoors: Dictionary = {}
+var mansion_trapdoor_defaults: Dictionary = {}
 
 func register_mansion_door(id: String, initial_state: DoorState) -> void:
 	if not mansion_door_defaults.has(id):
@@ -42,6 +44,32 @@ func toggle_mansion_door(id: String, actor_id: int) -> void:
 	if key_slot >= 0:
 		take_inventory_slot(key_slot)
 	emit_cross_map_event("mansion_door_changed", {"door_id": id, "state": next_state, "source_player": actor_id})
+
+func register_mansion_trapdoor(id: String, initial_state: DoorState) -> void:
+	if not mansion_trapdoor_defaults.has(id):
+		mansion_trapdoor_defaults[id] = initial_state
+		mansion_trapdoors[id] = initial_state
+	elif mansion_trapdoor_defaults[id] != initial_state:
+		push_warning("Conflicting initial state for mansion trapdoor %s" % id)
+
+func get_mansion_trapdoor_state(id: String) -> DoorState:
+	return mansion_trapdoors.get(id, DoorState.LOCKED)
+
+func toggle_mansion_trapdoor(id: String, actor_id: int) -> void:
+	if not mansion_trapdoors.has(id):
+		return
+	var state := get_mansion_trapdoor_state(id)
+	var key_slot := -1
+	if state == DoorState.LOCKED:
+		key_slot = find_inventory_slot("key")
+		if key_slot == -1:
+			print("P%d needs a key to open %s" % [actor_id, id])
+			return
+	var next_state := DoorState.CLOSED if state == DoorState.OPEN else DoorState.OPEN
+	mansion_trapdoors[id] = next_state
+	if key_slot >= 0:
+		take_inventory_slot(key_slot)
+	emit_cross_map_event("mansion_trapdoor_changed", {"trapdoor_id": id, "state": next_state, "source_player": actor_id})
 
 var inventory_slots: Array[Dictionary] = [{}, {}, {}]
 var inventory_actor_id := 0
@@ -100,6 +128,7 @@ func emit_cross_map_event(event_name: String, payload: Dictionary = {}) -> void:
 
 func reset() -> void:
 	mansion_doors = mansion_door_defaults.duplicate()
+	mansion_trapdoors = mansion_trapdoor_defaults.duplicate()
 	inventory_slots = [{}, {}, {}]
 	inventory_actor_id = 0
 	collected_collectible_ids.clear()

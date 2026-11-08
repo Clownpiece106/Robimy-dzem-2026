@@ -8,7 +8,7 @@ func _ready():
 			z_index = 2
 		1:
 			z_index = 0
-	print("table z index is "+str(z_index))
+	#print("table z index is "+str(z_index))
 
 func _process(delta):
 	#print("table z index is "+str(z_index))

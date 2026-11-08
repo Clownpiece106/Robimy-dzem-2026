@@ -2,5 +2,13 @@
 
 [ext_resource type="TileSet" uid="uid://djbyx8u2bi5ny" path="res://Tileset Physics/physics_tileset_bg.tres" id="1_ny62n"]
 
+[sub_resource type="GDScript" id="GDScript_l1gn1"]
+script/source = "extends TileMapLayer
+
+func _ready():
+	visible = false
+"
+
 [node name="PhysicsTileMap" type="TileMapLayer" unique_id=462440174]
 tile_set = ExtResource("1_ny62n")
+script = SubResource("GDScript_l1gn1")
