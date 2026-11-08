@@ -5,8 +5,7 @@ signal health_changed(hearts: int)
 
 enum DepthPlane { BACKGROUND, FOREGROUND }
 
-const MAX_HEALTH := 3
-const SPEED := 220.0
+const SPEED := 420.0
 const GRV := 50.0
 const MAX_VSP := 300.0
 const INTERACT_ACTION := "p%d_interact"
