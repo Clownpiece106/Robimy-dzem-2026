@@ -6,6 +6,7 @@ signal session_reset
 signal inventory_changed(slots: Array)
 signal collectible_collected(collectible_id: String)
 signal collectible_dropped(collectible_id: String, item: Dictionary, world_position: Vector2)
+signal placement_changed(placement_id: String, item_kind: String)
 
 const PLAYER_1 := 1
 const PLAYER_2 := 2
@@ -75,6 +76,7 @@ var inventory_slots: Array[Dictionary] = [{}, {}, {}]
 var inventory_actor_id := 0
 var collected_collectible_ids: Dictionary = {}
 var next_dropped_collectible_id := 1
+var placed_items: Dictionary = {}
 
 func add_inventory_item(item: Dictionary, actor_id: int) -> int:
 	for slot_index in INVENTORY_SLOT_COUNT:
@@ -117,6 +119,21 @@ func find_inventory_slot(item_kind: String) -> int:
 			return slot_index
 	return -1
 
+func place_inventory_item(placement_id: String, item_kind: String, actor_id: int) -> bool:
+	if placement_id.is_empty() or placed_items.has(placement_id):
+		return false
+	var slot_index := find_inventory_slot(item_kind)
+	if slot_index < 0:
+		return false
+	take_inventory_slot(slot_index)
+	placed_items[placement_id] = item_kind
+	placement_changed.emit(placement_id, item_kind)
+	print("P%d placed %s on %s" % [actor_id, item_kind, placement_id])
+	return true
+
+func get_placed_item(placement_id: String) -> String:
+	return str(placed_items.get(placement_id, ""))
+
 func update_player_state(player_id: int, map_position: Vector2, sprite_offset_y: float, draw_order: int) -> void:
 	player_states[player_id] = {"position": map_position, "sprite_offset_y": sprite_offset_y, "draw_order": draw_order}
 
@@ -132,6 +149,7 @@ func reset() -> void:
 	inventory_slots = [{}, {}, {}]
 	inventory_actor_id = 0
 	collected_collectible_ids.clear()
+	placed_items.clear()
 	next_dropped_collectible_id = 1
 	inventory_changed.emit(inventory_slots)
 	session_reset.emit()

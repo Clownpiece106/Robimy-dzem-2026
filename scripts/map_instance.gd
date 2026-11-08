@@ -10,6 +10,7 @@ var mansion: Node2D
 var mansion_rooms: Array[MansionRoom] = []
 var mansion_doors: Array[MansionDoor] = []
 var mansion_trapdoors: Array[MansionTrapdoor] = []
+var placement_surfaces: Array[PlacementSurface] = []
 const ROOM_VIEW_SIZE := Vector2(540.0, 540.0)
 
 @onready var bg_physics_tile_map := get_node_or_null("BgPhysicsTileMap") as TileMapLayer
@@ -100,12 +101,15 @@ func _configure_layout() -> void:
 	mansion_rooms.clear()
 	mansion_doors.clear()
 	mansion_trapdoors.clear()
+	placement_surfaces.clear()
 	_collect_layout_nodes(mansion)
 	_apply_environment_appearance()
 	for door in mansion_doors:
 		door.configure(session)
 	for trapdoor in mansion_trapdoors:
 		trapdoor.configure(session)
+	for surface in placement_surfaces:
+		surface.configure(session)
 
 func _apply_environment_appearance() -> void:
 	var environment_material: Material = INVERT_ENVIRONMENT if local_player_id == GameSession.PLAYER_2 else null
@@ -128,6 +132,8 @@ func _collect_layout_nodes(node: Node) -> void:
 		mansion_doors.append(node as MansionDoor)
 	if node is MansionTrapdoor:
 		mansion_trapdoors.append(node as MansionTrapdoor)
+	if node is PlacementSurface:
+		placement_surfaces.append(node as PlacementSurface)
 	for child in node.get_children():
 		_collect_layout_nodes(child)
 

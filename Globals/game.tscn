@@ -41,6 +41,7 @@
 [ext_resource type="Texture2D" uid="uid://dvwlih5s74xgm" path="res://Assets/lustro_ścienne.png" id="17_6ik8u"]
 [ext_resource type="Texture2D" uid="uid://cy3eirkvyduq6" path="res://Assets/skrzynia.png" id="18_5jhku"]
 [ext_resource type="Script" uid="uid://d2wkkbw8q7oag" path="res://scripts/mansion_game.gd" id="mansion_game"]
+[ext_resource type="PackedScene" path="res://scenes/interactive_objects/placement_surface.tscn" id="placement_surface"]
 
 [sub_resource type="RectangleShape2D" id="Stairs5To3Shape"]
 size = Vector2(80, 100)
@@ -286,9 +287,6 @@ position = Vector2(2360, 423)
 position = Vector2(-1160, 431)
 initial_state = 0
 
-[node name="DoorL" parent="MansionLayout/Doors/Door(3->4)" index="0" unique_id=285493679]
-position = Vector2(-82, -96)
-
 [node name="CollisionShape2D" parent="MansionLayout/Doors/Door(3->4)/InteractionArea" parent_id_path=PackedInt32Array(569955723, 1453849483, 950921253) index="0" unique_id=1904547995]
 position = Vector2(56.5, 0)
 shape = SubResource("RectangleShape2D_4qlxu")
@@ -511,6 +509,48 @@ position = Vector2(3500, 2472)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("8_ylx2x")
 
+[node name="MusicBoxPlacement6" parent="MansionLayout/PlaneObjectsContainer" unique_id=2055229217 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(-141, 1015)
+placement_id = "music_box_display_6"
+accepted_item_kind = "music_box"
+visual_offset = Vector2(0, -100)
+
+[node name="MusicBoxPlacement0" parent="MansionLayout/PlaneObjectsContainer" unique_id=353823316 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(1446, -127)
+placement_id = "music_box_display_0"
+accepted_item_kind = "music_box"
+visual_offset = Vector2(0, -100)
+
+[node name="MusicBoxPlacement12" parent="MansionLayout/PlaneObjectsContainer" unique_id=610831457 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(2832, 990)
+placement_id = "music_box_display_12"
+accepted_item_kind = "music_box"
+visual_offset = Vector2(0, -100)
+
+[node name="MusicBoxPlacement8" parent="MansionLayout/PlaneObjectsContainer" unique_id=1332351855 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(1296, 1503)
+placement_id = "music_box_display_8"
+accepted_item_kind = "music_box"
+visual_offset = Vector2(0, -100)
+
+[node name="MusicBoxPlacement17" parent="MansionLayout/PlaneObjectsContainer" unique_id=1664573411 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(3741, 2088)
+placement_id = "music_box_display_17"
+accepted_item_kind = "music_box"
+visual_offset = Vector2(0, -100)
+
+[node name="MusicBoxPlacement24" parent="MansionLayout/PlaneObjectsContainer" unique_id=979077871 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(3634, 2627)
+placement_id = "music_box_display_24"
+accepted_item_kind = "music_box"
+visual_offset = Vector2(0, -100)
+
 [node name="curtains_double" parent="MansionLayout/PlaneObjectsContainer" unique_id=314049513 instance=ExtResource("9_f235b")]
 z_index = 0
 position = Vector2(-304, 1320)
@@ -617,6 +657,44 @@ z_index = 0
 position = Vector2(7037.0005, 1830)
 scale = Vector2(-0.6, 0.6)
 texture = ExtResource("15_w7ctf")
+
+[node name="CandlePlacement18" parent="MansionLayout/PlaneObjectsContainer" unique_id=1774688524 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(978, 2075)
+placement_id = "candle_holder_18"
+
+[node name="CandlePlacement20" parent="MansionLayout/PlaneObjectsContainer" unique_id=1893539054 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(-2235, 1541)
+placement_id = "candle_holder_20"
+visual_offset = Vector2(0, -90)
+
+[node name="CandlePlacement12" parent="MansionLayout/PlaneObjectsContainer" unique_id=968059481 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(2184, 1560)
+placement_id = "candle_holder_12"
+visual_offset = Vector2(0, -65)
+
+[node name="CandlePlacement0" parent="MansionLayout/PlaneObjectsContainer" unique_id=95418949 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(2166, -327)
+placement_id = "candle_holder_0"
+visual_offset = Vector2(0, -65)
+
+[node name="CollisionShape2D" parent="MansionLayout/PlaneObjectsContainer/CandlePlacement0/InteractionArea" index="0"]
+position = Vector2(0, 177)
+
+[node name="CandlePlacement26" parent="MansionLayout/PlaneObjectsContainer" unique_id=557242141 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(3135, 3126)
+placement_id = "candle_holder_26"
+visual_offset = Vector2(0, -90)
+
+[node name="CandlePlacement15" parent="MansionLayout/PlaneObjectsContainer" unique_id=645509647 instance=ExtResource("placement_surface")]
+z_index = 0
+position = Vector2(7685, 2075)
+placement_id = "candle_holder_15"
+visual_offset = Vector2(0, -65)
 
 [node name="vanity" parent="MansionLayout/PlaneObjectsContainer" unique_id=1080298158 instance=ExtResource("9_f235b")]
 z_index = 0
@@ -876,6 +954,7 @@ z_index = -1
 [node name="Player" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=499025125 instance=ExtResource("3_j27jc")]
 z_index = 1
 position = Vector2(204, 978)
+floor_max_angle = 0.7853982
 player_id = 1
 
 [node name="OtherPlayerGhost" type="Node2D" parent="SplitScreenManager2/Player1ViewportContainer/Player1Viewport/MapInstance1" unique_id=812873534]
@@ -942,3 +1021,4 @@ color = Color(0, 0, 0, 1)
 [editable path="MansionLayout/Doors/Door(5->6)"]
 [editable path="MansionLayout/Doors/Door(8->9)2"]
 [editable path="MansionLayout/Doors/Door(26-27)"]
+[editable path="MansionLayout/PlaneObjectsContainer/CandlePlacement0"]
